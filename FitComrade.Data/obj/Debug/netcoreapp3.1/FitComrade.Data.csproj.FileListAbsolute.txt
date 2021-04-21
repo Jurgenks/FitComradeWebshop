@@ -1,0 +1,12 @@
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.csprojAssemblyReference.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.AssemblyInfoInputs.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.AssemblyInfo.cs
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.csproj.CoreCompileInputs.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Data.deps.json
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Data.runtimeconfig.json
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Data.runtimeconfig.dev.json
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Data.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Data.pdb
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.pdb
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.genruntimeconfig.cache

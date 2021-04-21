@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using FitComrade.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using FitComrade.Controller;
+using FitComrade.Data.Entities;
+using FitComrade.Data;
 
 namespace FitComrade.Pages.Login
 {

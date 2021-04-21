@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
+using FitComrade.Data.Entities;
 
 namespace FitComrade.Pages.Account.ProductManager
 {

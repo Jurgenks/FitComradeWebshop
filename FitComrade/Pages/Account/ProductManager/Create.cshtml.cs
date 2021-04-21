@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FitComrade.Data;
 using FitComrade.Models;
+using FitComrade.Data.Entities;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
     public class CreateModel : PageModel
     {
-        private readonly FitComrade.Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public CreateModel(FitComrade.Data.FitComradeContext context)
+        public CreateModel(FitComradeContext context)
         {
             _context = context;
         }

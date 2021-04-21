@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade", "FitComrade\FitComrade.csproj", "{4CD8F280-E0A6-4F25-818B-88991C3195CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Data", "FitComrade.Data\FitComrade.Data.csproj", "{DBD9ED8E-8282-46DF-B8CD-9B13B894BD9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Data", "FitComrade.Data\FitComrade.Data.csproj", "{DBD9ED8E-8282-46DF-B8CD-9B13B894BD9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Core", "FitComrade.Core\FitComrade.Core.csproj", "{C5B9B352-657F-43B2-9146-DD38678447E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Core", "FitComrade.Core\FitComrade.Core.csproj", "{C5B9B352-657F-43B2-9146-DD38678447E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Test", "FitComrade.Test\FitComrade.Test.csproj", "{CF20B378-C782-4E70-B453-CB5B485294AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Test", "FitComrade.Test\FitComrade.Test.csproj", "{ED741360-6F48-42DF-B5E8-F45BE72EBECE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{C5B9B352-657F-43B2-9146-DD38678447E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5B9B352-657F-43B2-9146-DD38678447E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5B9B352-657F-43B2-9146-DD38678447E4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF20B378-C782-4E70-B453-CB5B485294AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF20B378-C782-4E70-B453-CB5B485294AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF20B378-C782-4E70-B453-CB5B485294AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF20B378-C782-4E70-B453-CB5B485294AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

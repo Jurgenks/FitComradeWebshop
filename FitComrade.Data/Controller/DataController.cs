@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FitComrade.Models;
+using FitComrade.Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using FitComrade.Data;
 
-namespace FitComrade.Controller
+namespace FitComrade.Data
 {
     public class DataController : ControllerBase
     {
@@ -27,6 +26,7 @@ namespace FitComrade.Controller
 
             if (login != null)
             {
+
                 //Je huidige sessie ontvangen variabelen om toegang te verkrijgen
                 session.SetString("userName", profile.UserName);
                 session.SetInt32("profileID", login.ProfileID);

@@ -13,14 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20210315101633_InitialCreate.cs" />
-    <Compile Remove="Migrations\20210315101633_InitialCreate.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.13">
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.13" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.13" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -29,5 +24,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\workouts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitComrade.Data\FitComrade.Data.csproj" />
   </ItemGroup>	
 </Project>

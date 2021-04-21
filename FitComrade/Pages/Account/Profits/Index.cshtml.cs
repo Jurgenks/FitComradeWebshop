@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
-using FitComrade.Controller;
+using FitComrade.Data.Entities;
+using FitComrade.Data;
 
 namespace FitComrade.Pages.Account.Profits
 {
     public class IndexModel : PageModel
     {
-        private readonly Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public IndexModel(Data.FitComradeContext context)
+        public IndexModel(FitComradeContext context)
         {
             _context = context;
         }

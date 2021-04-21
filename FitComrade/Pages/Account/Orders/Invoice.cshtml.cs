@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
+using FitComrade.Data.Entities;
 
 namespace FitComrade.Pages.Account.Orders
 {
@@ -45,7 +46,7 @@ namespace FitComrade.Pages.Account.Orders
             {
                 var order = _context.Orders.Where(s => s.OrderID.Equals(id)).FirstOrDefault();
 
-                Controller.DataController dataController = new Controller.DataController(_context);
+                DataController dataController = new DataController(_context);
 
                 dataController.UpdateStock(order);
 
