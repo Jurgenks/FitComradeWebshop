@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VxIM08fYobtAgTb3ka0LeoWGBwGsEf/vkKLPAXKvPMH77kt3t4knxcPDa9ksuav/ngE1FiPw93VsHJGLOAdCfA==",
+  "dgSpecHash": "uuN06oi+Q7Ad5zHKMxd9o6a6j+x+obmfN9MzheZY2sSZ9N+M//wtdQ0V8nucq2cVHoxa2tv/sfwyQSszjvnl4g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade\\FitComrade.csproj",
+  "projectFilePath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade\\FitComrade.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jurge\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\jurge\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

@@ -4,5 +4,6 @@ namespace FitComrade.Data
 {
     public class Class1
     {
+
     }
 }
