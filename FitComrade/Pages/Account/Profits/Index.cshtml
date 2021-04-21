@@ -1,0 +1,75 @@
+﻿@page
+@model FitComrade.Pages.Account.Profits.IndexModel
+@{
+    ViewData["Title"] = "Profit";  
+
+}
+<head>
+    <link rel="stylesheet" href="~/css/Skills.css" />
+</head>
+<hr />
+<h3>Status: @DateTime.Now</h3>
+<hr />
+<body>
+    <div>
+        <h5>Totaal aan orders: @Model.Orders.Count()</h5>
+        <p>Inkomst verkoop: € @Model.sale</p>
+        <p>Uitgaven: € @Model.purchase</p>
+        <p>Winst/Verlies: € @Model.profit</p>
+    </div>
+    <hr />
+    <button class="accordion">Dag: @DateTime.Today.DayOfYear</button>
+    <div class="panel">
+        <h5>Vandaag: @Model.Orders.Where(s => s.OrderDate.Day.Equals(DateTime.Today.Day)).Count()</h5>
+        <p>Inkomst verkoop: € @Model.DaySale</p>        
+    </div>
+
+    <button class="accordion">Maand: @DateTime.Today.Month</button>
+    <div class="panel">
+        <h5>Deze maand: @Model.Orders.Where(s => s.OrderDate.Month.Equals(DateTime.Today.Month)).Count()</h5>
+        <p>Inkomst verkoop: € @Model.MonthSale</p>        
+    </div>
+    <button class="accordion">Jaar: @DateTime.Today.Year</button>
+    <div class="panel">
+        <h5>Dit jaar: @Model.Orders.Where(s => s.OrderDate.Year.Equals(DateTime.Today.Year)).Count()</h5>
+        <p>Inkomst verkoop: € @Model.YearSale</p>        
+    </div>
+
+    <hr />
+    <h5>Percentages van meest gewilde producten.</h5>
+    @foreach (var item in Model.Products)
+    {
+        var order = Model.OrderDetails.Where(s => s.ProductID.Equals(item.ProductID)).ToList();
+        decimal percentage = ((decimal)order.Count() / (decimal)Model.OrderDetails.Count());
+        <hr />
+        @Html.DisplayFor(modelItem => item.ProductName)
+        <div class="containerskill">
+            <div class="skills html" style="width:@percentage.ToString("0%")">@percentage.ToString("0.0%")</div>
+        </div>
+
+    }
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                /* Toggle between adding and removing the "active" class,
+                to highlight the button that controls the panel */
+                this.classList.toggle("active");
+
+                /* Toggle between hiding and showing the active panel */
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+</body>
+
+
+
+

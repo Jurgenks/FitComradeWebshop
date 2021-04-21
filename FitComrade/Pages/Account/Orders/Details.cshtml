@@ -1,0 +1,123 @@
+﻿@page
+@model FitComrade.Pages.Account.Orders.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    
+}
+
+<h1>Factuur</h1>
+
+<div>
+    
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Gebruiker:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Profile.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            Voornaam:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerSurName)
+        </dd>
+        <dt class="col-sm-2">
+            Achternaam:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerName)
+        </dd>
+        <dt class="col-sm-2">
+            Adres:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerAdress)
+        </dd>        
+        <dt class="col-sm-2">
+            Postcode:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerPostalCode)
+        </dd>        
+        <dt class="col-sm-2">
+            Telefoon:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerPhone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.CustomerEmail):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.CustomerEmail)
+        </dd>
+        <dt class="col-sm-2">
+            Prijs:
+        </dt>
+        <dd class="col-sm-10">
+            €@Html.DisplayFor(model => model.Order.OrderPrice)
+        </dd>
+        <dt class="col-sm-2">
+            Betaling:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Payment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Customer.Bank):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Customer.Bank)
+        </dd>
+        <dt class="col-sm-2">
+            Datum:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.OrderDate)
+        </dd>
+        <dt class="col-sm-2">
+            Status:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Order.OrderStatus)
+        </dd>
+    </dl>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Aantal
+                </th>
+                <th>
+                    Totaal
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderDetail)
+            {
+                <tr>
+                    <td>
+                        Art. @Html.DisplayFor(modelItem => item.ProductID), @Html.DisplayFor(modelItem => modelItem.Products.Where(s=>s.ProductID.Equals(item.ProductID)).FirstOrDefault().ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        €@Html.DisplayFor(modelItem => item.TotalPrice)
+                    </td>                                   
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-page="./Invoice">Ga terug</a>
+</div>

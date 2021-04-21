@@ -1,0 +1,67 @@
+﻿@page
+@model FitComrade.Pages.FitComradeBlog.EditModel
+@{
+}
+<head>
+
+</head>
+<body>
+    @if (Model.Blog != null)
+    {
+        <h2>Blog: @Model.Blog.BlogName</h2>
+
+        <h3>Add Workout</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @if (Model.Workout != null)
+                    {
+                        <div class="form-group">
+                            <label asp-for="Workout.WorkoutID" class="control-label"></label>
+                            <input asp-for="Workout.WorkoutID" class="form-control-plaintext" />
+                            <span asp-validation-for="Workout.WorkoutID" class="text-danger"></span>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label asp-for="Workout.WorkoutName" class="control-label"></label>
+                        <input asp-for="Workout.WorkoutName" class="form-control" />
+                        <span asp-validation-for="Workout.WorkoutName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Workout.Discription" class="control-label"></label>
+                        <input asp-for="Workout.Discription" class="form-control" />
+                        <span asp-validation-for="Workout.Discription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Workout.WorkoutImage" class="control-label"></label>
+                        <input asp-for="Workout.WorkoutImage" class="form-control" />
+                        <span asp-validation-for="Workout.WorkoutImage" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Workout.WorkoutVideo" class="control-label"></label>
+                        <input asp-for="Workout.WorkoutVideo" class="form-control" />
+                        <span asp-validation-for="Workout.WorkoutVideo" class="text-danger"></span>
+                    </div>
+                    @if (Model.user.ProfileID == 1)
+                    {
+                        <div class="form-group">
+                            <label asp-for="Workout.Confirmed" class="control-label"></label>
+                            <input asp-for="Workout.Confirmed" class="form-control" />
+                            <span asp-validation-for="Workout.Confirmed" class="text-danger"></span>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <input type="submit" value="Plaats workout" class="btn btn-primary" />
+                    </div>                    
+                </form>
+            </div>
+        </div>
+        <div>
+            <a asp-page="Index">Naar FitComradeBlog</a>
+        </div>
+    }
+
+</body>

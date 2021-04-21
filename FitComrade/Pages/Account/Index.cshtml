@@ -1,0 +1,36 @@
+﻿@page
+@model FitComrade.Pages.Account.IndexModel
+@{
+    ViewData["Title"] = "Account";
+    
+}
+
+<body>      
+    <div class="row">
+        <div class="col-6">
+            @if (Model.user.ProfileID == 0)
+            {
+                <h3><a asp-page="/Login/SignIn">Sign In</a></h3>
+            }
+            else
+            {
+                <h5>Profiel: @Model.user.UserName</h5>
+                <br />
+                <h3><a asp-page="Orders/Invoice">Bestellingen</a></h3>
+                <br />
+                <h4><a asp-page="/Index" asp-page-handler="LogOut">Sign Out</a></h4>
+            }
+        </div>
+        <div class="col-6">
+            @if (Model.user.ProfileID == 1) // Admin
+            {
+                <h5>Admin: @Model.user.ProfileID</h5>
+                <br />
+                <h3><a asp-page="ProductManager/Index">ProductManager</a></h3>
+                <h3><a asp-page="Profits/Index">Inkomsten</a></h3>                
+            }
+        </div>
+    </div>
+</body>
+
+

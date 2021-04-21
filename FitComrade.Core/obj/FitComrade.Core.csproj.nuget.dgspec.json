@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj": {}
+    "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj": {
+    "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj",
+        "projectUniqueName": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj",
         "projectName": "FitComrade.Core",
-        "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj",
+        "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj",
         "packagesPath": "C:\\Users\\jurge\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\obj\\",
+        "outputPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\jurge\\AppData\\Roaming\\NuGet\\NuGet.Config",

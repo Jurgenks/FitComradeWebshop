@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj",
+      "projectUniqueName": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj",
       "projectName": "FitComrade.Data",
-      "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj",
+      "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj",
       "packagesPath": "C:\\Users\\jurge\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\obj\\",
+      "outputPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\FitComradeWebshop\\FitComrade.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jurge\\AppData\\Roaming\\NuGet\\NuGet.Config",

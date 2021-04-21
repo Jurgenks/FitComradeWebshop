@@ -1,0 +1,58 @@
+﻿@page
+@model FitComrade.Pages.Shop.CartModel
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+</head>
+<body>
+
+    <h3>Winkelmand</h3>
+    <form method="post" asp-page="cart" asp-page-handler="update">
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>ArtikelNr.</th>
+                <th>Product</th>
+                <th>Photo</th>
+                <th>Prijs</th>
+                <th>Aantal <input type="submit" value="Update" /></th>
+                <th>Totaalprijs</th>
+            </tr>
+            @if (Model.Cart.Products != null)
+            {
+                @foreach (var item in Model.Cart.Products)
+                {
+                    <tr align="center">
+                        <td align="center">
+                            <a asp-page="cart" asp-page-handler="delete" asp-route-id="@item.ProductID">Verwijder</a>
+                        </td>
+                        <td>@item.ProductID</td>
+                        <td>@item.ProductName</td>
+                        <td><img src="~/images/FitComrade logo.png" width="100" height="100" /></td>
+                        <td>€@item.ProductPrice</td>
+                        <td><input type="number" name="quantities" value="@item.ProductQuantity" min="1" style="width: 50px;" /></td>
+                        <td>
+                            €@(item.ProductPrice * item.ProductQuantity)
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="6" align="right">Totaal</td>
+                    <td align="center">€@Model.Total</td>
+                    @if (Model.Cart.Products.Count() != 0)
+                    {
+                    <td>
+                    <a asp-page="Checkout">Betaal</a>
+                    </td>}
+
+                </tr>
+            }
+
+        </table>
+    </form>
+    <a asp-page="index">Doorgaan met winkelen</a>
+    
+</body>
+</html>

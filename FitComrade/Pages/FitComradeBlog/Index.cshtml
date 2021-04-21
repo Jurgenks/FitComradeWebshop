@@ -1,0 +1,87 @@
+﻿@page
+@model FitComrade.Pages.FitComradeBlog.IndexModel
+@{
+    ViewData["Title"] = "FitComradeBlog";
+}
+
+<head>
+
+</head>
+<body>
+    <h2>FitComrade Blog</h2>
+    @if (Model.HasNoBlog)
+    {
+        <a asp-page="Edit" asp-page-handler="CreateBlog">Start een Blog!</a>
+    }
+    else if (Model.user.ProfileID > 0)
+    {
+        <a asp-page="Edit">Wijzig Blog</a>
+    }
+    <br />
+    <br />
+    @if (Model.user.ProfileID == 1)
+    {
+        <a asp-page-handler="CheckNewPosts">Controlleer Blogs</a>
+    }
+    @if (Model.Blogs != null)
+    {
+        <hr />
+        @if (Model.Blogs.Count > 0)
+        {
+            <div>
+                @foreach (var item in Model.Blogs.Where(item => item != null))
+                {
+
+                    if (item.Workouts != null)
+                    {
+                        <h4>@item.BlogName</h4>
+                        <br />
+                        <h5>Aantal Workouts: @item.Workouts.Count</h5>
+                        @foreach (var workout in item.Workouts)
+                        {
+                            <h3>@workout.WorkoutName</h3>
+                            <hr />
+                            <div style="display:flex">
+                                @if (workout.WorkoutImage != null)
+                                {
+                                    <img style="margin-right:auto" width="420" height="315" src="@workout.WorkoutImage" />
+                                }
+
+                                @if (workout.WorkoutVideo != null)
+                                {
+                                    <iframe width="420" height="315"
+                                            src="@workout.WorkoutVideo"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen>
+                                    </iframe>
+                                }
+                            </div>
+                            <hr />
+                            <h6>Uitleg:</h6>
+                            <p>@workout.Discription</p>
+                            @if(Model.user.ProfileID == item.ProfileID || Model.user.ProfileID == 1)
+                            { 
+                                <a asp-page="Edit" asp-page-handler="Edit" asp-route-id="@workout.WorkoutID">Aanpassen</a>
+                            }                          
+
+                            <hr />
+                            <br />
+                            <br />
+                            <br />
+                        }
+                    }
+
+                }
+
+            </div>
+        }
+
+    }
+    else
+    {
+        <p>FitComrade Blog is leeg...</p>
+    }
+
+</body>

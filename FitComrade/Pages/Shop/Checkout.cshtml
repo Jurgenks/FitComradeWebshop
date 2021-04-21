@@ -1,0 +1,103 @@
+﻿@page
+@model FitComrade.Pages.Shop.CheckoutModel
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/CheckoutStyle.css" />
+</head>
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Gegevens</h3>
+                        <div class="form-group">
+                            <label asp-for="Customer.CustomerSurName" class="control-label"></label>
+                            <input asp-for="Customer.CustomerSurName" class="form-control" />
+                            <span asp-validation-for="Customer.CustomerSurName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Customer.CustomerName" class="control-label"></label>
+                            <input asp-for="Customer.CustomerName" class="form-control" />
+                            <span asp-validation-for="Customer.CustomerName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Customer.CustomerEmail" class="control-label"></label>
+                            <input asp-for="Customer.CustomerEmail" class="form-control" />
+                            <span asp-validation-for="Customer.CustomerEmail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Customer.CustomerPostalCode" class="control-label"></label>
+                            <input asp-for="Customer.CustomerPostalCode" class="form-control" />
+                            <span asp-validation-for="Customer.CustomerPostalCode" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Customer.CustomerAdress" class="control-label"></label>
+                            <input asp-for="Customer.CustomerAdress" class="form-control" />
+                            <span asp-validation-for="Customer.CustomerAdress" class="text-danger"></span>
+                        </div>                        
+                        <div class="form-group">
+                            <label asp-for="Customer.CustomerPhone" class="control-label"></label>
+                            <input asp-for="Customer.CustomerPhone" class="form-control" />
+                            <span asp-validation-for="Customer.CustomerPhone" class="text-danger"></span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-50">
+                        <h3>Betaling</h3>                        
+                        <div class="form-group">
+                            <label asp-for="Customer.Payment" class="control-label"></label>                            
+                            <select asp-for="Customer.Payment" class="form-control">
+                                <option>IDEAL</option>
+                                <option>PayPal</option>
+                                <option>Visa</option>                               
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Customer.Bank" class="control-label"></label>
+                            <select asp-for="Customer.Bank" class="form-control">
+                                <option>ING</option>
+                                <option>RaboBank</option>
+                                <option>ABN Ambro</option>
+                            </select>
+                        </div>                        
+                    </div>
+                </div>
+                <label>
+                    <input type="checkbox" checked="checked" name="sameadr"> Factuur naar hetzelfde adress als verzending
+                </label>
+                <input type="submit" value="Verder naar betaling" class="btn">
+            </form>
+        </div>
+    </div>
+
+    @if(Model.Cart.Products != null){
+        decimal TotalPrice = 0;
+        <div class="col-25">
+            <div class="container">
+                <h4>
+                    Winkelmand
+                    <span class="price" style="color:black">
+                        <i class="fa fa-shopping-cart"></i>
+
+                    </span>
+                </h4>
+                @foreach (var item in Model.Cart.Products)
+                {
+                    var price = item.ProductPrice * item.ProductQuantity;
+                    <p><a>@item.ProductName</a> <span class="price">€@price</span></p>
+                    TotalPrice = TotalPrice + price;
+                }
+                <hr>
+                <p>Totaal <span class="price" style="color:black"><b>€@TotalPrice</b></span></p>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

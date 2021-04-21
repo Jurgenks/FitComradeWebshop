@@ -1,0 +1,50 @@
+﻿@page
+@model FitComrade.Pages.Account.ProductManager.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-page="Create">Add Product</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductQuantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].ProductPrice)
+            </th>                            
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Products) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductPrice)
+            </td>            
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ProductID">Wijzig</a> |
+                <a asp-page="./Details" asp-route-id="@item.ProductID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ProductID">Verwijder</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

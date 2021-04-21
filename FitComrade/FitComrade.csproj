@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Jurgen Kalkers</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Account\AccountManager\**" />
+    <Content Remove="Pages\Account\AccountManager\**" />
+    <EmbeddedResource Remove="Pages\Account\AccountManager\**" />
+    <None Remove="Pages\Account\AccountManager\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210315101633_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210315101633_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\workouts\" />
+  </ItemGroup>	
+</Project>

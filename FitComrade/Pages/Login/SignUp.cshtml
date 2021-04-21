@@ -1,0 +1,34 @@
+﻿@page
+@model FitComrade.Pages.Login.SignUpModel
+@{
+}
+<h3>Sign Up account</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Profile.UserName" class="control-label"></label>
+                <input asp-for="Profile.UserName" class="form-control" />
+                <span asp-validation-for="Profile.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Profile.Password" class="control-label"></label>
+                <input asp-for="Profile.Password" class="form-control" />
+                <span asp-validation-for="Profile.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Match.Password" class="control-label"></label>
+                <input asp-for="Match.Password" class="form-control" />
+                <span asp-validation-for="Match.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sign Up" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-page="SignIn">Sign In</a>
+</div>
