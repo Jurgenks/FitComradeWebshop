@@ -266,8 +266,7 @@ namespace FitComrade.Data
                 var workouts = _context.Workouts.ToList();
                 
                 if(workout.WorkoutID == 0)  //Create workout
-                {
-                    blog.Workouts = new List<Workout>();
+                {                    
                     blog.Workouts.Add(workout);
 
                     //Update Blog
