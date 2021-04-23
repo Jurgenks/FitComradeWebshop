@@ -18,10 +18,7 @@ namespace FitComrade.Data
             : base(options)
         {
         }
-
-        
-
-        public DbSet<Profile> Profiles { get; set; }
+                
 
         public DbSet<Product> Products { get; set; }
 

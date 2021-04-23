@@ -21,7 +21,6 @@ namespace FitComrade.Pages.Account.Orders
         public Order Order;
         public List<OrderDetail> OrderDetail;
         public Customer Customer;
-        public Profile Profile;
         public List<Product> Products;
         
 
@@ -39,8 +38,6 @@ namespace FitComrade.Pages.Account.Orders
             Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
 
             Customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerID == Order.CustomerID);
-
-            Profile = await _context.Profiles.FirstOrDefaultAsync(m => m.CustomerID == Order.CustomerID);
 
             if (Order == null) // Er zijn geen orders
             {

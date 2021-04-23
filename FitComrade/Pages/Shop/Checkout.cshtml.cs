@@ -51,13 +51,13 @@ namespace FitComrade.Pages.Shop
             dataController.RegisterCustomer(HttpContext.Session, Customer);
 
             user = user.GetSession(HttpContext.Session, user);
-
-            if(user.ProfileID != 0)
-            {                
-                dataController.UpdateProfile(HttpContext.Session, user.CustomerID);
-            }
+            
             if(user.CustomerID != 0)
             {
+                if (user.ProfileID != 0)
+                {
+                    dataController.UpdateProfile(HttpContext.Session, Customer);
+                }
                 dataController.PlaceOrder(user.CustomerID, Cart);
             }
             await _context.SaveChangesAsync();

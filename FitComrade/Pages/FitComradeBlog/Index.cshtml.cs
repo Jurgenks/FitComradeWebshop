@@ -42,7 +42,7 @@ namespace FitComrade.Pages.FitComradeBlog
         }
         private bool CanCreateBlog()    //Check of de gebruiker al een blog heeft
         {
-            var ProfileBlogs = _context.Blogs.Where(item => item.ProfileID.Equals(user.ProfileID));
+            var ProfileBlogs = _context.Blogs.Where(item => item.CustomerID.Equals(user.ProfileID));
             if(user.ProfileID != 0)
             {
                 if(ProfileBlogs.Count() > 0)

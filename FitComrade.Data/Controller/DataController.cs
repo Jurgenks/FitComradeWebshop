@@ -19,17 +19,17 @@ namespace FitComrade.Data
         }
 
         //Account
-        public bool Login(ISession session, Profile profile) //Read Account
+        public bool Login(ISession session, Customer profile) //Read Account
         {
             
-            var login = _context.Profiles.Where(s => s.UserName.Equals(profile.UserName) && s.Password.Equals(profile.Password)).FirstOrDefault();
+            var login = _context.Customers.Where(s => s.UserName.Equals(profile.UserName) && s.Password.Equals(profile.Password)).FirstOrDefault();
 
             if (login != null)
             {
 
                 //Je huidige sessie ontvangen variabelen om toegang te verkrijgen
                 session.SetString("userName", profile.UserName);
-                session.SetInt32("profileID", login.ProfileID);
+                session.SetInt32("profileID", login.CustomerID);
 
                 //Heeft profile een CustomerID, ontvangt je huidige sessie het CustomerID van het Profiel
                 if(login.CustomerID != 0)
@@ -43,13 +43,13 @@ namespace FitComrade.Data
             return false;
         }
 
-        public bool Create(Profile profile) // Create Account
+        public bool Create(Customer profile) // Create Account
         {
-            var register = _context.Profiles.Where(s => s.UserName.Equals(profile.UserName));
+            var register = _context.Customers.Where(s => s.UserName.Equals(profile.UserName));
             //Check of profile al bestaat
             if (register.Count() == 0)
             {
-                _context.Profiles.Add(profile);
+                _context.Customers.Add(profile);
                 _context.SaveChanges();
                 return true;
             }
@@ -69,39 +69,43 @@ namespace FitComrade.Data
                 session.SetInt32("customerID", id.CustomerID);
             }
             else if(register.Count() > 0) //customer bestaat wel
-            {
-                //id wordt een List van alle customers met dezelfde email
-                var id = register.ToList();
-                for(int i = 0; i < register.Count();i++)
+            {                
+                if(session.Keys.Contains("profileID"))
                 {
-                    if (customer.CustomerPostalCode == id[i].CustomerPostalCode) //Same Email, Same PostalCode, old customer
-                    {                        
-                        session.SetInt32("customerID", id[i].CustomerID);
-                        return;
-                    }
-                    else if (!id.Contains(customer)) // Same Email, Different fields, new customer
-                    {
-                        _context.Customers.Add(customer);
-                        _context.SaveChanges();
-                        var newid = _context.Customers.Where(s => s.CustomerPostalCode.Equals(customer.CustomerPostalCode)).FirstOrDefault();
-                        session.SetInt32("customerID", newid.CustomerID);
-                        return;
-                    }
-                }                
-                
+                    return;
+                }
+                //id wordt een List van alle customers met dezelfde email maar zonder actief account
+                var unlogged = register.Where(item => item.UserName.Equals(null));
+                if (!unlogged.Contains(customer)) // Same Email, Different fields, new customer
+                {
+                    _context.Customers.Add(customer);
+                    _context.SaveChanges();
+                    var newid = _context.Customers.Where(s => s.CustomerPostalCode.Equals(customer.CustomerPostalCode)).FirstOrDefault();
+                    session.SetInt32("customerID", newid.CustomerID);
+                    return;
+
+                }
+
             }
             
         }
 
-        public void UpdateProfile(ISession session, int id) // Update Profile CustomerID
+        public void UpdateProfile(ISession session, Customer customer) // Update Profile CustomerID
         {
-            //Haal het profile op waar de gebruiker op is ingelogd
-            var profile = _context.Profiles.Where(s => s.ProfileID.Equals((int)session.GetInt32("profileID"))).FirstOrDefault();
-            
-            profile.CustomerID = id;
+            //Haal de profile op waar de gebruiker op is ingelogd
+            var profile = _context.Customers.Where(s => s.CustomerID.Equals((int)session.GetInt32("profileID"))).FirstOrDefault();
+            session.SetInt32("customerID", profile.CustomerID);
+            profile.CustomerAdress = customer.CustomerAdress;
+            profile.CustomerEmail = customer.CustomerEmail;
+            profile.CustomerName = customer.CustomerName;
+            profile.CustomerPhone = customer.CustomerPhone;
+            profile.CustomerSurName = customer.CustomerSurName;
+            profile.CustomerPostalCode = customer.CustomerPostalCode;
+            profile.Bank = customer.Bank;
+            profile.Payment = customer.Payment;
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
-            _context.Profiles.Attach(profile).State = EntityState.Modified;
+            _context.Customers.Attach(profile).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
@@ -244,7 +248,7 @@ namespace FitComrade.Data
 
                 Blog blog = new Blog();
                 blog.BlogName = userName;
-                blog.ProfileID = profileID;
+                blog.CustomerID = profileID;
 
                 //Create Blog
                 _context.Blogs.Add(blog);
@@ -264,7 +268,11 @@ namespace FitComrade.Data
                 var workouts = _context.Workouts.ToList();
                 
                 if(workout.WorkoutID == 0)  //Create workout
-                {                    
+                { 
+                    if(blog.Workouts == null)
+                    {
+                        blog.Workouts = new List<Workout>();
+                    }
                     blog.Workouts.Add(workout);
 
                     //Update Blog

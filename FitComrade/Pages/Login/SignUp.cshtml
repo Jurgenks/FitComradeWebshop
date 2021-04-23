@@ -9,9 +9,14 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Profile.UserName" class="control-label"></label>
+                <label asp-for="Profile.UserName" class="control-label">Username</label>
                 <input asp-for="Profile.UserName" class="form-control" />
                 <span asp-validation-for="Profile.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Profile.CustomerEmail" class="control-label">E-Mail</label>
+                <input asp-for="Profile.CustomerEmail" class="form-control" />
+                <span asp-validation-for="Profile.CustomerEmail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Profile.Password" class="control-label"></label>
@@ -19,7 +24,7 @@
                 <span asp-validation-for="Profile.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Match.Password" class="control-label"></label>
+                <label asp-for="Match.Password" class="control-label">Confirm Password</label>
                 <input asp-for="Match.Password" class="form-control" />
                 <span asp-validation-for="Match.Password" class="text-danger"></span>
             </div>

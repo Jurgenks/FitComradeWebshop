@@ -10,6 +10,6 @@ namespace FitComrade.Data.Entities
         public int BlogID { get; set; }
         public string BlogName { get; set; }
         public List<Workout> Workouts { get; set; }
-        public int ProfileID { get; set; }
+        public int CustomerID { get; set; }
     }
 }

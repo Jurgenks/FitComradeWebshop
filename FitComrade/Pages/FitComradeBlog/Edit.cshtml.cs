@@ -30,7 +30,7 @@ namespace FitComrade.Pages.FitComradeBlog
                 Response.Redirect("/");
             }
             //Haalt de blog op van de ingelogde gebruiker
-            Blog = _context.Blogs.Where(item => item.ProfileID.Equals(user.ProfileID)).FirstOrDefault();
+            Blog = _context.Blogs.Where(item => item.CustomerID.Equals(user.ProfileID)).FirstOrDefault();
         }
         public IActionResult OnGetCreateBlog()
         {
@@ -50,7 +50,7 @@ namespace FitComrade.Pages.FitComradeBlog
             }
             else  //Nieuwe Workout
             {
-                Blog = _context.Blogs.Where(b => b.ProfileID.Equals(user.ProfileID)).FirstOrDefault();
+                Blog = _context.Blogs.Where(b => b.CustomerID.Equals(user.ProfileID)).FirstOrDefault();
             }
 
             DataController dataController = new DataController(_context);

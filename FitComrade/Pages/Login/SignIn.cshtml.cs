@@ -21,7 +21,7 @@ namespace FitComrade.Pages.Login
 
         public SessionUser user = new SessionUser();
         [BindProperty]
-        public Profile Profile { get; set; }
+        public Customer Profile { get; set; }
         
 
         public void OnGet()

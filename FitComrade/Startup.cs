@@ -27,9 +27,9 @@ namespace FitComrade
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            
+
             services.AddDbContext<FitComradeContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("FitComradeContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("FitComradeContext"), b=>b.MigrationsAssembly("FitComrade.Data")));
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
