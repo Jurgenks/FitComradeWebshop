@@ -18,7 +18,8 @@ namespace FitComrade.Pages.Shop
             _context = context;
         }
 
-        public Cart Cart = new Cart();        
+        public Cart Cart = new Cart();     
+        public SessionUser user { get; private set; }
 
         [BindProperty]
         public Customer Customer { get; set; }        
@@ -27,7 +28,8 @@ namespace FitComrade.Pages.Shop
         public void OnGet()
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
-            
+            user = new SessionUser();
+            user = user.GetSession(HttpContext.Session, user);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
 
             if(Cart.Products == null || Cart.Products.Count == 0)
@@ -41,8 +43,6 @@ namespace FitComrade.Pages.Shop
             {
                 return Page();
             }
-
-            SessionUser user = new SessionUser();
 
             DataController dataController = new DataController(_context);
 

@@ -96,7 +96,6 @@ namespace FitComrade.Data
             var profile = _context.Customers.Where(s => s.CustomerID.Equals((int)session.GetInt32("profileID"))).FirstOrDefault();
             session.SetInt32("customerID", profile.CustomerID);
             profile.CustomerAdress = customer.CustomerAdress;
-            profile.CustomerEmail = customer.CustomerEmail;
             profile.CustomerName = customer.CustomerName;
             profile.CustomerPhone = customer.CustomerPhone;
             profile.CustomerSurName = customer.CustomerSurName;
