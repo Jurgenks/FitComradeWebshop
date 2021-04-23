@@ -32,9 +32,9 @@ namespace FitComrade.Pages.Account.Orders
                 return NotFound();
             }
 
-            OrderDetail = _context.OrderDetails.Where(m => m.OrderID.Equals(id)).ToList(); 
+            OrderDetail = await _context.OrderDetails.Where(m => m.OrderID.Equals(id)).ToListAsync(); 
             
-            Products = _context.Products.ToList(); 
+            Products = await _context.Products.ToListAsync(); 
 
             Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
 
