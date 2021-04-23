@@ -122,9 +122,7 @@ namespace FitComrade.Data
                 {                    
                     orderDetails.Add(new OrderDetail
                     {                        
-                        ProductID = item.ProductID,
-                        ProductName = item.ProductName,
-                        ProductPrice = item.ProductPrice,
+                        ProductID = item.ProductID,                        
                         Quantity = item.ProductQuantity,
                         TotalPrice = item.ProductPrice * item.ProductQuantity
                     });

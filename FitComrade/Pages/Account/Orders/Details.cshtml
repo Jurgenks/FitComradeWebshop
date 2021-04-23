@@ -105,7 +105,7 @@
             {
                 <tr>
                     <td>
-                        Art. @Html.DisplayFor(modelItem => item.ProductID), @Html.DisplayFor(modelItem => modelItem.Products.Where(s=>s.ProductID.Equals(item.ProductID)).FirstOrDefault().ProductName)
+                        Art. @Html.DisplayFor(modelItem => item.ProductID), @Html.DisplayFor(modelItem=>item.Product.ProductName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Quantity)

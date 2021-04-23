@@ -48,6 +48,10 @@ namespace FitComrade.Pages.Account.Profits
                 {
                     purchase -= ((decimal)0.60 * item.ProductPrice) * item.ProductQuantity;
                 }
+                foreach (var item in OrderDetails)
+                {
+                    purchase -= ((decimal)0.60 * item.TotalPrice);
+                }
                 profit = purchase + sale;
             }
             
