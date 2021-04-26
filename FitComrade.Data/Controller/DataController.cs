@@ -57,16 +57,25 @@ namespace FitComrade.Data
         }
 
         //Webshop
-        public void RegisterCustomer(ISession session, Customer customer) //Create Customer
+        public void RegisterCustomer(ISession session, Customer customer , CustomerAdress customerAdress) //Create Customer
         {
+            
             var register = _context.Customers.Where(s => s.CustomerEmail.Equals(customer.CustomerEmail));
+
             //Check of de customer bestaat
             if(register.Count() == 0) //customer bestaat niet
             {
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
-                var id = _context.Customers.Where(s=>s.CustomerEmail.Equals(customer.CustomerEmail)).FirstOrDefault();
-                session.SetInt32("customerID", id.CustomerID);
+
+                var newCustomer = _context.Customers.Where(s=>s.CustomerEmail.Equals(customer.CustomerEmail)).FirstOrDefault();
+                newCustomer.Adresses = new List<CustomerAdress>();
+                newCustomer.Adresses.Add(customerAdress);
+
+                _context.Customers.Attach(newCustomer);
+                _context.SaveChanges();
+
+                session.SetInt32("customerID", newCustomer.CustomerID);
             }
             else if(register.Count() > 0) //customer bestaat wel
             {                
@@ -74,14 +83,22 @@ namespace FitComrade.Data
                 {
                     return;
                 }
+
                 //id wordt een List van alle customers met dezelfde email maar zonder actief account
                 var unlogged = register.Where(item => item.UserName.Equals(null));
                 if (!unlogged.Contains(customer)) // Same Email, Different fields, new customer
                 {
                     _context.Customers.Add(customer);
                     _context.SaveChanges();
-                    var newid = _context.Customers.Where(s => s.CustomerPostalCode.Equals(customer.CustomerPostalCode)).FirstOrDefault();
-                    session.SetInt32("customerID", newid.CustomerID);
+
+                    var newCustomer = _context.Customers.Where(c=>c.Equals(customer)).FirstOrDefault();
+                    newCustomer.Adresses = new List<CustomerAdress>();
+                    newCustomer.Adresses.Add(customerAdress);
+
+                    _context.Customers.Attach(newCustomer);
+                    _context.SaveChanges();
+
+                    session.SetInt32("customerID", newCustomer.CustomerID);
                     return;
 
                 }
@@ -90,18 +107,25 @@ namespace FitComrade.Data
             
         }
 
-        public void UpdateProfile(ISession session, Customer customer) // Update Profile CustomerID
+        public void UpdateProfile(ISession session, Customer customer, CustomerAdress customerAdress) // Update Profile CustomerID
         {
             //Haal de profile op waar de gebruiker op is ingelogd
             var profile = _context.Customers.Where(s => s.CustomerID.Equals((int)session.GetInt32("profileID"))).FirstOrDefault();
+
             session.SetInt32("customerID", profile.CustomerID);
-            profile.CustomerAdress = customer.CustomerAdress;
+
             profile.CustomerName = customer.CustomerName;
+
             profile.CustomerPhone = customer.CustomerPhone;
+
             profile.CustomerSurName = customer.CustomerSurName;
-            profile.CustomerPostalCode = customer.CustomerPostalCode;
+
             profile.Bank = customer.Bank;
+
             profile.Payment = customer.Payment;
+
+            profile.Adresses.Add(customerAdress);
+
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
             _context.Customers.Attach(profile).State = EntityState.Modified;

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Data.Entities;
+using FitComrade.Models;
 
 namespace FitComrade.Pages.Account.Orders
 {
@@ -38,6 +39,7 @@ namespace FitComrade.Pages.Account.Orders
             Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
 
             Customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerID == Order.CustomerID);
+            
 
             if (Order == null) // Er zijn geen orders
             {

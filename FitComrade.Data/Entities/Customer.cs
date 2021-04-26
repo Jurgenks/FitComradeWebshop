@@ -14,19 +14,19 @@ namespace FitComrade.Data.Entities
 
         public string CustomerSurName { get; set; }
 
-        public string CustomerName { get; set; }
-        [DataType(DataType.PostalCode)]
-        public string CustomerPostalCode { get; set; }
-
-        public string CustomerAdress { get; set; }
+        public string CustomerName { get; set; }    
+        
         [DataType(DataType.PhoneNumber)]
         public string CustomerPhone { get; set; }
+
         [DataType(DataType.EmailAddress)]
         public string CustomerEmail { get; set; }
 
         public string Payment { get; set; }
 
         public string Bank { get; set; }   
+
+        public List<CustomerAdress> Adresses { get; set; }
 
         public List<Order> Orders { get; set; }
         
