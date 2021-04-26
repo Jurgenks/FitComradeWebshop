@@ -19,6 +19,7 @@ namespace FitComrade.Data
         {
         }
                 
+        //MSSQL Tables
 
         public DbSet<Product> Products { get; set; }
 

@@ -237,3 +237,5 @@ C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitCom
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Test\obj\Debug\netcoreapp3.1\FitComrade.Test.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Test\obj\Debug\netcoreapp3.1\FitComrade.Test.pdb
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Test\obj\Debug\netcoreapp3.1\FitComrade.Test.genruntimeconfig.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Test\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Test\bin\Debug\netcoreapp3.1\Moq.dll

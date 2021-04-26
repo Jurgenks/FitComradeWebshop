@@ -235,6 +235,12 @@ namespace FitComrade.Data
                     
         }
 
+        public void AddProduct(Product product) //Create Product
+        {
+            _context.Products.Add(product);
+            _context.SaveChanges();
+        }
+
         //Blog
         public Blog CreateBlog(ISession session) //Create Blog
         {            
