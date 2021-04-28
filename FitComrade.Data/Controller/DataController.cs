@@ -30,12 +30,8 @@ namespace FitComrade.Data
                 //Je huidige sessie ontvangen variabelen om toegang te verkrijgen
                 session.SetString("userName", profile.UserName);
                 session.SetInt32("profileID", login.CustomerID);
-
-                //Heeft profile een CustomerID, ontvangt je huidige sessie het CustomerID van het Profiel
-                if(login.CustomerID != 0)
-                {
-                    session.SetInt32("customerID", login.CustomerID);
-                }
+                session.SetInt32("customerID", login.CustomerID);
+                
                 //Login succes
                 return true;
             }
@@ -59,7 +55,13 @@ namespace FitComrade.Data
         //Webshop
         public void RegisterCustomer(ISession session, Customer customer , CustomerAdress customerAdress) //Create Customer
         {
-            
+            int customerID = (int)session.GetInt32("customerID");
+            if(customerID != 0)
+            {
+                var logged = _context.Customers.Where(c => c.CustomerID.Equals(customerID)).FirstOrDefault();
+                customer.CustomerEmail = logged.CustomerEmail;
+                customer.UserName = logged.UserName;
+            }
             var register = _context.Customers.Where(s => s.CustomerEmail.Equals(customer.CustomerEmail));
 
             //Check of de customer bestaat
@@ -81,15 +83,11 @@ namespace FitComrade.Data
                 session.SetInt32("adressID", adress.CustomerAdressID);
             }
             else if(register.Count() > 0) //customer bestaat wel
-            {                
-                if(session.Keys.Contains("profileID"))
-                {                    
-                    return;
-                }
-
+            {               
+                
                 //id wordt een List van alle customers met dezelfde email maar zonder actief account
                 var unlogged = register.Where(item => item.UserName.Equals(null));
-                if (!unlogged.Contains(customer)) // Same Email, Different fields, new customer
+                if (unlogged.Count() > 0) // Same Email, Different fields, new customer
                 {
                     _context.Customers.Add(customer);
                     _context.SaveChanges();
@@ -108,7 +106,7 @@ namespace FitComrade.Data
                     return;
 
                 }
-
+                
             }
             
         }
@@ -116,7 +114,7 @@ namespace FitComrade.Data
         public void UpdateProfile(ISession session, Customer customer, CustomerAdress customerAdress) // Update Profile CustomerID
         {
             //Haal de profile op waar de gebruiker op is ingelogd
-            var profile = _context.Customers.Where(s => s.CustomerID.Equals((int)session.GetInt32("profileID"))).FirstOrDefault();
+            var profile = _context.Customers.Where(s => s.CustomerID.Equals((int)session.GetInt32("customerID"))).FirstOrDefault();
 
             session.SetInt32("customerID", profile.CustomerID);
 
@@ -130,20 +128,20 @@ namespace FitComrade.Data
 
             profile.Payment = customer.Payment;
 
-            if(profile.Adresses == null)
+            var profileAdress = _context.CustomerAdresses.Where(a=>a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+
+            if(profileAdress == null)
             {
                 profile.Adresses = new List<CustomerAdress>();
-            }
-
-            profile.Adresses.Add(customerAdress);
+                profile.Adresses.Add(customerAdress);
+            }                       
 
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
             _context.Customers.Attach(profile).State = EntityState.Modified;
             _context.SaveChanges();
 
-            var adress = _context.CustomerAdresses.Where(a => a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
-            session.SetInt32("adressID", adress.CustomerAdressID);
+            session.SetInt32("adressID", profileAdress.CustomerAdressID);
         }
 
         public void PlaceOrder(ISession session, Cart cart) //Create Order in Customer

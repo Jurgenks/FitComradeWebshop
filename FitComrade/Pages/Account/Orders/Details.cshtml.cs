@@ -22,6 +22,7 @@ namespace FitComrade.Pages.Account.Orders
         public Order Order;
         public List<OrderDetail> OrderDetail;
         public Customer Customer;
+        public List<CustomerAdress> CustomerAdress;
         public List<Product> Products;
         
 
@@ -39,7 +40,8 @@ namespace FitComrade.Pages.Account.Orders
             Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
 
             Customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerID == Order.CustomerID);
-            
+
+            CustomerAdress = await _context.CustomerAdresses.ToListAsync();
 
             if (Order == null) // Er zijn geen orders
             {

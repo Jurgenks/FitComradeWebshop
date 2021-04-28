@@ -34,13 +34,13 @@
             Adres:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Adresses[0].Adress)
+            @Html.DisplayFor(model => model.Customer.Adresses.Where(a=>a.CustomerAdressID.Equals(model.Order.CustomerAdressID)).FirstOrDefault().Adress)
         </dd>        
         <dt class="col-sm-2">
             Postcode:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Adresses[0].PostalCode)
+            @Html.DisplayFor(model => model.Customer.Adresses.Where(a => a.CustomerAdressID.Equals(model.Order.CustomerAdressID)).FirstOrDefault().PostalCode)
         </dd>        
         <dt class="col-sm-2">
             Telefoon:
