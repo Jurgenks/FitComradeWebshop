@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitComrade.Data.Migrations
 {
     [DbContext(typeof(FitComradeContext))]
-    [Migration("20210423121027_InitialCreate")]
+    [Migration("20210428100058_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,6 @@ namespace FitComrade.Data.Migrations
                     b.Property<string>("Bank")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerAdress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CustomerEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -59,9 +56,6 @@ namespace FitComrade.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerPostalCode")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerSurName")
@@ -81,12 +75,38 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("FitComrade.Data.Entities.CustomerAdress", b =>
+                {
+                    b.Property<int>("CustomerAdressID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerAdressID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("CustomerAdresses");
+                });
+
             modelBuilder.Entity("FitComrade.Data.Entities.Order", b =>
                 {
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerAdressID")
+                        .HasColumnType("int");
 
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
@@ -101,6 +121,8 @@ namespace FitComrade.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderID");
+
+                    b.HasIndex("CustomerAdressID");
 
                     b.HasIndex("CustomerID");
 
@@ -188,8 +210,21 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Workouts");
                 });
 
+            modelBuilder.Entity("FitComrade.Data.Entities.CustomerAdress", b =>
+                {
+                    b.HasOne("FitComrade.Data.Entities.Customer", null)
+                        .WithMany("Adresses")
+                        .HasForeignKey("CustomerID");
+                });
+
             modelBuilder.Entity("FitComrade.Data.Entities.Order", b =>
                 {
+                    b.HasOne("FitComrade.Data.Entities.CustomerAdress", "CustomerAdress")
+                        .WithMany()
+                        .HasForeignKey("CustomerAdressID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FitComrade.Data.Entities.Customer", null)
                         .WithMany("Orders")
                         .HasForeignKey("CustomerID")

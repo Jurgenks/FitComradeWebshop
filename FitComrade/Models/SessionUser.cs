@@ -12,6 +12,7 @@ namespace FitComrade.Models
         public int ProfileID { get; set; }
         public string CartID { get; set; }
         public int CustomerID { get; set; }
+        public int AdressID { get; set; }
         public string UserName { get; set; }
         
         public SessionUser GetSession(ISession session, SessionUser sessionUser)
@@ -39,7 +40,11 @@ namespace FitComrade.Models
             {
                 sessionUser.CustomerID = (int)session.GetInt32("customerID");
             }
-            if(session.Keys.Contains("userName"))
+            if (session.Keys.Contains("adressID"))
+            {
+                sessionUser.AdressID = (int)session.GetInt32("adressID");
+            }
+            if (session.Keys.Contains("userName"))
             {
                 sessionUser.UserName = session.GetString("userName");
             }

@@ -31,8 +31,6 @@ namespace FitComrade.Data.Migrations
                     Password = table.Column<string>(nullable: true),
                     CustomerSurName = table.Column<string>(nullable: true),
                     CustomerName = table.Column<string>(nullable: true),
-                    CustomerPostalCode = table.Column<string>(nullable: true),
-                    CustomerAdress = table.Column<string>(nullable: true),
                     CustomerPhone = table.Column<string>(nullable: true),
                     CustomerEmail = table.Column<string>(nullable: true),
                     Payment = table.Column<string>(nullable: true),
@@ -83,6 +81,27 @@ namespace FitComrade.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CustomerAdresses",
+                columns: table => new
+                {
+                    CustomerAdressID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostalCode = table.Column<string>(nullable: true),
+                    Adress = table.Column<string>(nullable: true),
+                    CustomerID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CustomerAdresses", x => x.CustomerAdressID);
+                    table.ForeignKey(
+                        name: "FK_CustomerAdresses_Customers_CustomerID",
+                        column: x => x.CustomerID,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -91,11 +110,18 @@ namespace FitComrade.Data.Migrations
                     OrderDate = table.Column<DateTime>(nullable: false),
                     CustomerID = table.Column<int>(nullable: false),
                     OrderStatus = table.Column<string>(nullable: true),
-                    OrderPrice = table.Column<decimal>(nullable: false)
+                    OrderPrice = table.Column<decimal>(nullable: false),
+                    CustomerAdressID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderID);
+                    table.ForeignKey(
+                        name: "FK_Orders_CustomerAdresses_CustomerAdressID",
+                        column: x => x.CustomerAdressID,
+                        principalTable: "CustomerAdresses",
+                        principalColumn: "CustomerAdressID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerID",
                         column: x => x.CustomerID,
@@ -133,6 +159,11 @@ namespace FitComrade.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CustomerAdresses_CustomerID",
+                table: "CustomerAdresses",
+                column: "CustomerID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderID",
                 table: "OrderDetails",
                 column: "OrderID");
@@ -141,6 +172,11 @@ namespace FitComrade.Data.Migrations
                 name: "IX_OrderDetails_ProductID",
                 table: "OrderDetails",
                 column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_CustomerAdressID",
+                table: "Orders",
+                column: "CustomerAdressID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerID",
@@ -169,6 +205,9 @@ namespace FitComrade.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Blogs");
+
+            migrationBuilder.DropTable(
+                name: "CustomerAdresses");
 
             migrationBuilder.DropTable(
                 name: "Customers");

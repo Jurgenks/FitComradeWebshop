@@ -76,11 +76,14 @@ namespace FitComrade.Data
                 _context.SaveChanges();
 
                 session.SetInt32("customerID", newCustomer.CustomerID);
+
+                var adress = _context.CustomerAdresses.Where(a => a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+                session.SetInt32("adressID", adress.CustomerAdressID);
             }
             else if(register.Count() > 0) //customer bestaat wel
             {                
                 if(session.Keys.Contains("profileID"))
-                {
+                {                    
                     return;
                 }
 
@@ -99,6 +102,9 @@ namespace FitComrade.Data
                     _context.SaveChanges();
 
                     session.SetInt32("customerID", newCustomer.CustomerID);
+
+                    var adress = _context.CustomerAdresses.Where(a => a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+                    session.SetInt32("adressID", adress.CustomerAdressID);
                     return;
 
                 }
@@ -124,16 +130,26 @@ namespace FitComrade.Data
 
             profile.Payment = customer.Payment;
 
+            if(profile.Adresses == null)
+            {
+                profile.Adresses = new List<CustomerAdress>();
+            }
+
             profile.Adresses.Add(customerAdress);
 
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
             _context.Customers.Attach(profile).State = EntityState.Modified;
             _context.SaveChanges();
+
+            var adress = _context.CustomerAdresses.Where(a => a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+            session.SetInt32("adressID", adress.CustomerAdressID);
         }
 
-        public void PlaceOrder(int customerID, Cart cart) //Create Order in Customer
+        public void PlaceOrder(ISession session, Cart cart) //Create Order in Customer
         {
+            int customerID = (int)session.GetInt32("customerID");
+            int adressID = (int)session.GetInt32("adressID");
             //Haal customer op met customerID
             var customer = _context.Customers.Where(c => c.CustomerID.Equals(customerID)).FirstOrDefault();
 
@@ -141,6 +157,7 @@ namespace FitComrade.Data
             order.OrderDate = DateTime.Now;
             order.OrderStatus = "Paid";         //Alle bestellingen zijn direct "Paid" (fake)
             order.OrderPrice = cart.Total();
+            order.CustomerAdressID = adressID;
 
             if (order.OrderStatus == "Paid")
             {              
@@ -162,7 +179,7 @@ namespace FitComrade.Data
 
                 //Update Customers
                 _context.Customers.Attach(customer).State = EntityState.Modified;
-                _context.SaveChanges();                
+                _context.SaveChanges();
             }            
             
         }

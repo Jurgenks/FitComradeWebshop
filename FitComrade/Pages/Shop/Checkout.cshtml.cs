@@ -59,7 +59,7 @@ namespace FitComrade.Pages.Shop
                 {
                     dataController.UpdateProfile(HttpContext.Session, Customer, CustomerAdress);
                 }
-                dataController.PlaceOrder(user.CustomerID, Cart);
+                dataController.PlaceOrder(HttpContext.Session, Cart);
             }
             await _context.SaveChangesAsync();
             return RedirectToPage("/Index");

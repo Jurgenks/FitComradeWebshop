@@ -13,6 +13,8 @@ namespace FitComrade.Data.Entities
         public string OrderStatus { get; set; }
         public decimal OrderPrice { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
-        
+        public int CustomerAdressID { get; set; }
+
+        public virtual CustomerAdress CustomerAdress { get; set; }
     }
 }

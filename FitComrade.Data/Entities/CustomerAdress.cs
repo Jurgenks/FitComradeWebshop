@@ -13,7 +13,5 @@ namespace FitComrade.Data.Entities
         public string PostalCode { get; set; }
         
         public string Adress { get; set; }
-
-        public int OrderID { get; set; }
     }
 }
