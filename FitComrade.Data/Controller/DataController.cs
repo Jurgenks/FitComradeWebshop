@@ -134,11 +134,12 @@ namespace FitComrade.Data
 
             var profileAdress = _context.CustomerAdresses.Where(a=>a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
 
-            if(profileAdress == null)
+            if(profileAdress == null || profileAdress.CustomerID != profile.CustomerID)
             {
                 profile.Adresses = new List<CustomerAdress>();
                 profile.Adresses.Add(customerAdress);
-            }                       
+            }                   
+            
 
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
