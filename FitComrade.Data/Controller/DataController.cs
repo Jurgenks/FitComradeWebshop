@@ -55,7 +55,11 @@ namespace FitComrade.Data
         //Webshop
         public void RegisterCustomer(ISession session, Customer customer , CustomerAdress customerAdress) //Create Customer
         {
-            int customerID = (int)session.GetInt32("customerID");
+            int customerID = 0;
+            if (session.Keys.Contains("customerID"))
+            {
+                customerID = (int)session.GetInt32("customerID");
+            }            
             if(customerID != 0)
             {
                 var logged = _context.Customers.Where(c => c.CustomerID.Equals(customerID)).FirstOrDefault();
