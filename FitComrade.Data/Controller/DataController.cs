@@ -22,7 +22,7 @@ namespace FitComrade.Data
         public bool Login(ISession session, Customer profile) //Read Account
         {
             
-            var login = _context.Customers.Where(s => s.UserName.Equals(profile.UserName) && s.Password.Equals(profile.Password)).FirstOrDefault();
+            var login = _context.Customers.FirstOrDefault(s => s.UserName.Equals(profile.UserName) && s.Password.Equals(profile.Password));
 
             if (login != null)
             {
@@ -56,16 +56,18 @@ namespace FitComrade.Data
         public void RegisterCustomer(ISession session, Customer customer , CustomerAdress customerAdress) //Create Customer
         {
             int customerID = 0;
+            //Check of de customer account bestaat
             if (session.Keys.Contains("customerID"))
             {
                 customerID = (int)session.GetInt32("customerID");
             }            
             if(customerID != 0)
             {
-                var logged = _context.Customers.Where(c => c.CustomerID.Equals(customerID)).FirstOrDefault();
+                var logged = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
                 customer.CustomerEmail = logged.CustomerEmail;
                 customer.UserName = logged.UserName;
             }
+
             var register = _context.Customers.Where(s => s.CustomerEmail.Equals(customer.CustomerEmail));
 
             //Check of de customer bestaat
@@ -74,7 +76,7 @@ namespace FitComrade.Data
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
 
-                var newCustomer = _context.Customers.Where(s=>s.CustomerEmail.Equals(customer.CustomerEmail)).FirstOrDefault();
+                var newCustomer = _context.Customers.FirstOrDefault(s=>s.CustomerEmail.Equals(customer.CustomerEmail));
                 newCustomer.Adresses = new List<CustomerAdress>();
                 newCustomer.Adresses.Add(customerAdress);
 
@@ -83,7 +85,7 @@ namespace FitComrade.Data
 
                 session.SetInt32("customerID", newCustomer.CustomerID);
 
-                var adress = _context.CustomerAdresses.Where(a => a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+                var adress = _context.CustomerAdresses.FirstOrDefault(a => a.PostalCode.Equals(customerAdress.PostalCode));
                 session.SetInt32("adressID", adress.CustomerAdressID);
             }
             else if(register.Count() > 0) //customer bestaat wel
@@ -96,7 +98,7 @@ namespace FitComrade.Data
                     _context.Customers.Add(customer);
                     _context.SaveChanges();
 
-                    var newCustomer = _context.Customers.Where(c=>c.Equals(customer)).FirstOrDefault();
+                    var newCustomer = _context.Customers.FirstOrDefault(c=>c.Equals(customer));
                     newCustomer.Adresses = new List<CustomerAdress>();
                     newCustomer.Adresses.Add(customerAdress);
 
@@ -105,7 +107,7 @@ namespace FitComrade.Data
 
                     session.SetInt32("customerID", newCustomer.CustomerID);
 
-                    var adress = _context.CustomerAdresses.Where(a => a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+                    var adress = _context.CustomerAdresses.FirstOrDefault(a => a.PostalCode.Equals(customerAdress.PostalCode));
                     session.SetInt32("adressID", adress.CustomerAdressID);
                     return;
 
@@ -118,7 +120,7 @@ namespace FitComrade.Data
         public void UpdateProfile(ISession session, Customer customer, CustomerAdress customerAdress) // Update Profile CustomerID
         {
             //Haal de profile op waar de gebruiker op is ingelogd
-            var profile = _context.Customers.Where(s => s.CustomerID.Equals((int)session.GetInt32("customerID"))).FirstOrDefault();
+            var profile = _context.Customers.FirstOrDefault(s => s.CustomerID.Equals((int)session.GetInt32("customerID")));
 
             session.SetInt32("customerID", profile.CustomerID);
 
@@ -132,7 +134,7 @@ namespace FitComrade.Data
 
             profile.Payment = customer.Payment;
 
-            var profileAdress = _context.CustomerAdresses.Where(a=>a.PostalCode.Equals(customerAdress.PostalCode)).FirstOrDefault();
+            var profileAdress = _context.CustomerAdresses.FirstOrDefault(a=>a.PostalCode.Equals(customerAdress.PostalCode));
 
             if(profileAdress == null || profileAdress.CustomerID != profile.CustomerID)
             {
@@ -154,7 +156,7 @@ namespace FitComrade.Data
             int customerID = (int)session.GetInt32("customerID");
             int adressID = (int)session.GetInt32("adressID");
             //Haal customer op met customerID
-            var customer = _context.Customers.Where(c => c.CustomerID.Equals(customerID)).FirstOrDefault();
+            var customer = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
 
             Order order = new Order();
             order.OrderDate = DateTime.Now;
@@ -257,7 +259,7 @@ namespace FitComrade.Data
                 //Haal bijbehorende OrderDetails op
                 var OrderDetails = _context.OrderDetails.Where(s => s.OrderID.Equals(order.OrderID));
                 //Haal de Producten van de voorraad op
-                var Products = _context.Products.ToList();
+                var Products = _context.Products;
                 
                 foreach (var item in OrderDetails)
                 {
@@ -312,7 +314,7 @@ namespace FitComrade.Data
             //Bestaat blog
             if (_context.Blogs.Where(blog => blog.BlogID.Equals(id)) != null)
             {
-                var blog = _context.Blogs.Where(blog => blog.BlogID.Equals(id)).FirstOrDefault();
+                var blog = _context.Blogs.FirstOrDefault(blog => blog.BlogID.Equals(id));
 
                 var workouts = _context.Workouts.ToList();
                 

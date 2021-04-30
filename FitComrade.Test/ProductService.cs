@@ -20,13 +20,13 @@ namespace FitComrade.Test
 
         public void AddProduct(string name, decimal price, int stock)
         {
-            _context.TestProducts.Add(new Product {ProductName = name, ProductPrice = price, ProductQuantity = stock });
+            _context.Products.Add(new Product {ProductName = name, ProductPrice = price, ProductQuantity = stock });
             _context.SaveChanges();
         }
 
         public List<Product> GetAllProducts()
         {
-            var query = from b in _context.TestProducts
+            var query = from b in _context.Products
                         orderby b.ProductName
                         select b;
 
@@ -35,7 +35,7 @@ namespace FitComrade.Test
 
         public async Task<List<Product>> GetAllProductsAsync()
         {
-            var query = from b in _context.TestProducts
+            var query = from b in _context.Products
                         orderby b.ProductName
                         select b;
 

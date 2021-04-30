@@ -21,8 +21,11 @@ namespace FitComrade.Test
         public void AddBlog(int customerID, string workoutName, string discription)
         {
             List<Workout> workouts = new List<Workout>();
+
             workouts.Add(new Workout {WorkoutName = workoutName, Discription = discription});
-            _context.TestBlogs.Add(new Blog {CustomerID = customerID, Workouts = workouts});
+
+            _context.Blogs.Add(new Blog {CustomerID = customerID, Workouts = workouts});
+
             _context.SaveChanges();
         }
 
@@ -30,7 +33,7 @@ namespace FitComrade.Test
 
         public List<Blog> GetAllBlogs()
         {
-            var query = from b in _context.TestBlogs
+            var query = from b in _context.Blogs
                         orderby b.BlogName
                         select b;
 
@@ -39,7 +42,7 @@ namespace FitComrade.Test
         
         public async Task<List<Blog>> GetAllBlogsAsync()
         {
-            var query = from b in _context.TestBlogs
+            var query = from b in _context.Blogs
                         orderby b.BlogName
                         select b;
 
