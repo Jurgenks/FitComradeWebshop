@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FitComrade.Data.Entities
+namespace FitComrade.Domain.Entities
 {
     public class Order
     {

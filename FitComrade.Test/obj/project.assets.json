@@ -3411,6 +3411,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "FitComrade.Domain": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.13",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.13"
@@ -3420,6 +3421,16 @@
         },
         "runtime": {
           "bin/placeholder/FitComrade.Data.dll": {}
+        }
+      },
+      "FitComrade.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/FitComrade.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FitComrade.Domain.dll": {}
         }
       }
     }
@@ -10419,6 +10430,11 @@
       "type": "project",
       "path": "../FitComrade.Data/FitComrade.Data.csproj",
       "msbuildProject": "../FitComrade.Data/FitComrade.Data.csproj"
+    },
+    "FitComrade.Domain/1.0.0": {
+      "type": "project",
+      "path": "../FitComrade.Domain/FitComrade.Domain.csproj",
+      "msbuildProject": "../FitComrade.Domain/FitComrade.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -10426,6 +10442,7 @@
       "FitComrade >= 1.0.0",
       "FitComrade.Core >= 1.0.0",
       "FitComrade.Data >= 1.0.0",
+      "FitComrade.Domain >= 1.0.0",
       "MSTest.TestAdapter >= 2.1.1",
       "MSTest.TestFramework >= 2.1.1",
       "Microsoft.EntityFrameworkCore.InMemory >= 5.0.5",
@@ -10469,6 +10486,9 @@
             },
             "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj": {
               "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj"
+            },
+            "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Domain\\FitComrade.Domain.csproj": {
+              "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Domain\\FitComrade.Domain.csproj"
             },
             "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade\\FitComrade.csproj": {
               "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade\\FitComrade.csproj"

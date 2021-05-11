@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FitComrade.Data.Entities
+namespace FitComrade.Domain.Entities
 {
     public class Customer
     {

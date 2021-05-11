@@ -1,5 +1,5 @@
 using FitComrade.Data;
-using FitComrade.Data.Entities;
+using FitComrade.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

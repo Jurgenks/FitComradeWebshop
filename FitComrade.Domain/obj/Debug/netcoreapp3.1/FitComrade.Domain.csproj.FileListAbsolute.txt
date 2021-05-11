@@ -1,0 +1,9 @@
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\bin\Debug\netcoreapp3.1\FitComrade.Domain.deps.json
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\bin\Debug\netcoreapp3.1\FitComrade.Domain.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\bin\Debug\netcoreapp3.1\FitComrade.Domain.pdb
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\obj\Debug\netcoreapp3.1\FitComrade.Domain.csprojAssemblyReference.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\obj\Debug\netcoreapp3.1\FitComrade.Domain.AssemblyInfoInputs.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\obj\Debug\netcoreapp3.1\FitComrade.Domain.AssemblyInfo.cs
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\obj\Debug\netcoreapp3.1\FitComrade.Domain.csproj.CoreCompileInputs.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\obj\Debug\netcoreapp3.1\FitComrade.Domain.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Domain\obj\Debug\netcoreapp3.1\FitComrade.Domain.pdb

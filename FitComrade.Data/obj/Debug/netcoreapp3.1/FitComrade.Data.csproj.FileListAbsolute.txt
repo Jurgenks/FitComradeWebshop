@@ -10,3 +10,6 @@ C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitCom
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.pdb
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.genruntimeconfig.cache
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Domain.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\bin\Debug\netcoreapp3.1\FitComrade.Domain.pdb
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade.Data\obj\Debug\netcoreapp3.1\FitComrade.Data.csproj.CopyComplete

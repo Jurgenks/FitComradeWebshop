@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
-using FitComrade.Data.Entities;
+using FitComrade.Domain.Entities;
 using FitComrade.Data;
 
 namespace FitComrade.Pages.Account.Profits

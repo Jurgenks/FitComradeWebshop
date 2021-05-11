@@ -1964,6 +1964,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "FitComrade.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/FitComrade.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FitComrade.Domain.dll": {}
+        }
       }
     }
   },
@@ -6711,10 +6721,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "FitComrade.Domain/1.0.0": {
+      "type": "project",
+      "path": "../FitComrade.Domain/FitComrade.Domain.csproj",
+      "msbuildProject": "../FitComrade.Domain/FitComrade.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "FitComrade.Domain >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Core >= 2.2.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.13",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.13",
@@ -6747,7 +6763,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Domain\\FitComrade.Domain.csproj": {
+              "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Domain\\FitComrade.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

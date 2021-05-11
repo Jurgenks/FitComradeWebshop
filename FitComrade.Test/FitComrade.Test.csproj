@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FitComrade.Core\FitComrade.Core.csproj" />
     <ProjectReference Include="..\FitComrade.Data\FitComrade.Data.csproj" />
+    <ProjectReference Include="..\FitComrade.Domain\FitComrade.Domain.csproj" />
     <ProjectReference Include="..\FitComrade\FitComrade.csproj" />
   </ItemGroup>
 

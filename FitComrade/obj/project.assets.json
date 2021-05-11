@@ -3019,6 +3019,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "FitComrade.Domain": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.13",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.13"
@@ -3028,6 +3029,16 @@
         },
         "runtime": {
           "bin/placeholder/FitComrade.Data.dll": {}
+        }
+      },
+      "FitComrade.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/FitComrade.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/FitComrade.Domain.dll": {}
         }
       }
     }
@@ -9377,6 +9388,11 @@
       "type": "project",
       "path": "../FitComrade.Data/FitComrade.Data.csproj",
       "msbuildProject": "../FitComrade.Data/FitComrade.Data.csproj"
+    },
+    "FitComrade.Domain/1.0.0": {
+      "type": "project",
+      "path": "../FitComrade.Domain/FitComrade.Domain.csproj",
+      "msbuildProject": "../FitComrade.Domain/FitComrade.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {

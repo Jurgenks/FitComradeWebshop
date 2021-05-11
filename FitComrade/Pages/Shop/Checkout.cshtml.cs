@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
 using FitComrade.Helpers;
-using FitComrade.Data.Entities;
+using FitComrade.Domain.Entities;
 using FitComrade.Data;
 
 namespace FitComrade.Pages.Shop

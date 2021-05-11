@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Data", "FitComra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Core", "FitComrade.Core\FitComrade.Core.csproj", "{C5B9B352-657F-43B2-9146-DD38678447E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Test", "FitComrade.Test\FitComrade.Test.csproj", "{ED741360-6F48-42DF-B5E8-F45BE72EBECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Test", "FitComrade.Test\FitComrade.Test.csproj", "{ED741360-6F48-42DF-B5E8-F45BE72EBECE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Domain", "FitComrade.Domain\FitComrade.Domain.csproj", "{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED741360-6F48-42DF-B5E8-F45BE72EBECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

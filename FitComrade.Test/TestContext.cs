@@ -1,4 +1,4 @@
-﻿using FitComrade.Data.Entities;
+﻿using FitComrade.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

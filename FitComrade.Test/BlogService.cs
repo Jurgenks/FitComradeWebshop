@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using FitComrade.Data;
-using FitComrade.Data.Entities;
+using FitComrade.Domain.Entities;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;

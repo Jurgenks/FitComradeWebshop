@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
-using FitComrade.Data.Entities;
+using FitComrade.Domain.Entities;
 using FitComrade.Models;
 
 namespace FitComrade.Pages.Account.Orders

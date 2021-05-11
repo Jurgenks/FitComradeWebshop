@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using FitComrade.Data.Entities;
+using FitComrade.Domain.Entities;
 using System.Collections.Generic;
 
 namespace FitComrade.Test
@@ -66,14 +66,18 @@ namespace FitComrade.Test
 
             Cart cart = new Cart();
 
-            CustomerAdress customerAdress = new CustomerAdress { PostalCode = "2002MK", Adress = "Maaskantje" };
+            CustomerAdress customerAdress = new CustomerAdress 
+            { 
+                PostalCode = "2002MK", 
+                Adress = "Eindhoven" 
+            };
 
             Customer customer = new Customer
             {
                 CustomerSurName = "Gerrie",
                 CustomerName = "Van Boven",
                 CustomerEmail = "test@test.com",
-                CustomerPhone = "06xxxxxxxx",
+                CustomerPhone = "0611111111",
                 Payment = "IDEAL",
                 Bank = "RaboBank",
             };
@@ -82,10 +86,16 @@ namespace FitComrade.Test
             cart.Products = new List<Product>();
             cart.Products.Add(new Product { ProductName = "Pre Workout", ProductQuantity = 1 });
 
-            //Assert
-            var order = mockContext.Object.Orders;
+            TestDataController testController = new TestDataController(mockContext.Object);
 
-            Assert.IsTrue(order != null);
+            testController.RegisterCustomer(mockSession, customer, customerAdress);
+
+            testController.PlaceOrder(mockSession, cart);
+
+            //Assert
+            var orders = mockContext.Object.Orders;
+
+            Assert.IsTrue(orders != null);
         }
     }
 }
