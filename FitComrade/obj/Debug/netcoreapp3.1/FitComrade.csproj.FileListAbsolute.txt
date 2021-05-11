@@ -377,3 +377,5 @@ C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitCom
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\obj\Debug\netcoreapp3.1\FitComrade.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Domain.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Domain.pdb
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Core.dll
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Core.pdb

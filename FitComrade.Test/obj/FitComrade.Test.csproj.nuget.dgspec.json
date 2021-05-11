@@ -27,7 +27,14 @@
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj": {
+                "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj"
+              },
+              "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Domain\\FitComrade.Domain.csproj": {
+                "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Domain\\FitComrade.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -319,6 +326,9 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj": {
+                "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Core\\FitComrade.Core.csproj"
+              },
               "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj": {
                 "projectPath": "C:\\Users\\jurge\\Documents\\MEGAsync\\Laptop\\Fontys\\Semester 2\\Project\\GitHub\\FitComradeWebshop\\FitComrade.Data\\FitComrade.Data.csproj"
               }
