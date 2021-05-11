@@ -1,3 +1,4 @@
+using FitComrade.Core;
 using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;

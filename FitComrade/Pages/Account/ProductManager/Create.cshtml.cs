@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
+using FitComrade.Core;
 
 namespace FitComrade.Pages.Account.ProductManager
 {

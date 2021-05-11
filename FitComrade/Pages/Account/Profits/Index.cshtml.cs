@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
+using FitComrade.Core;
 
 namespace FitComrade.Pages.Account.Profits
 {

@@ -8,7 +8,7 @@ namespace FitComrade.Test
 {
     public class TestContext: DbContext
     {
-        //MSSQL Tables
+        //Test Tables
 
         public virtual DbSet<Product> Products { get; set; }
 
@@ -23,6 +23,5 @@ namespace FitComrade.Test
         public virtual DbSet<Blog> Blogs { get; set; }
 
         public virtual DbSet<Workout> Workouts { get; set; }
-        
     }
 }

@@ -34,6 +34,7 @@ namespace FitComrade.Data
         public DbSet<Blog> Blogs { get; set; }
 
         public DbSet<Workout> Workouts { get; set; }
+
         
 
 

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using FitComrade.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using FitComrade.Data;
 
-namespace FitComrade.Data
+namespace FitComrade.Core
 {
     public class DataController : ControllerBase
     {
@@ -17,6 +18,7 @@ namespace FitComrade.Data
         {
             _context = context;
         }
+
 
         //Account
         public bool Login(ISession session, Customer profile) //Read Account

@@ -6,6 +6,7 @@ using FitComrade.Models;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
+using FitComrade.Core;
 
 namespace FitComrade.Pages.FitComradeBlog
 {
