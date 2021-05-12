@@ -4,6 +4,7 @@ using Moq;
 using FitComrade.Domain.Entities;
 using System.Collections.Generic;
 using FitComrade.Core;
+using Microsoft.AspNetCore.Http;
 
 namespace FitComrade.Test
 {
@@ -47,57 +48,70 @@ namespace FitComrade.Test
             mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
 
+        
+
         [TestMethod]
-        public void Can_Buy_Product()
+        public void Can_Place_Order()
         {
             //Arrange
-            var M_product = new Mock<DbSet<Product>>();        
-            var M_customer = new Mock<DbSet<Customer>>();
-            var M_customerAdress = new Mock<DbSet<CustomerAdress>>();
-            var M_order = new Mock<DbSet<Order>>();
+            Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
+            MockHttpSession session = new MockHttpSession();
+            mockHttpContext.Setup(s => s.Session).Returns(session);
+            
+            
 
-            var mockContext = new Mock<TestContext>();
+            Customer customer = new Customer 
+            {
+                CustomerName = "Van Boven",
+                CustomerEmail = "Gerrie.Boven@hotmail.com",
+                CustomerSurName = "Gerrie",
+                CustomerPhone = "x",
+                Bank ="x",
+                Payment ="x"
+            };
 
-            mockContext.Setup(m => m.Products).Returns(M_product.Object);
-            mockContext.Setup(m => m.Customers).Returns(M_customer.Object);
-            mockContext.Setup(m => m.CustomerAdresses).Returns(M_customerAdress.Object);
-            mockContext.Setup(m => m.Orders).Returns(M_order.Object);
+            CustomerAdress customerAdress = new CustomerAdress 
+            {
+                PostalCode = "5023CE"
+            };
 
-
-            var mockSession = new MockHttpSession();
+            Product product = new Product 
+            { 
+                ProductID = 1, 
+                ProductName = "Tren", 
+                ProductPrice = 100, 
+                ProductQuantity = 1 
+            };
 
             Cart cart = new Cart();
 
-            CustomerAdress customerAdress = new CustomerAdress 
-            { 
-                PostalCode = "2002MK", 
-                Adress = "Eindhoven" 
-            };
-
-            Customer customer = new Customer
-            {
-                CustomerSurName = "Gerrie",
-                CustomerName = "Van Boven",
-                CustomerEmail = "test@test.com",
-                CustomerPhone = "0611111111",
-                Payment = "IDEAL",
-                Bank = "RaboBank",
-            };
-
+            var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
+                .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
+                .Options;
             //Act
             cart.Products = new List<Product>();
-            cart.Products.Add(new Product { ProductName = "Pre Workout", ProductQuantity = 1 });
+            cart.Products.Add(product);
 
-            //DataController testController = new DataController(mockContext.Object);
+            using (var context = new Data.FitComradeContext(options))
+            {                
+                DataController dataController = new DataController(context);
+                dataController.ControllerContext.HttpContext = mockHttpContext.Object;                
+                dataController.RegisterCustomer(session, customer, customerAdress);
+                
+                if((int)session.GetInt32("customerID") != 0)
+                {
+                    dataController.PlaceOrder(session, cart);
+                }
 
-            //testController.RegisterCustomer(mockSession, customer, customerAdress);
-
-            //testController.PlaceOrder(mockSession, cart);
-
-            ////Assert
-            //var orders = mockContext.Object.Orders;
-
-            //Assert.IsTrue(orders != null);
+                var orders = context.Orders;
+                int count = 0;
+                foreach (var item in orders)
+                {
+                    count++;
+                }
+                Assert.AreEqual(1, count);
+            }
+            
         }
     }
 }

@@ -8,6 +8,15 @@ namespace FitComrade.Test
 {
     public class TestContext: DbContext
     {
+        public TestContext()
+        {
+        }
+
+        public TestContext(DbContextOptions<TestContext> options)
+            : base(options)
+        {
+        }
+
         //Test Tables
 
         public virtual DbSet<Product> Products { get; set; }
