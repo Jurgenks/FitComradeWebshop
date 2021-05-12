@@ -5,60 +5,163 @@ using FitComrade.Domain.Entities;
 using System.Collections.Generic;
 using FitComrade.Core;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using System.Linq;
+using FitComrade.Pages.Shop;
+using FitComrade.Helpers;
 
 namespace FitComrade.Test
 {
     [TestClass]
     public class UnitTest1
-    {
-        
+    {            
         [TestMethod]
-        public void Can_Add_New_Product()
-        {            
-            //Arrange
-            var mockSet = new Mock<DbSet<Product>>();
-
-            var mockContext = new Mock<TestContext>();
-            mockContext.Setup(m => m.Products).Returns(mockSet.Object);
-
-            var service = new ProductService(mockContext.Object);
-
-            //Act
-            service.AddProduct("Tren",100,100);
-
-            //Assert
-            mockSet.Verify(m => m.Add(It.IsAny<Product>()), Times.Once());
-            mockContext.Verify(m => m.SaveChanges(), Times.Once());
-        }
-
-        [TestMethod]
-        public void Can_Add_Workout_To_BlogAsync()
-        {
-            //Arrange            
-            var mockSet = new Mock<DbSet<Blog>>();
-
-            var mockContext = new Mock<TestContext>();
-            mockContext.Setup(m => m.Blogs).Returns(mockSet.Object);
-
-            var service = new BlogService(mockContext.Object);
-            //Act
-            service.AddBlog(2, "Fietsen", "Fiets");
-            //Assert
-            mockSet.Verify(m => m.Add(It.IsAny<Blog>()), Times.Once());
-            mockContext.Verify(m => m.SaveChanges(), Times.Once());
-        }
-
-        
-
-        [TestMethod]
-        public void Can_Place_Order()
+        public void TC01_Can_Add_Product()
         {
             //Arrange
             Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
             MockHttpSession session = new MockHttpSession();
             mockHttpContext.Setup(s => s.Session).Returns(session);
-            
-            
+
+            var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
+                .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
+                .Options;
+
+            Product product = new Product 
+            { 
+                ProductName = "Tren", 
+                ProductPrice = 100, 
+                ProductQuantity = 100 
+            };
+            //Act
+            using (var context = new Data.FitComradeContext(options))
+            {
+                DataController dataController = new DataController(context);
+                dataController.ControllerContext.HttpContext = mockHttpContext.Object;
+                dataController.AddProduct(product);
+
+                var Products = context.Products;
+                
+                //Assert
+                Assert.IsTrue(Products != null);
+            }
+        }
+
+        [TestMethod]
+        public async Task TC02_Can_Add_Workout_To_BlogAsync()
+        {
+            //Arrange
+            Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
+            MockHttpSession session = new MockHttpSession();
+            mockHttpContext.Setup(s => s.Session).Returns(session);
+
+            var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
+                .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
+                .Options;
+
+            Workout workout = new Workout
+            {
+                WorkoutName = "Fietsen",
+                Discription = "Om vooruit te gaan op de fiets moet je op de trappers duwen moet je voeten."                
+            };
+            //Act
+            session.SetInt32("profileID", 2);
+            session.SetString("userName", "Barrie");
+
+            using (var context = new Data.FitComradeContext(options))
+            {
+                DataController dataController = new DataController(context);
+                dataController.ControllerContext.HttpContext = mockHttpContext.Object;
+                dataController.CreateBlog(session);
+                await dataController.AddWorkoutToBlogAsync(1, workout);
+
+                var Workout = context.Workouts.First();
+                var Blog = context.Blogs.Where(w => w.Workouts.Contains(Workout));
+
+                Assert.IsTrue(Blog != null);
+            }
+        }
+
+        [TestMethod]
+        public async Task TC03_Can_Confirm_Workout_From_BlogAsync()
+        {
+            //Arrange
+            Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
+            MockHttpSession session = new MockHttpSession();
+            mockHttpContext.Setup(s => s.Session).Returns(session);
+
+            var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
+                .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
+                .Options;
+
+            Workout workout = new Workout
+            {
+                WorkoutName = "Fietsen",
+                Discription = "Om vooruit te gaan op de fiets moet je op de trappers duwen moet je voeten."
+            };
+            //Act
+            session.SetInt32("profileID", 2);
+            session.SetString("userName", "Barrie");
+
+            using (var context = new Data.FitComradeContext(options))
+            {
+                DataController dataController = new DataController(context);
+                dataController.ControllerContext.HttpContext = mockHttpContext.Object;
+                dataController.CreateBlog(session);
+                await dataController.AddWorkoutToBlogAsync(1, workout);
+
+                var Workout = context.Workouts.First();
+                var Blog = context.Blogs.Where(w => w.Workouts.Contains(Workout));
+
+                session.SetInt32("profileID", 1);
+                Workout.Confirmed = true;
+                await dataController.AddWorkoutToBlogAsync(1, Workout);
+
+                Workout = context.Workouts.First();
+                Assert.IsTrue(Workout.Confirmed);
+            }
+        }
+
+        [TestMethod]
+        public void TC04_Can_Create_New_Cart()
+        {
+            //Arrange
+            Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
+            MockHttpSession session = new MockHttpSession();
+            mockHttpContext.Setup(s => s.Session).Returns(session);
+             
+            var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
+                .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
+                .Options;            
+
+            Product product = new Product
+            {
+                ProductName = "Pre Workout",
+                ProductPrice = 25,
+                ProductQuantity = 100
+            };
+            //Act          
+
+            using (var context = new Data.FitComradeContext(options))
+            {
+                context.Products.Add(product);
+                context.SaveChanges();
+
+                CartModel cartModel = new CartModel(context);
+                cartModel.OnGetBuyNow(1);
+                cartModel.Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(session, "cart");
+                //Assert
+                Assert.IsTrue(cartModel.Cart.Products != null);
+            }
+        }
+
+        [TestMethod]
+        public void TC05_Can_Place_Order()
+        {
+            //Arrange
+            Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
+            MockHttpSession session = new MockHttpSession();
+            mockHttpContext.Setup(s => s.Session).Returns(session);         
 
             Customer customer = new Customer 
             {
@@ -104,12 +207,10 @@ namespace FitComrade.Test
                 }
 
                 var orders = context.Orders;
-                int count = 0;
-                foreach (var item in orders)
-                {
-                    count++;
-                }
-                Assert.AreEqual(1, count);
+                
+                //Assert
+
+                Assert.IsTrue(orders != null);
             }
             
         }
