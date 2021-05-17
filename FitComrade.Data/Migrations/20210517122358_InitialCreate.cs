@@ -81,6 +81,26 @@ namespace FitComrade.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Credits",
+                columns: table => new
+                {
+                    CreditID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreditValue = table.Column<decimal>(nullable: false),
+                    CustomerID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Credits", x => x.CreditID);
+                    table.ForeignKey(
+                        name: "FK_Credits_Customers_CustomerID",
+                        column: x => x.CustomerID,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CustomerAdresses",
                 columns: table => new
                 {
@@ -88,7 +108,7 @@ namespace FitComrade.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostalCode = table.Column<string>(nullable: true),
                     Adress = table.Column<string>(nullable: true),
-                    CustomerID = table.Column<int>(nullable: true)
+                    CustomerID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +118,7 @@ namespace FitComrade.Data.Migrations
                         column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "CustomerID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,7 +131,7 @@ namespace FitComrade.Data.Migrations
                     CustomerID = table.Column<int>(nullable: false),
                     OrderStatus = table.Column<string>(nullable: true),
                     OrderPrice = table.Column<decimal>(nullable: false),
-                    CustomerAdressID = table.Column<int>(nullable: false)
+                    CustomerAdressID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,7 +141,7 @@ namespace FitComrade.Data.Migrations
                         column: x => x.CustomerAdressID,
                         principalTable: "CustomerAdresses",
                         principalColumn: "CustomerAdressID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerID",
                         column: x => x.CustomerID,
@@ -159,6 +179,12 @@ namespace FitComrade.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Credits_CustomerID",
+                table: "Credits",
+                column: "CustomerID",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CustomerAdresses_CustomerID",
                 table: "CustomerAdresses",
                 column: "CustomerID");
@@ -191,6 +217,9 @@ namespace FitComrade.Data.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Credits");
+
             migrationBuilder.DropTable(
                 name: "OrderDetails");
 

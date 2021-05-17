@@ -5,6 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210517114917_Credits.cs" />
+    <Compile Remove="Migrations\20210517114917_Credits.Designer.cs" />
+    <Compile Remove="Migrations\20210517114946_Credits.cs" />
+    <Compile Remove="Migrations\20210517114946_Credits.Designer.cs" />
+    <Compile Remove="Migrations\20210517115541_Credits.cs" />
+    <Compile Remove="Migrations\20210517115541_Credits.Designer.cs" />
+    <Compile Remove="Migrations\20210517115911_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210517115911_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20210517115925_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210517115925_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20210517120358_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210517120358_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20210517120758_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210517120758_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20210517121747_InitialCreate.cs" />
+    <Compile Remove="Migrations\20210517121747_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.13" />

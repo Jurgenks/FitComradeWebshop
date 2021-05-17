@@ -35,7 +35,7 @@ namespace FitComrade.Data
 
         public DbSet<Workout> Workouts { get; set; }
 
-        
+        public DbSet<Credit> Credits { get; set; }
 
 
     }

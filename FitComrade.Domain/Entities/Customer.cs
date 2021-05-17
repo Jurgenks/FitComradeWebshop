@@ -5,12 +5,13 @@ namespace FitComrade.Domain.Entities
 {
     public class Customer
     {
+
+        public int CustomerID { get; set; }
+
         public string UserName { get; set; }
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        public int CustomerID { get; set; }
 
         public string CustomerSurName { get; set; }
 
@@ -29,6 +30,8 @@ namespace FitComrade.Domain.Entities
         public List<CustomerAdress> Adresses { get; set; }
 
         public List<Order> Orders { get; set; }
+
+        public Credit Credit { get; set; }
         
     }
 }

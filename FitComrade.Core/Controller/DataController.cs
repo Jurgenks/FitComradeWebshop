@@ -68,6 +68,7 @@ namespace FitComrade.Core
                 var logged = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
                 customer.CustomerEmail = logged.CustomerEmail;
                 customer.UserName = logged.UserName;
+                return;
             }
 
             var register = _context.Customers.Where(s => s.CustomerEmail.Equals(customer.CustomerEmail));
@@ -91,30 +92,23 @@ namespace FitComrade.Core
                 session.SetInt32("adressID", adress.CustomerAdressID);
             }
             else if(register.Count() > 0) //customer bestaat wel
-            {               
-                
-                //id wordt een List van alle customers met dezelfde email maar zonder actief account
-                var unlogged = register.Where(item => item.UserName.Equals(null));
-                if (unlogged.Count() > 0) // Same Email, Different fields, new customer
-                {
-                    _context.Customers.Add(customer);
-                    _context.SaveChanges();
+            {
+                _context.Customers.Add(customer);
+                _context.SaveChanges();
 
-                    var newCustomer = _context.Customers.FirstOrDefault(c=>c.Equals(customer));
-                    newCustomer.Adresses = new List<CustomerAdress>();
-                    newCustomer.Adresses.Add(customerAdress);
+                var newCustomer = _context.Customers.FirstOrDefault(c => c.Equals(customer));
+                newCustomer.Adresses = new List<CustomerAdress>();
+                newCustomer.Adresses.Add(customerAdress);
 
-                    _context.Customers.Attach(newCustomer);
-                    _context.SaveChanges();
+                _context.Customers.Attach(newCustomer);
+                _context.SaveChanges();
 
-                    session.SetInt32("customerID", newCustomer.CustomerID);
+                session.SetInt32("customerID", newCustomer.CustomerID);
 
-                    var adress = _context.CustomerAdresses.FirstOrDefault(a => a.PostalCode.Equals(customerAdress.PostalCode));
-                    session.SetInt32("adressID", adress.CustomerAdressID);
-                    return;
+                var adress = _context.CustomerAdresses.FirstOrDefault(a => a.PostalCode.Equals(customerAdress.PostalCode));
+                session.SetInt32("adressID", adress.CustomerAdressID);
+                return;
 
-                }
-                
             }
             
         }
@@ -184,7 +178,7 @@ namespace FitComrade.Core
 
                 customer.Orders.Add(order);
 
-                //Update Customers
+                //Update Customers                
                 _context.Customers.Attach(customer).State = EntityState.Modified;
                 _context.SaveChanges();
             }            
@@ -253,27 +247,11 @@ namespace FitComrade.Core
             return Sale;
         }
 
-        public void UpdateStock(Order order) //Update Order & Products
+        public void UpdateStatus(Order order) //Update Order & Products
         {
             //Orders met de status "Paid" moeten hun producten nog afschrijven van de voorraad
             if(order.OrderStatus == "Paid")
-            {
-                //Haal bijbehorende OrderDetails op
-                var OrderDetails = _context.OrderDetails.Where(s => s.OrderID.Equals(order.OrderID));
-                //Haal de Producten van de voorraad op
-                var Products = _context.Products;
-                
-                foreach (var item in OrderDetails)
-                {
-                    //Haal het product op dat gelijk is aan het product in OrderDetail
-                    var Product = Products.Where(p => p.ProductID.Equals(item.ProductID)).ToList();
-                    //Bereken nieuwe voorraad van het product
-                    for (int i = 0; i < Product.Count(); i++)
-                    {
-                        Product[i].ProductQuantity -= item.Quantity;
-                        _context.Products.Attach(Product[i]).State = EntityState.Modified;
-                    }
-                }
+            {               
                 //Order met de status "Confirmed" zijn omgeboekt
                 order.OrderStatus = "Confirmed";
                 //Update OrderStatus
@@ -287,6 +265,18 @@ namespace FitComrade.Core
         {
             _context.Products.Add(product);
             _context.SaveChanges();
+        }
+
+        public void RetourOrder(Order order)
+        {
+            if(order.OrderStatus == "Paid")
+            {
+                //Orders met de status "Dismissed" zijn afgewezen
+                order.OrderStatus = "Dismissed";
+                //Update OrderStatus
+                _context.Orders.Attach(order).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
         }
 
         //Blog

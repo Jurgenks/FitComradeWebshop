@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitComrade.Data.Migrations
 {
     [DbContext(typeof(FitComradeContext))]
-    [Migration("20210428100058_InitialCreate")]
+    [Migration("20210517122358_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace FitComrade.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("FitComrade.Data.Entities.Blog", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Blog", b =>
                 {
                     b.Property<int>("BlogID")
                         .ValueGeneratedOnAdd()
@@ -39,7 +39,28 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.Customer", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Credit", b =>
+                {
+                    b.Property<int>("CreditID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("CreditValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CreditID");
+
+                    b.HasIndex("CustomerID")
+                        .IsUnique();
+
+                    b.ToTable("Credits");
+                });
+
+            modelBuilder.Entity("FitComrade.Domain.Entities.Customer", b =>
                 {
                     b.Property<int>("CustomerID")
                         .ValueGeneratedOnAdd()
@@ -75,7 +96,7 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.CustomerAdress", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.CustomerAdress", b =>
                 {
                     b.Property<int>("CustomerAdressID")
                         .ValueGeneratedOnAdd()
@@ -85,7 +106,7 @@ namespace FitComrade.Data.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerID")
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
                     b.Property<string>("PostalCode")
@@ -98,14 +119,14 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("CustomerAdresses");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.Order", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerAdressID")
+                    b.Property<int?>("CustomerAdressID")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerID")
@@ -129,7 +150,7 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.OrderDetail", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.OrderDetail", b =>
                 {
                     b.Property<int>("OrderDetailID")
                         .ValueGeneratedOnAdd()
@@ -157,7 +178,7 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.Product", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("ProductID")
                         .ValueGeneratedOnAdd()
@@ -178,7 +199,7 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.Workout", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Workout", b =>
                 {
                     b.Property<int>("WorkoutID")
                         .ValueGeneratedOnAdd()
@@ -210,46 +231,55 @@ namespace FitComrade.Data.Migrations
                     b.ToTable("Workouts");
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.CustomerAdress", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Credit", b =>
                 {
-                    b.HasOne("FitComrade.Data.Entities.Customer", null)
-                        .WithMany("Adresses")
-                        .HasForeignKey("CustomerID");
-                });
-
-            modelBuilder.Entity("FitComrade.Data.Entities.Order", b =>
-                {
-                    b.HasOne("FitComrade.Data.Entities.CustomerAdress", "CustomerAdress")
-                        .WithMany()
-                        .HasForeignKey("CustomerAdressID")
+                    b.HasOne("FitComrade.Domain.Entities.Customer", null)
+                        .WithOne("Credit")
+                        .HasForeignKey("FitComrade.Domain.Entities.Credit", "CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("FitComrade.Data.Entities.Customer", null)
+            modelBuilder.Entity("FitComrade.Domain.Entities.CustomerAdress", b =>
+                {
+                    b.HasOne("FitComrade.Domain.Entities.Customer", null)
+                        .WithMany("Adresses")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FitComrade.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("FitComrade.Domain.Entities.CustomerAdress", "CustomerAdress")
+                        .WithMany()
+                        .HasForeignKey("CustomerAdressID");
+
+                    b.HasOne("FitComrade.Domain.Entities.Customer", null)
                         .WithMany("Orders")
                         .HasForeignKey("CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.OrderDetail", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("FitComrade.Data.Entities.Order", "Order")
+                    b.HasOne("FitComrade.Domain.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FitComrade.Data.Entities.Product", "Product")
+                    b.HasOne("FitComrade.Domain.Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FitComrade.Data.Entities.Workout", b =>
+            modelBuilder.Entity("FitComrade.Domain.Entities.Workout", b =>
                 {
-                    b.HasOne("FitComrade.Data.Entities.Blog", null)
+                    b.HasOne("FitComrade.Domain.Entities.Blog", null)
                         .WithMany("Workouts")
                         .HasForeignKey("BlogID");
                 });

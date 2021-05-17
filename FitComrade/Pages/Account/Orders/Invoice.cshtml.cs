@@ -39,7 +39,7 @@ namespace FitComrade.Pages.Account.Orders
             }            
             
         }
-        public async Task OnGetConfirmAsync(int id) //Pas bij het bevestigen van de order naar "Confirmed" wordt de voorraad afgeschreven
+        public async Task OnGetConfirmAsync(int id) //Na het bevestigen van de Order is het klaar voor verzameling
         {
             user = user.GetSession(HttpContext.Session, user);
 
@@ -49,7 +49,7 @@ namespace FitComrade.Pages.Account.Orders
 
                 DataController dataController = new DataController(_context);
 
-                dataController.UpdateStock(order);
+                dataController.UpdateStatus(order);
 
                 var data = _context.Orders;
                 if (data.Count() > 0)
@@ -62,6 +62,30 @@ namespace FitComrade.Pages.Account.Orders
                 await OnGetAsync();
             }
             
+        }
+        public async Task OnGetDismissed(int id) //Bij het bevestigen van de order naar "Dismissed" wordt de voorraad teruggehaald
+        {
+            user = user.GetSession(HttpContext.Session, user);
+
+            if (user.ProfileID > 0)
+            {
+                var order = _context.Orders.Where(s => s.OrderID.Equals(id)).FirstOrDefault();
+
+                DataController dataController = new DataController(_context);
+
+                dataController.RetourOrder(order);
+
+                var data = _context.Orders;
+                if (data.Count() > 0)
+                {
+                    Order = await data.ToListAsync();
+                }
+            }
+            else
+            {
+                await OnGetAsync();
+            }
+
         }
         public async Task OnGetAllOrdersAsync() // Haalt alle orders op
         {
