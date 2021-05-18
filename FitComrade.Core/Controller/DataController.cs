@@ -164,7 +164,10 @@ namespace FitComrade.Core
             if (customer.Payment == "Credits")
             {
                 var credits = _context.Credits.Where(item=>item.CustomerID.Equals(customer.CustomerID)).FirstOrDefault();
-
+                if(credits.CreditValue < order.OrderPrice)
+                {
+                    return;
+                }
                 credits.CreditValue -= order.OrderPrice;
             }
 
