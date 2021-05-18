@@ -75,7 +75,7 @@ namespace FitComrade.Pages.Account.Orders
 
                 dataController.RetourOrder(order);
 
-                var data = _context.Orders;
+                var data = _context.Orders.Where(order => order.CustomerID.Equals(user.CustomerID));
                 if (data.Count() > 0)
                 {
                     Order = await data.ToListAsync();

@@ -56,7 +56,7 @@
                         {
                             <a asp-page-handler="Confirm" asp-route-id="@item.OrderID">Bevestig</a>
                         }
-                        @if(Model.user.ProfileID > 0 && item.OrderStatus == "Paid")
+                        @if(Model.user.ProfileID == item.CustomerID && item.OrderStatus == "Paid")
                         { 
                             <a asp-page-handler="Dismissed" asp-route-id="@item.OrderID">Retourneer</a>
                         }

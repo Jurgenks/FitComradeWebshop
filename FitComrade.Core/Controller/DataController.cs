@@ -46,7 +46,7 @@ namespace FitComrade.Core
             var register = _context.Customers.Where(s => s.UserName.Equals(profile.UserName));
             //Check of profile al bestaat
             if (register.Count() == 0)
-            {
+            {                
                 _context.Customers.Add(profile);
                 _context.SaveChanges();
                 return true;
