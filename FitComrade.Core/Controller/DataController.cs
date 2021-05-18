@@ -281,8 +281,11 @@ namespace FitComrade.Core
             {
                 //Orders met de status "Dismissed" zijn afgewezen
                 order.OrderStatus = "Dismissed";
+                var credits = _context.Credits.Where(item=>item.CustomerID.Equals(order.CustomerID)).FirstOrDefault();
+                
                 //Update OrderStatus
                 _context.Orders.Attach(order).State = EntityState.Modified;
+                credits.CreditValue += order.OrderPrice;
                 _context.SaveChanges();
             }
         }
