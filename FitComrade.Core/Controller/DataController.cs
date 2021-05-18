@@ -154,11 +154,19 @@ namespace FitComrade.Core
             //Haal customer op met customerID
             var customer = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
 
+            
             Order order = new Order();
             order.OrderDate = DateTime.Now;
             order.OrderStatus = "Paid";         //Alle bestellingen zijn direct "Paid" (fake)
             order.OrderPrice = cart.Total();
             order.CustomerAdressID = adressID;
+
+            if (customer.Payment == "Credits")
+            {
+                var credits = _context.Credits.Where(item=>item.CustomerID.Equals(customer.CustomerID)).FirstOrDefault();
+
+                credits.CreditValue -= order.OrderPrice;
+            }
 
             if (order.OrderStatus == "Paid")
             {              
