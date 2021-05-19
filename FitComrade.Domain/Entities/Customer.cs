@@ -27,8 +27,6 @@ namespace FitComrade.Domain.Entities
 
         public string Bank { get; set; }   
 
-        public List<CustomerAdress> Adresses { get; set; }
-
         public List<Order> Orders { get; set; }
 
         public Credit Credit { get; set; }

@@ -49,7 +49,7 @@ namespace FitComrade.Pages.Shop
 
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");          
 
-            dataController.RegisterCustomer(HttpContext.Session, Customer, CustomerAdress);
+            dataController.RegisterCustomer(HttpContext.Session, Customer);
 
             user = user.GetSession(HttpContext.Session, user);
 
@@ -57,9 +57,9 @@ namespace FitComrade.Pages.Shop
             {
                 if (user.ProfileID != 0)
                 {
-                    dataController.UpdateProfile(HttpContext.Session, Customer, CustomerAdress);
+                    dataController.UpdateProfile(HttpContext.Session, Customer);
                 }
-                dataController.PlaceOrder(HttpContext.Session, Cart);
+                dataController.PlaceOrder(HttpContext.Session, Cart, CustomerAdress);
             }
             await _context.SaveChangesAsync();
             return RedirectToPage("/Index");

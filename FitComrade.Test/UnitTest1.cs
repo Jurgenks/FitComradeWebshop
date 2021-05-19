@@ -199,11 +199,11 @@ namespace FitComrade.Test
             {                
                 DataController dataController = new DataController(context);
                 dataController.ControllerContext.HttpContext = mockHttpContext.Object;                
-                dataController.RegisterCustomer(session, customer, customerAdress);
+                dataController.RegisterCustomer(session, customer);
                 
                 if((int)session.GetInt32("customerID") != 0)
                 {
-                    dataController.PlaceOrder(session, cart);
+                    dataController.PlaceOrder(session, cart, customerAdress);
                 }
 
                 var orders = context.Orders;

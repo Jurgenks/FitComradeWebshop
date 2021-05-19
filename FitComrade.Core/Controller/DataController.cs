@@ -55,14 +55,18 @@ namespace FitComrade.Core
         }
 
         //Webshop
-        public void RegisterCustomer(ISession session, Customer customer , CustomerAdress customerAdress) //Create Customer
+        public void RegisterCustomer(ISession session, Customer customer) //Create Customer
         {
             int customerID = 0;
             //Check of de customer account bestaat
             if (session.Keys.Contains("customerID"))
             {
                 customerID = (int)session.GetInt32("customerID");
-            }            
+            }
+            if(customer.Payment == "Credits")
+            {
+                customer.Bank = "Credits";
+            }
             if(customerID != 0)
             {
                 var logged = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
@@ -80,40 +84,28 @@ namespace FitComrade.Core
                 _context.SaveChanges();
 
                 var newCustomer = _context.Customers.FirstOrDefault(s=>s.CustomerEmail.Equals(customer.CustomerEmail));
-                newCustomer.Adresses = new List<CustomerAdress>();
-                newCustomer.Adresses.Add(customerAdress);
-
-                _context.Customers.Attach(newCustomer);
-                _context.SaveChanges();
-
+                
                 session.SetInt32("customerID", newCustomer.CustomerID);
-
-                var adress = _context.CustomerAdresses.FirstOrDefault(a => a.PostalCode.Equals(customerAdress.PostalCode));
-                session.SetInt32("adressID", adress.CustomerAdressID);
             }
             else if(register.Count() > 0) //customer bestaat wel
             {
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
 
-                var newCustomer = _context.Customers.FirstOrDefault(c => c.Equals(customer));
-                newCustomer.Adresses = new List<CustomerAdress>();
-                newCustomer.Adresses.Add(customerAdress);
+                var newCustomer = _context.Customers.FirstOrDefault(c => c.Equals(customer));               
 
                 _context.Customers.Attach(newCustomer);
                 _context.SaveChanges();
 
                 session.SetInt32("customerID", newCustomer.CustomerID);
 
-                var adress = _context.CustomerAdresses.FirstOrDefault(a => a.PostalCode.Equals(customerAdress.PostalCode));
-                session.SetInt32("adressID", adress.CustomerAdressID);
                 return;
 
             }
             
         }
 
-        public void UpdateProfile(ISession session, Customer customer, CustomerAdress customerAdress) // Update Profile CustomerID
+        public void UpdateProfile(ISession session, Customer customer) // Update Profile CustomerID
         {
             //Haal de profile op waar de gebruiker op is ingelogd
             var profile = _context.Customers.FirstOrDefault(s => s.CustomerID.Equals((int)session.GetInt32("customerID")));
@@ -129,28 +121,18 @@ namespace FitComrade.Core
             profile.Bank = customer.Bank;
 
             profile.Payment = customer.Payment;
-
-            var profileAdress = _context.CustomerAdresses.FirstOrDefault(a=>a.PostalCode.Equals(customerAdress.PostalCode));
-
-            if(profileAdress == null || profileAdress.CustomerID != profile.CustomerID)
-            {
-                profile.Adresses = new List<CustomerAdress>();
-                profile.Adresses.Add(customerAdress);
-            }                   
+                              
             
 
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
             _context.Customers.Attach(profile).State = EntityState.Modified;
             _context.SaveChanges();
-
-            session.SetInt32("adressID", profileAdress.CustomerAdressID);
         }
 
-        public void PlaceOrder(ISession session, Cart cart) //Create Order in Customer
+        public void PlaceOrder(ISession session, Cart cart, CustomerAdress customerAdress) //Create Order in Customer
         {
             int customerID = (int)session.GetInt32("customerID");
-            int adressID = (int)session.GetInt32("adressID");
             //Haal customer op met customerID
             var customer = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
 
@@ -159,7 +141,7 @@ namespace FitComrade.Core
             order.OrderDate = DateTime.Now;
             order.OrderStatus = "Paid";         //Alle bestellingen zijn direct "Paid" (fake)
             order.OrderPrice = cart.Total();
-            order.CustomerAdressID = adressID;
+            order.CustomerAdress = customerAdress;
 
             if (customer.Payment == "Credits")
             {

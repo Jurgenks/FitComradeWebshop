@@ -14,6 +14,6 @@ namespace FitComrade.Domain.Entities
         
         public string Adress { get; set; }
 
-        public int CustomerID { get; set; }
+        public int OrderID { get; set; }
     }
 }
