@@ -17,7 +17,9 @@
                 <h5>Profiel: @Model.user.UserName</h5>
                 <br />
                 <h3><a asp-page="Orders/Invoice">Bestellingen</a></h3>
-                <h3><a asp-page="Credits/Redeem">Code inwisselen</a></h3>
+                <br />
+                <h5>Credits: € @Model.Customer.Credit.CreditValue</h5>
+                <h6><a asp-page="Credits/Redeem">Code inwisselen</a></h6>
                 <br />
                 <h4><a asp-page="/Index" asp-page-handler="LogOut">Sign Out</a></h4>
             }

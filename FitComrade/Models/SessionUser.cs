@@ -49,6 +49,7 @@ namespace FitComrade.Models
                 sessionUser.UserName = session.GetString("userName");
             }
             
+            
             return sessionUser;
         }
         public void LogOutSession(ISession session)

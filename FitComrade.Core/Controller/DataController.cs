@@ -32,8 +32,7 @@ namespace FitComrade.Core
                 //Je huidige sessie ontvangen variabelen om toegang te verkrijgen
                 session.SetString("userName", profile.UserName);
                 session.SetInt32("profileID", login.CustomerID);
-                session.SetInt32("customerID", login.CustomerID);
-                
+                session.SetInt32("customerID", login.CustomerID);                
                 //Login succes
                 return true;
             }
@@ -52,7 +51,7 @@ namespace FitComrade.Core
                 return true;
             }
             return false;
-        }
+        }        
 
         //Webshop
         public void RegisterCustomer(ISession session, Customer customer) //Create Customer
