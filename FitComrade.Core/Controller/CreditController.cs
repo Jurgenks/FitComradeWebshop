@@ -47,6 +47,11 @@ namespace FitComrade.Core.Controller
 
         public bool CreateCode(ISession session, CreditCode creditCode)
         {
+            if(creditCode.CreditCodeString.Length > 10)
+            {
+                return false;
+            }
+
             if(session.GetInt32("customerID") == 1)
             {
                 var creditCodes = _context.CreditCodes.Where(item=>item.CreditCodeString.Equals(creditCode.CreditCodeString)).ToList();

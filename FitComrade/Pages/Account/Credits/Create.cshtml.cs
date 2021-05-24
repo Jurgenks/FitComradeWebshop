@@ -36,10 +36,11 @@ namespace FitComrade.Pages.Account.Credits
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if(CreditCode.CreditCodeString.Length > 10)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
+            
             CreditController creditController = new CreditController(_context);
             bool created = creditController.CreateCode(HttpContext.Session, CreditCode);
 

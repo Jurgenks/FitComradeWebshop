@@ -36,13 +36,20 @@ namespace FitComrade.Pages.Account.Credits
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if(CreditCode.CreditCodeString != null)
+            if(CreditCode.CreditCodeString != null && CreditCode.CreditCodeString.Length <= 10)
             {
                 CreditController creditController = new CreditController(_context);
-                creditController.RedeemCode(HttpContext.Session, CreditCode);
-                await _context.SaveChangesAsync();
-
-                return RedirectToPage("/");
+                bool succes = creditController.RedeemCode(HttpContext.Session, CreditCode);
+                if(succes == true)
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("/Account/Index");
+                }
+                else
+                {
+                    return Page();
+                }
+                             
             }
             else
             {
