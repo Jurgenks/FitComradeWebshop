@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Core", "FitComra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Test", "FitComrade.Test\FitComrade.Test.csproj", "{ED741360-6F48-42DF-B5E8-F45BE72EBECE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitComrade.Domain", "FitComrade.Domain\FitComrade.Domain.csproj", "{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitComrade.Domain", "FitComrade.Domain\FitComrade.Domain.csproj", "{8D2E42F4-4F0B-49A9-8FBC-24FF95800DCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

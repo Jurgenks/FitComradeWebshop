@@ -1,0 +1,48 @@
+﻿@page
+@model FitComrade.Pages.Account.Credits.IndexModel
+@{
+}
+<h1>CreditCodes</h1>
+
+<p>
+    <a asp-page="Create">Add Credit</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCodes[0].CreditCodeString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCodes[0].CreditIsValid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCodes[0].CreditValue)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.CreditCodes != null)
+        {
+            @foreach (var item in Model.CreditCodes)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreditCodeString)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreditIsValid)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreditValue)
+                    </td>
+                    <td>
+                        <a asp-page="./Delete" asp-route-id="@item.CreditCodeID">Verwijder</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

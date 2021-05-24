@@ -17,6 +17,7 @@
                 <h5>Profiel: @Model.user.UserName</h5>
                 <br />
                 <h3><a asp-page="Orders/Invoice">Bestellingen</a></h3>
+                <h3><a asp-page="Credits/Redeem">Code inwisselen</a></h3>
                 <br />
                 <h4><a asp-page="/Index" asp-page-handler="LogOut">Sign Out</a></h4>
             }
@@ -27,7 +28,8 @@
                 <h5>Admin: @Model.user.ProfileID</h5>
                 <br />
                 <h3><a asp-page="ProductManager/Index">ProductManager</a></h3>
-                <h3><a asp-page="Profits/Index">Inkomsten</a></h3>                
+                <h3><a asp-page="Credits/Index">Credits</a></h3>
+                <h3><a asp-page="Profits/Index">Inkomsten</a></h3>
             }
         </div>
     </div>

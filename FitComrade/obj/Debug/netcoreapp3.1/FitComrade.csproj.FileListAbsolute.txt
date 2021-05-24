@@ -379,3 +379,7 @@ C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitCom
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Domain.pdb
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Core.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Core.pdb
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\obj\Debug\netcoreapp3.1\Razor\Pages\Account\Credits\Create.cshtml.g.cs
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\obj\Debug\netcoreapp3.1\Razor\Pages\Account\Credits\Delete.cshtml.g.cs
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\obj\Debug\netcoreapp3.1\Razor\Pages\Account\Credits\Index.cshtml.g.cs
+C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\obj\Debug\netcoreapp3.1\Razor\Pages\Account\Credits\Redeem.cshtml.g.cs
