@@ -61,11 +61,7 @@ namespace FitComrade.Core
             if (session.Keys.Contains("customerID"))
             {
                 customerID = (int)session.GetInt32("customerID");
-            }
-            if(customer.Payment == "Credits")
-            {
-                customer.Bank = "Credits";
-            }
+            }            
             if(customerID != 0)
             {
                 var logged = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
@@ -116,8 +112,6 @@ namespace FitComrade.Core
             profile.CustomerPhone = customer.CustomerPhone;
 
             profile.CustomerSurName = customer.CustomerSurName;
-
-            profile.Bank = customer.Bank;
 
             profile.Payment = customer.Payment;
                               

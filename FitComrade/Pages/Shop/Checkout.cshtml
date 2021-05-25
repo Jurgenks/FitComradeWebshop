@@ -1,11 +1,6 @@
 ﻿@page
 @model FitComrade.Pages.Shop.CheckoutModel
-@{
-    string SelectedOption;
-    void ChangeSelect(string option)
-    {
-        SelectedOption = option;
-    }
+@{    
 }
 <head>
     <link rel="stylesheet" href="~/css/CheckoutStyle.css" />
@@ -59,20 +54,11 @@
                         <h3>Betaling</h3>
                         <div class="form-group">
                             <label asp-for="Customer.Payment" class="control-label">Betaalmethode</label>
-                            <select asp-for="Customer.Payment" class="form-control" onchange="myFunction()">
-                                <option id="IDEAL">IDEAL</option>
-                                <option id="CREDITS">Credits</option>
+                            <select asp-for="Customer.Payment" class="form-control">
+                                <option>IDEAL</option>
+                                <option>Credits</option>
                             </select>
-                        </div>
-
-                        <div id="bank" class="form-group">
-                            <label asp-for="Customer.Bank" class="control-label"></label>
-                            <select asp-for="Customer.Bank" class="form-control">
-                                <option>ING</option>
-                                <option>RaboBank</option>
-                                <option>ABN Ambro</option>
-                            </select>
-                        </div>
+                        </div>                        
                         
                     </div>
                 </div>
@@ -110,15 +96,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script>
-    function myFunction() {
-
-        if (document.getElementById("IDEAL").selected == true) {
-
-            document.getElementById("bank").style.display = "block";
-        }
-        else {
-            document.getElementById("bank").style.display = "none";
-        }
-    }
-</script>
