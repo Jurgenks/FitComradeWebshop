@@ -53,12 +53,14 @@
                     <div class="col-50">
                         <h3>Betaling</h3>
                         <div class="form-group">
-                            <label asp-for="Customer.Payment" class="control-label">Betaalmethode</label>
-                            <select asp-for="Customer.Payment" class="form-control">
-                                <option>IDEAL</option>
-                                <option>Credits</option>
+                            <label asp-for="Payment.PaymentMethod" class="control-label">Betaalmethode</label>
+                            <select asp-for="Payment.PaymentMethod" class="form-control">
+                                <option id="IDEAL">IDEAL</option>
+                                <option id="CREDITS">Credits</option>
                             </select>
-                        </div>                        
+                        </div>
+
+                        
                         
                     </div>
                 </div>

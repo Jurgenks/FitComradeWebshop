@@ -15,11 +15,14 @@ namespace FitComrade.Domain.Entities
 
         public string OrderStatus { get; set; }
 
-        public decimal OrderPrice { get; set; }        
+        public decimal OrderPrice { get; set; }      
+        
+        public int PaymentID { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
 
         public CustomerAdress CustomerAdress { get; set; }
 
+        public virtual Payment Payment { get; set; }
     }
 }

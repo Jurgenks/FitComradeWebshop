@@ -47,13 +47,24 @@ namespace FitComrade.Data.Migrations
                     CustomerSurName = table.Column<string>(nullable: true),
                     CustomerName = table.Column<string>(nullable: true),
                     CustomerPhone = table.Column<string>(nullable: true),
-                    CustomerEmail = table.Column<string>(nullable: true),
-                    Payment = table.Column<string>(nullable: true),
-                    Bank = table.Column<string>(nullable: true)
+                    CustomerEmail = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.CustomerID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    PaymentID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentMethod = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.PaymentID);
                 });
 
             migrationBuilder.CreateTable(
@@ -124,7 +135,8 @@ namespace FitComrade.Data.Migrations
                     OrderDate = table.Column<DateTime>(nullable: false),
                     CustomerID = table.Column<int>(nullable: false),
                     OrderStatus = table.Column<string>(nullable: true),
-                    OrderPrice = table.Column<decimal>(nullable: false)
+                    OrderPrice = table.Column<decimal>(nullable: false),
+                    PaymentID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,6 +146,12 @@ namespace FitComrade.Data.Migrations
                         column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "CustomerID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Payments_PaymentID",
+                        column: x => x.PaymentID,
+                        principalTable: "Payments",
+                        principalColumn: "PaymentID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -145,8 +163,7 @@ namespace FitComrade.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PostalCode = table.Column<string>(nullable: true),
                     Adress = table.Column<string>(nullable: true),
-                    OrderID = table.Column<int>(nullable: false),
-                    CustomerID = table.Column<int>(nullable: false)
+                    OrderID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,6 +232,11 @@ namespace FitComrade.Data.Migrations
                 column: "CustomerID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_PaymentID",
+                table: "Orders",
+                column: "PaymentID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Workouts_BlogID",
                 table: "Workouts",
                 column: "BlogID");
@@ -248,6 +270,9 @@ namespace FitComrade.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
         }
     }
 }

@@ -161,18 +161,24 @@ namespace FitComrade.Test
             //Arrange
             Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
             MockHttpSession session = new MockHttpSession();
-            mockHttpContext.Setup(s => s.Session).Returns(session);         
+            mockHttpContext.Setup(s => s.Session).Returns(session);
+            
 
             Customer customer = new Customer 
             {
                 CustomerName = "Van Boven",
                 CustomerEmail = "Gerrie.Boven@hotmail.com",
                 CustomerSurName = "Gerrie",
-                CustomerPhone = "x",
-                Bank ="x",
-                Payment ="x"
+                CustomerPhone = "x"
             };
-
+            Payment payment1 = new Payment
+            {
+                PaymentMethod = "IDEAL"
+            };
+            Payment payment2 = new Payment
+            {
+                PaymentMethod = "Credits"
+            };
             CustomerAdress customerAdress = new CustomerAdress 
             {
                 PostalCode = "5023CE"
@@ -196,14 +202,17 @@ namespace FitComrade.Test
             cart.Products.Add(product);
 
             using (var context = new Data.FitComradeContext(options))
-            {                
+            {
+                context.Payments.Add(payment1); //Vaste betalingsopties
+                context.Payments.Add(payment2);
+
                 DataController dataController = new DataController(context);
                 dataController.ControllerContext.HttpContext = mockHttpContext.Object;                
                 dataController.RegisterCustomer(session, customer);
                 
                 if((int)session.GetInt32("customerID") != 0)
                 {
-                    dataController.PlaceOrder(session, cart, customerAdress);
+                    dataController.PlaceOrder(session, cart, customerAdress, payment1);
                 }
 
                 var orders = context.Orders;

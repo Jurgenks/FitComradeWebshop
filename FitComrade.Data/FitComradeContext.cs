@@ -38,5 +38,7 @@ namespace FitComrade.Data
         public DbSet<Credit> Credits { get; set; }
 
         public DbSet<CreditCode> CreditCodes { get; set; }
+
+        public DbSet<Payment> Payments { get; set; }
     }
 }

@@ -111,11 +111,7 @@ namespace FitComrade.Core
 
             profile.CustomerPhone = customer.CustomerPhone;
 
-            profile.CustomerSurName = customer.CustomerSurName;
-
-            profile.Payment = customer.Payment;
-                              
-            
+            profile.CustomerSurName = customer.CustomerSurName;                       
 
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
@@ -123,20 +119,19 @@ namespace FitComrade.Core
             _context.SaveChanges();
         }
 
-        public void PlaceOrder(ISession session, Cart cart, CustomerAdress customerAdress) //Create Order in Customer
+        public void PlaceOrder(ISession session, Cart cart, CustomerAdress customerAdress, Payment payment) //Create Order in Customer
         {
             int customerID = (int)session.GetInt32("customerID");
             //Haal customer op met customerID
             var customer = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
-
+            var paymentMethods = _context.Payments;
             
             Order order = new Order();
             order.OrderDate = DateTime.Now;
-            order.OrderStatus = "Paid";         //Alle bestellingen zijn direct "Paid" (fake)
             order.OrderPrice = cart.Total();
             order.CustomerAdress = customerAdress;
 
-            if (customer.Payment == "Credits")
+            if (payment.PaymentMethod == paymentMethods.FirstOrDefault(item=>item.PaymentMethod.Equals("Credits")).PaymentMethod)
             {
                 var credits = _context.Credits.Where(item=>item.CustomerID.Equals(customer.CustomerID)).FirstOrDefault();
                 if(credits.CreditValue < order.OrderPrice)
@@ -144,6 +139,13 @@ namespace FitComrade.Core
                     return;
                 }
                 credits.CreditValue -= order.OrderPrice;
+                order.OrderStatus = "Paid";
+                order.PaymentID = paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("Credits")).PaymentID;
+            }
+            if(payment.PaymentMethod == paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("IDEAL")).PaymentMethod)
+            {
+                order.OrderStatus = "Paid"; //fake
+                order.PaymentID = paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("IDEAL")).PaymentID;
             }
 
             if (order.OrderStatus == "Paid")

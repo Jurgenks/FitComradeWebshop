@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace FitComrade.Domain.Entities
         
         public int Quantity { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal TotalPrice { get; set; }
 
         public int OrderDetailID { get; set; }

@@ -23,8 +23,6 @@ namespace FitComrade.Domain.Entities
         [DataType(DataType.EmailAddress)]
         public string CustomerEmail { get; set; }
 
-        public string Payment { get; set; }
-
         public List<Order> Orders { get; set; }
 
         public Credit Credit { get; set; }

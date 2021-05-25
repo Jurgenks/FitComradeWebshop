@@ -24,7 +24,9 @@ namespace FitComrade.Pages.Shop
         [BindProperty]
         public Customer Customer { get; set; }
         [BindProperty]
-        public CustomerAdress CustomerAdress { get; set; }
+        public CustomerAdress CustomerAdress { get; set; } 
+        [BindProperty]
+        public Payment Payment { get; set; }
 
 
         public void OnGet()
@@ -59,7 +61,7 @@ namespace FitComrade.Pages.Shop
                 {
                     dataController.UpdateProfile(HttpContext.Session, Customer);
                 }
-                dataController.PlaceOrder(HttpContext.Session, Cart, CustomerAdress);
+                dataController.PlaceOrder(HttpContext.Session, Cart, CustomerAdress, Payment);
             }
             await _context.SaveChangesAsync();
             return RedirectToPage("/Index");

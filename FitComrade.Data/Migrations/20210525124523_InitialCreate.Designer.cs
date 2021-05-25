@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitComrade.Data.Migrations
 {
     [DbContext(typeof(FitComradeContext))]
-    [Migration("20210519100624_InitialCreate")]
+    [Migration("20210525124523_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,9 +88,6 @@ namespace FitComrade.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bank")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CustomerEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -104,9 +101,6 @@ namespace FitComrade.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Payment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
@@ -126,9 +120,6 @@ namespace FitComrade.Data.Migrations
 
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
 
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
@@ -163,9 +154,14 @@ namespace FitComrade.Data.Migrations
                     b.Property<string>("OrderStatus")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PaymentID")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderID");
 
                     b.HasIndex("CustomerID");
+
+                    b.HasIndex("PaymentID");
 
                     b.ToTable("Orders");
                 });
@@ -196,6 +192,21 @@ namespace FitComrade.Data.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("FitComrade.Domain.Entities.Payment", b =>
+                {
+                    b.Property<int>("PaymentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PaymentMethod")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PaymentID");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("FitComrade.Domain.Entities.Product", b =>
@@ -274,6 +285,12 @@ namespace FitComrade.Data.Migrations
                     b.HasOne("FitComrade.Domain.Entities.Customer", null)
                         .WithMany("Orders")
                         .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitComrade.Domain.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
