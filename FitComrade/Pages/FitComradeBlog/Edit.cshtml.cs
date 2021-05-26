@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
 using FitComrade.Core;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.FitComradeBlog
 {
@@ -35,9 +36,9 @@ namespace FitComrade.Pages.FitComradeBlog
         }
         public IActionResult OnGetCreateBlog()
         {
-            DataController dataController = new DataController(_context);
+            BlogController blogController = new BlogController(_context);
 
-            Blog = dataController.CreateBlog(HttpContext.Session);
+            Blog = blogController.CreateBlog(HttpContext.Session);
 
             return RedirectToPage("Edit");
         }
@@ -54,9 +55,9 @@ namespace FitComrade.Pages.FitComradeBlog
                 Blog = _context.Blogs.Where(b => b.CustomerID.Equals(user.ProfileID)).FirstOrDefault();
             }
 
-            DataController dataController = new DataController(_context);
+            BlogController blogController = new BlogController(_context);
 
-            await dataController.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
+            await blogController.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
             
             return Page();
         }

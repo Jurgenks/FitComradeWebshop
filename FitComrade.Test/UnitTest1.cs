@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using FitComrade.Pages.Shop;
 using FitComrade.Helpers;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Test
 {
@@ -70,10 +71,10 @@ namespace FitComrade.Test
 
             using (var context = new Data.FitComradeContext(options))
             {
-                DataController dataController = new DataController(context);
-                dataController.ControllerContext.HttpContext = mockHttpContext.Object;
-                dataController.CreateBlog(session);
-                await dataController.AddWorkoutToBlogAsync(1, workout);
+                BlogController blogController = new BlogController(context);
+                blogController.ControllerContext.HttpContext = mockHttpContext.Object;
+                blogController.CreateBlog(session);
+                await blogController.AddWorkoutToBlogAsync(1, workout);
 
                 var Workout = context.Workouts.First();
                 var Blog = context.Blogs.Where(w => w.Workouts.Contains(Workout));
@@ -105,17 +106,17 @@ namespace FitComrade.Test
 
             using (var context = new Data.FitComradeContext(options))
             {
-                DataController dataController = new DataController(context);
-                dataController.ControllerContext.HttpContext = mockHttpContext.Object;
-                dataController.CreateBlog(session);
-                await dataController.AddWorkoutToBlogAsync(1, workout);
+                BlogController blogController = new BlogController(context);
+                blogController.ControllerContext.HttpContext = mockHttpContext.Object;
+                blogController.CreateBlog(session);
+                await blogController.AddWorkoutToBlogAsync(1, workout);
 
                 var Workout = context.Workouts.First();
                 var Blog = context.Blogs.Where(w => w.Workouts.Contains(Workout));
 
                 session.SetInt32("profileID", 1);
                 Workout.Confirmed = true;
-                await dataController.AddWorkoutToBlogAsync(1, Workout);
+                await blogController.AddWorkoutToBlogAsync(1, Workout);
 
                 Workout = context.Workouts.First();
                 Assert.IsTrue(Workout.Confirmed);

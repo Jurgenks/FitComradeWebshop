@@ -18,7 +18,7 @@ namespace FitComrade.Core.Controller
         {
             _context = context;
         }
-
+        //Credit
         public bool RedeemCode(ISession session,CreditCode creditCode)
         {            
             var dataCredit = _context.CreditCodes.FirstOrDefault(item=>item.CreditCodeString.Equals(creditCode.CreditCodeString));
