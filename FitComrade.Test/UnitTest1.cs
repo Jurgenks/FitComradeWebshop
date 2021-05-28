@@ -141,6 +141,7 @@ namespace FitComrade.Test
                 ProductPrice = 25,
                 ProductQuantity = 100
             };
+            List<Product> cart = new List<Product>();
             //Act          
 
             using (var context = new Data.FitComradeContext(options))
@@ -148,11 +149,14 @@ namespace FitComrade.Test
                 context.Products.Add(product);
                 context.SaveChanges();
 
-                CartModel cartModel = new CartModel(context);
-                cartModel.OnGetBuyNow(1);
-                cartModel.Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(session, "cart");
+                CartController cartController = new CartController();                
+                var dbProduct = context.Products.FirstOrDefault(item => item.ProductID.Equals(1));
+                cart = cartController.NewCart(dbProduct);
+                SessionHelper.SetObjectAsJson(session, "cart", cart);
+                cart = SessionHelper.GetObjectFromJson<List<Product>>(session, "cart");
                 //Assert
-                Assert.IsTrue(cartModel.Cart.Products != null);
+                Assert.IsTrue(cart != null);
+                Assert.IsTrue(cart.Count == 1);
             }
         }
 

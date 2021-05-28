@@ -7,7 +7,7 @@ namespace FitComrade.Domain.Entities
 {
     public class Order
     {
-        public int OrderID { get; set; }
+        public int OrderID { get; private set; }
 
         public DateTime OrderDate { get; set; }
 

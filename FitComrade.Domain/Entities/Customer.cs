@@ -6,7 +6,7 @@ namespace FitComrade.Domain.Entities
     public class Customer
     {
 
-        public int CustomerID { get; set; }
+        public int CustomerID { get; private set; }
 
         public string UserName { get; set; }
 

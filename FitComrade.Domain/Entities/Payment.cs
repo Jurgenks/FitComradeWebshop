@@ -6,7 +6,7 @@ namespace FitComrade.Domain.Entities
 {
     public class Payment
     {
-        public int PaymentID { get; set; }
+        public int PaymentID { get; private set; }
         
         public string PaymentMethod { get; set; }
     }

@@ -75,5 +75,6 @@ namespace FitComrade.Models
             }
             return (int)session.GetInt32("attempts");
         }
+
     }
 }

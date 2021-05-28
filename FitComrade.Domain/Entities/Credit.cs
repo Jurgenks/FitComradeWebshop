@@ -7,7 +7,7 @@ namespace FitComrade.Domain.Entities
 {
     public class Credit
     {
-        public int CreditID { get; set; }
+        public int CreditID { get; private set; }
 
         [DataType(DataType.Currency)]
         public decimal CreditValue { get; set; }

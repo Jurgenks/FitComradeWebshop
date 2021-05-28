@@ -20,7 +20,7 @@ namespace FitComrade.Domain.Entities
             }
             return Total;
         }
-
+        
         
     }
 }

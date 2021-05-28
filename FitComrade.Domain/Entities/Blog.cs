@@ -7,7 +7,7 @@ namespace FitComrade.Domain.Entities
 {
     public class Blog
     {
-        public int BlogID { get; set; }
+        public int BlogID { get; private set; }
 
         public string BlogName { get; set; }
 

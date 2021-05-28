@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
 using FitComrade.Helpers;
 using FitComrade.Domain.Entities;
+using FitComrade.Data;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Shop
 {
     public class CartModel : PageModel
     {
-        private readonly Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public CartModel(Data.FitComradeContext context)
+        public CartModel(FitComradeContext context)
         {
             _context = context;
         }
@@ -43,36 +45,18 @@ namespace FitComrade.Pages.Shop
             
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
+            CartController cartController = new CartController();
+
             if (Cart.Products == null)
-            {                
-                Cart.Products = new List<Product>();
-                Cart.Products.Add(new Product
-                {
-                    ProductID = product.ProductID,
-                    ProductName = product.ProductName,
-                    ProductQuantity = 1,
-                    ProductPrice = product.ProductPrice
-                });
+            {
+                Cart.Products = cartController.NewCart(product);
 
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
             }
             else
             {
-                int index = Exists(Cart.Products, product.ProductID);
-                if (index == -1)
-                {
-                    Cart.Products.Add(new Product
-                    {
-                        ProductID = product.ProductID,
-                        ProductName = product.ProductName,
-                        ProductQuantity = 1,
-                        ProductPrice = product.ProductPrice
-                    });
-                }
-                else
-                {
-                    Cart.Products[index].ProductQuantity++;
-                }
+                Cart.Products = cartController.AddToCart(Cart.Products, product);
+
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
             }
             return RedirectToPage("Cart");
@@ -82,9 +66,9 @@ namespace FitComrade.Pages.Shop
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            int index = Exists(Cart.Products, id);
+            CartController cartController = new CartController();
 
-            Cart.Products.RemoveAt(index);
+            Cart.Products = cartController.RemoveFromCart(Cart.Products, id);
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
 
@@ -97,26 +81,16 @@ namespace FitComrade.Pages.Shop
 
             if(Cart.Products != null)
             {
-                for (var i = 0; i < Cart.Products.Count; i++)
-                {
-                    Cart.Products[i].ProductQuantity = quantities[i];
-                }
+                CartController cartController = new CartController();
+
+                Cart.Products = cartController.UpdateCart(Cart.Products, quantities);
+
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
             }           
 
             return RedirectToPage("Cart");
         }
 
-        private int Exists(List<Product> cart, int id)
-        {
-            for (var i = 0; i < cart.Count; i++)
-            {
-                if (cart[i].ProductID == id)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
+        
     }
 }
