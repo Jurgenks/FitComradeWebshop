@@ -8,6 +8,7 @@ using FitComrade.Domain.Entities;
 using FitComrade.Data;
 using FitComrade.Core;
 using FitComrade.Core.Controller;
+using FitComrade.Helpers;
 
 namespace FitComrade.Pages.FitComradeBlog
 {
@@ -46,20 +47,42 @@ namespace FitComrade.Pages.FitComradeBlog
         {
             user = user.GetSession(HttpContext.Session, user);
 
-            if(Workout.WorkoutID != 0 && user.ProfileID == 1)  //Bestaande Workout & admin
+            var oldWorkout = SessionHelper.GetObjectFromJson<Workout>(HttpContext.Session, "workout");
+
+            if (oldWorkout != null)  //Bestaande Workout
             {
-                Blog = _context.Blogs.Where(b => b.Workouts.Contains(Workout)).FirstOrDefault();
+                try
+                {                    
+                    Blog = _context.Blogs.Where(b => b.Workouts.Contains(oldWorkout)).FirstOrDefault();
+                    //Update Workout changes
+                    oldWorkout.WorkoutImage = Workout.WorkoutImage;
+                    oldWorkout.WorkoutName = Workout.WorkoutName;
+                    oldWorkout.WorkoutVideo = Workout.WorkoutVideo;
+                    oldWorkout.Discription = Workout.Discription;
+                    oldWorkout.Confirmed = Workout.Confirmed;
+
+                    BlogController blogController = new BlogController(_context);
+
+                    await blogController.AddWorkoutToBlogAsync(Blog.BlogID, oldWorkout);
+                }
+                catch
+                {
+                    Response.Redirect("/");
+                }
+
             }
             else  //Nieuwe Workout
             {
                 Blog = _context.Blogs.Where(b => b.CustomerID.Equals(user.ProfileID)).FirstOrDefault();
+
+                BlogController blogController = new BlogController(_context);
+
+                await blogController.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
             }
 
-            BlogController blogController = new BlogController(_context);
-
-            await blogController.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
             
-            return Page();
+            
+            return RedirectToPage("Index");
         }
         
         public async Task<IActionResult> OnGetEditAsync(int? id)
@@ -72,6 +95,8 @@ namespace FitComrade.Pages.FitComradeBlog
             }
 
             Workout = await _context.Workouts.FirstOrDefaultAsync(w => w.WorkoutID == id);
+
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "workout", Workout);
 
             if (Workout == null)
             {

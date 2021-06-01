@@ -16,15 +16,7 @@
             <div class="col-md-4">
                 <form method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    @if (Model.Workout != null)
-                    {
-                        <div class="form-group">
-                            <label asp-for="Workout.WorkoutID" class="control-label"></label>
-                            <input asp-for="Workout.WorkoutID" class="form-control-plaintext" />
-                            <span asp-validation-for="Workout.WorkoutID" class="text-danger"></span>
-                        </div>
-                    }
-
+                    
                     <div class="form-group">
                         <label asp-for="Workout.WorkoutName" class="control-label"></label>
                         <input asp-for="Workout.WorkoutName" class="form-control" />

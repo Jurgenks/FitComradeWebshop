@@ -149,9 +149,11 @@ namespace FitComrade.Test
                 context.Products.Add(product);
                 context.SaveChanges();
 
-                CartController cartController = new CartController();                
+                CartController cartController = new CartController(); 
+                
                 var dbProduct = context.Products.FirstOrDefault(item => item.ProductID.Equals(1));
                 cart = cartController.NewCart(dbProduct);
+
                 SessionHelper.SetObjectAsJson(session, "cart", cart);
                 cart = SessionHelper.GetObjectFromJson<List<Product>>(session, "cart");
                 //Assert

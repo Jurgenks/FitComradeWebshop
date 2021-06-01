@@ -7,7 +7,7 @@ namespace FitComrade.Domain.Entities
 {
     public class Workout
     {
-        public int WorkoutID { get; private set; }
+        public int WorkoutID { get; set; }
         public string WorkoutName { get; set; }
         public string Discription { get; set; }
         public bool Confirmed { get; set; }

@@ -7,8 +7,7 @@ using System.Text;
 namespace FitComrade.Core.Controller
 {
     public class CartController
-    {        
-        public Cart Cart = new Cart();
+    {       
 
         public List<Product> NewCart(Product product)
         {
