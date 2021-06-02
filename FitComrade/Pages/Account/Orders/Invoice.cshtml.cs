@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
-using FitComrade.Core;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Account.Orders
 {

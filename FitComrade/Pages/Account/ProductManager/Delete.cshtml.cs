@@ -8,14 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
     public class DeleteModel : PageModel
     {
-        private readonly FitComrade.Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public DeleteModel(FitComrade.Data.FitComradeContext context)
+        public DeleteModel(FitComradeContext context)
         {
             _context = context;
         }
@@ -46,12 +47,11 @@ namespace FitComrade.Pages.Account.ProductManager
                 return NotFound();
             }
 
-            Products = await _context.Products.FindAsync(id);
-
-            if (Products != null)
+            ProductController productController = new ProductController(_context);
+            bool delete = await productController.DeleteProductAsync(id);
+            if(delete == false)
             {
-                _context.Products.Remove(Products);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
 
             return RedirectToPage("./Index");

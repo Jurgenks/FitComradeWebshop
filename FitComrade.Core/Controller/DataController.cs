@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 
-namespace FitComrade.Core
+namespace FitComrade.Core.Controller
 {
     public class DataController : ControllerBase
     {
@@ -248,13 +248,7 @@ namespace FitComrade.Core
             }
                     
         }
-
-        public void AddProduct(Product product) //Create Product
-        {
-            _context.Products.Add(product);
-            _context.SaveChanges();
-        }
-
+        
         public void RetourOrder(Order order)
         {
             if(order.OrderStatus == "Paid")

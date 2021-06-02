@@ -9,14 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
+using FitComrade.Core;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
     public class EditModel : PageModel
     {
-        private readonly FitComrade.Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public EditModel(FitComrade.Data.FitComradeContext context)
+        public EditModel(FitComradeContext context)
         {
             _context = context;
         }
@@ -40,8 +42,7 @@ namespace FitComrade.Pages.Account.ProductManager
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
+        
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -49,30 +50,11 @@ namespace FitComrade.Pages.Account.ProductManager
                 return Page();
             }
 
-            _context.Attach(Products).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductsExists(Products.ProductID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            ProductController productController = new ProductController(_context);
+            await productController.UpdateProductAsync(Products.ProductID);
 
             return RedirectToPage("./Index");
         }
-
-        private bool ProductsExists(int id)
-        {
-            return _context.Products.Any(e => e.ProductID == id);
-        }
+        
     }
 }

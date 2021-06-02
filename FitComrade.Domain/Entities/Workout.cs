@@ -12,6 +12,6 @@ namespace FitComrade.Domain.Entities
         public string Discription { get; set; }
         public bool Confirmed { get; set; }
         public string WorkoutImage { get; set; }
-        public string WorkoutVideo { get; set; }
+        public string WorkoutVideo { get; set; }        
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
 using FitComrade.Helpers;
 using FitComrade.Domain.Entities;
-using FitComrade.Core;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Shop
 {

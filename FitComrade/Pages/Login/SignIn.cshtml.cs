@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
-using FitComrade.Core;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Login
 {

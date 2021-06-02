@@ -1,4 +1,4 @@
-using FitComrade.Core;
+using FitComrade.Core.Controller;
 using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +8,9 @@ namespace FitComrade.Pages.Login
 {
     public class SignUpModel : PageModel
     {
-        private readonly Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public SignUpModel(Data.FitComradeContext context)
+        public SignUpModel(FitComradeContext context)
         {
             _context = context;
         }

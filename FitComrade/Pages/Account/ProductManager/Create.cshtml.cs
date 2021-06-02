@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
-using FitComrade.Core;
+using FitComrade.Core.Controller;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
@@ -47,8 +47,8 @@ namespace FitComrade.Pages.Account.ProductManager
                 return Page();
             }
 
-            DataController dataController = new DataController(_context);
-            dataController.AddProduct(Products);
+            ProductController productController = new ProductController(_context);
+            productController.AddProduct(Products);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
