@@ -175,8 +175,8 @@ namespace FitComrade.Core.Controller
 
         public decimal GetSales(DateTime dateTime, string kind) //Read Sales from OrderDetail
         {
-            var Orders = _context.Orders.ToList();
-            var OrderDetails = _context.OrderDetails.ToList();
+            var Orders = _context.Orders.Where(o => o.OrderStatus != "Dismissed").ToList();
+            var OrderDetails = _context.OrderDetails.Where(o => o.Order.OrderStatus != "Dismissed").ToList();
             decimal Sale = 0;
             switch(kind)
             {

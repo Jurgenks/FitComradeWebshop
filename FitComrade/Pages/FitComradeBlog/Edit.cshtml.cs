@@ -14,12 +14,12 @@ namespace FitComrade.Pages.FitComradeBlog
 {
     public class EditModel : PageModel
     {
-        private readonly Data.FitComradeContext _context;
-        public EditModel(Data.FitComradeContext context)
+        private readonly FitComradeContext _context;
+        public EditModel(FitComradeContext context)
         {
             _context = context;
         }
-        public Blog Blog { get; set; }
+        public Blog Blog { get; private set; }
         public SessionUser user = new SessionUser();
 
         [BindProperty]

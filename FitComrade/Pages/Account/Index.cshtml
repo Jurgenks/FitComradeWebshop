@@ -10,7 +10,8 @@
         <div class="col-6">
             @if (Model.user.ProfileID == 0)
             {
-                <h3><a asp-page="/Login/SignIn">Sign In</a></h3>
+                <h2><a asp-page="/Login/SignIn">Sign In</a></h2>
+                <p>Heeft u geen account klik dan op <a asp-page="/Login/SignUp">SignUp</a></p>
             }
             else
             {

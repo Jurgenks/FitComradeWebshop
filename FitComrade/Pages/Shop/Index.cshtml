@@ -17,7 +17,7 @@
         </p>
     </form>
     
-    <table class="table">
+    <table class="table" style="height:auto">
         <tr>
             <th>Nr.</th>
             <th>Product</th>
@@ -32,12 +32,21 @@
             <tr>
                 <td>@product.ProductID</td>
                 <td>@product.ProductName</td>
-                <td><img src="~/images/FitComrade logo.png" width="100" height="100" /></td>                
+                <td><img src="~/images/FitComrade Product.png" width="150" height="150" /></td>                
                 <td>€@product.ProductPrice</td>
                 <td>@product.ProductQuantity</td>
+                @if(product.ProductQuantity > 0)
+                {
                 <td>
                     <a asp-page="Cart" asp-page-handler="buynow" asp-route-id="@product.ProductID">Bestel</a>
                 </td>
+                }
+                else
+                {
+                    <td>
+                        <p>NIET OP VOORRAAD</p>
+                    </td>
+                }
             </tr>
         }
     </table>

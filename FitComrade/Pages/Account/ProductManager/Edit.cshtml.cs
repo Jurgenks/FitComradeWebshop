@@ -51,7 +51,7 @@ namespace FitComrade.Pages.Account.ProductManager
             }
 
             ProductController productController = new ProductController(_context);
-            await productController.UpdateProductAsync(Products.ProductID);
+            await productController.UpdateProductAsync(Products);
 
             return RedirectToPage("./Index");
         }

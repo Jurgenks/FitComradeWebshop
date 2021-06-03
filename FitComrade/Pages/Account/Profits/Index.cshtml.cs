@@ -35,9 +35,9 @@ namespace FitComrade.Pages.Account.Profits
             }
             Products = _context.Products.ToList();
 
-            OrderDetails = _context.OrderDetails.ToList();
+            OrderDetails = _context.OrderDetails.Where(o=>o.Order.OrderStatus != "Dismissed").ToList();
 
-            Orders = _context.Orders.ToList();
+            Orders = _context.Orders.Where(o=>o.OrderStatus != "Dismissed").ToList();
 
             if(OrderDetails != null && Products != null)
             {

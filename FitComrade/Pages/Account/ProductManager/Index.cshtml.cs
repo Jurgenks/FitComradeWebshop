@@ -21,14 +21,17 @@ namespace FitComrade.Pages.Account.ProductManager
         }
         public SessionUser user = new SessionUser();
         public IList<Product> Products { get;set; }
-        private int admin = 1;
+
+        public List<OrderDetail> OrderDetails { get; private set; }
 
         public async Task OnGetAsync()
         {
             user = user.GetSession(HttpContext.Session, user);
-            if (user.ProfileID == admin)
+            if (user.ProfileID == 1)
             {
                 Products = await _context.Products.ToListAsync();
+
+                OrderDetails = _context.OrderDetails.ToList();
             }
             else
             {

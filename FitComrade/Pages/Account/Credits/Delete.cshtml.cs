@@ -58,7 +58,7 @@ namespace FitComrade.Pages.Account.Credits
 
             CreditCode = await _context.CreditCodes.FindAsync(id);
 
-            if (CreditCode != null)
+            if (CreditCode != null && CreditCode.CreditIsValid == true)
             {
                 CreditController creditController = new CreditController(_context);
                 creditController.DeleteCode(HttpContext.Session, CreditCode);

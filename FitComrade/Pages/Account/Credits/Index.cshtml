@@ -39,7 +39,10 @@
                         @Html.DisplayFor(modelItem => item.CreditValue)
                     </td>
                     <td>
-                        <a asp-page="./Delete" asp-route-id="@item.CreditCodeID">Verwijder</a>
+                        @if (item.CreditIsValid == true)
+                        {
+                            <a asp-page="./Delete" asp-route-id="@item.CreditCodeID">Verwijder</a>
+                        }
                     </td>
                 </tr>
             }

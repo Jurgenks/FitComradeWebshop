@@ -41,10 +41,15 @@
             </td>            
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ProductID">Wijzig</a> |
-                <a asp-page="./Details" asp-route-id="@item.ProductID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ProductID">Verwijder</a>
+                <a asp-page="./Details" asp-route-id="@item.ProductID">Details</a>
+                @if (Model.OrderDetails.Where(p=>p.ProductID.Equals(item.ProductID)).Count() == 0)
+                {
+                    <br />
+                  <a style="color:red" asp-page="./Delete" asp-route-id="@item.ProductID">Verwijder</a>
+                }
             </td>
-        </tr>
+   
+           </tr>
 }
     </tbody>
 </table>

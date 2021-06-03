@@ -18,8 +18,8 @@ namespace FitComrade.Pages.FitComradeBlog
             _context = context;
         }
         public SessionUser user = new SessionUser();
-        public List<Blog> Blogs { get; set; } 
-        public List<Workout> Workouts { get; set; }
+        public List<Blog> Blogs { get; private set; } 
+        public List<Workout> Workouts { get; private set; }
         public bool HasNoBlog { get; private set; }
 
         public async Task OnGetAsync()  //Haalt alle blogs en bijbehordende workouts op

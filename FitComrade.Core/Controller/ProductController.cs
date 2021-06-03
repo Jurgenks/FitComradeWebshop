@@ -44,9 +44,8 @@ namespace FitComrade.Core.Controller
             }
         }
 
-        public async Task UpdateProductAsync(int? id)
-        {
-            var Products = _context.Products.FirstOrDefault(item => item.ProductID.Equals(id));
+        public async Task UpdateProductAsync(Product Products)
+        {           
 
             _context.Attach(Products).State = EntityState.Modified;
 
