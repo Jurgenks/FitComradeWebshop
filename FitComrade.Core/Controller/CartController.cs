@@ -17,7 +17,8 @@ namespace FitComrade.Core.Controller
                 ProductID = product.ProductID,
                 ProductName = product.ProductName,
                 ProductQuantity = 1,
-                ProductPrice = product.ProductPrice
+                ProductPrice = product.ProductPrice,
+                ProductImage = product.ProductImage
             });
             return Products;
         }
@@ -33,7 +34,8 @@ namespace FitComrade.Core.Controller
                     ProductID = product.ProductID,
                     ProductName = product.ProductName,
                     ProductQuantity = 1,
-                    ProductPrice = product.ProductPrice
+                    ProductPrice = product.ProductPrice,
+                    ProductImage = product.ProductImage
                 });
             }
             else
