@@ -3,8 +3,7 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cart</title>
+    <link rel="stylesheet" href="~/css/Shop.css" />
 </head>
 <body>
 
@@ -28,12 +27,12 @@
                         <td align="center">
                             <a asp-page="cart" asp-page-handler="delete" asp-route-id="@item.ProductID">Verwijder</a>
                         </td>
-                        <td>@item.ProductID</td>
-                        <td>@item.ProductName</td>
+                        <td data-label="ArtNr.">@item.ProductID</td>
+                        <td data-label="Product">@item.ProductName</td>
                         <td><img src="~/images/FitComrade logo.png" width="100" height="100" /></td>
-                        <td>€@item.ProductPrice</td>
-                        <td><input type="number" name="quantities" value="@item.ProductQuantity" min="1" style="width: 50px;" /></td>
-                        <td>
+                        <td data-label="Prijs">€@item.ProductPrice</td>
+                        <td data-label="Aantal"><input type="number" name="quantities" value="@item.ProductQuantity" min="1" style="width: 50px;" /></td>
+                        <td data-label="Totaal">
                             €@(item.ProductPrice * item.ProductQuantity)
                         </td>
                     </tr>

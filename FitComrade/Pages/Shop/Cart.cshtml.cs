@@ -46,6 +46,10 @@ namespace FitComrade.Pages.Shop
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
             CartController cartController = new CartController();
+            if(product == null || product.ProductQuantity == 0)
+            {
+                return NotFound();
+            }
 
             if (Cart.Products == null)
             {

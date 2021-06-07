@@ -4,6 +4,9 @@
 @{
     ViewData["Title"] = "Invoice";
 }
+<head>
+    <link rel="stylesheet" href="~/css/Shop.css" />
+</head>
 
 <h1>Bestellingen</h1>
 @if (Model.user.ProfileID == 1)
@@ -37,17 +40,17 @@
             {
                 <tr>
 
-                    <td>
+                    <td data-label="Gebruiker ID">
                         @Html.DisplayFor(modelitem => item.CustomerID)
                     </td>
 
-                    <td>
+                    <td data-label="Bestelling Nr.">
                         @Html.DisplayFor(modelItem => item.OrderID)
                     </td>
-                    <td>
+                    <td data-label="Datum">
                         @Html.DisplayFor(modelItem => item.OrderDate)
                     </td>
-                    <td>
+                    <td data-label="Bestelling Status">
                         @Html.DisplayFor(modelItem => item.OrderStatus)                        
                     </td>
                     <td>

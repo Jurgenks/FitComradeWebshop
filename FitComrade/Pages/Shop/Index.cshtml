@@ -4,8 +4,7 @@
 }
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Shop</title>
+    <link rel="stylesheet" href="~/css/Shop.css" />
 </head>
 <body>
 
@@ -19,7 +18,7 @@
     
     <table class="table" style="height:auto">
         <tr>
-            <th>Nr.</th>
+            <th>ArtNr.</th>
             <th>Product</th>
             <th>Foto</th>            
             <th>Prijs</th>
@@ -30,11 +29,11 @@
         @foreach (var product in Model.Products)
         {
             <tr>
-                <td>@product.ProductID</td>
-                <td>@product.ProductName</td>
-                <td><img src="~/images/FitComrade Product.png" width="150" height="150" /></td>                
-                <td>€@product.ProductPrice</td>
-                <td>@product.ProductQuantity</td>
+                <td data-label="ArtNr.">@product.ProductID</td>
+                <td data-label="Proudct">@product.ProductName</td>
+                <td><img src="~/images/@product.ProductImage" width="150" height="150" /></td>                
+                <td data-label="Prijs">€@product.ProductPrice</td>
+                <td data-label="Voorraad">@product.ProductQuantity</td>
                 @if(product.ProductQuantity > 0)
                 {
                 <td>
