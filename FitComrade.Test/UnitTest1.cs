@@ -57,6 +57,12 @@ namespace FitComrade.Test
             var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
                 .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
                 .Options;
+            Customer customer = new Customer
+            {
+                UserName = "test",
+                Password = "test",
+                CustomerEmail = "test@test.test"
+            };
 
             Workout workout = new Workout
             {
@@ -69,6 +75,10 @@ namespace FitComrade.Test
 
             using (var context = new Data.FitComradeContext(options))
             {
+                DataController dataController = new DataController(context);
+                dataController.Create(customer);
+                dataController.Login(session, customer);
+
                 BlogController blogController = new BlogController(context);
                 blogController.ControllerContext.HttpContext = mockHttpContext.Object;
                 blogController.CreateBlog(session);
@@ -93,6 +103,13 @@ namespace FitComrade.Test
                 .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
                 .Options;
 
+            Customer customer = new Customer
+            {
+                UserName = "test",
+                Password = "test",
+                CustomerEmail = "test@test.test"
+            };
+
             Workout workout = new Workout
             {
                 WorkoutName = "Fietsen",
@@ -104,6 +121,10 @@ namespace FitComrade.Test
 
             using (var context = new Data.FitComradeContext(options))
             {
+                DataController dataController = new DataController(context);
+                dataController.Create(customer);
+                dataController.Login(session, customer);
+
                 BlogController blogController = new BlogController(context);
                 blogController.ControllerContext.HttpContext = mockHttpContext.Object;
                 blogController.CreateBlog(session);

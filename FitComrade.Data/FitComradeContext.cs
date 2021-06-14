@@ -14,11 +14,11 @@ namespace FitComrade.Data
         {
         }
 
-        public FitComradeContext (DbContextOptions<FitComradeContext> options)
+        public FitComradeContext(DbContextOptions<FitComradeContext> options)
             : base(options)
         {
         }
-                
+
         //MSSQL Tables
 
         public DbSet<Product> Products { get; set; }
@@ -30,7 +30,7 @@ namespace FitComrade.Data
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderDetail> OrderDetails { get; set; }
-             
+
         public DbSet<Blog> Blogs { get; set; }
 
         public DbSet<Workout> Workouts { get; set; }

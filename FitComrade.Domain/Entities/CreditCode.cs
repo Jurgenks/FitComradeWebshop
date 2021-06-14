@@ -9,6 +9,7 @@ namespace FitComrade.Domain.Entities
     {
         public int CreditCodeID { get; private set; }
 
+        [DataType(DataType.Currency)]
         public decimal CreditValue { get; set; }
 
         public string CreditCodeString { get; set; }

@@ -11,7 +11,7 @@ namespace FitComrade.Domain.Entities
 
         [DataType(DataType.PostalCode)]
         public string PostalCode { get; set; }
-        
+
         public string Adress { get; set; }
 
         public int OrderID { get; set; }

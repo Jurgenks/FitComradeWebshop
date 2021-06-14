@@ -26,6 +26,8 @@ namespace FitComrade.Domain.Entities
         public List<Order> Orders { get; set; }
 
         public Credit Credit { get; set; }
+
+        public Blog Blog { get; set; }
         
     }
 }

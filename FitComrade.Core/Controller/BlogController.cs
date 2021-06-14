@@ -29,15 +29,18 @@ namespace FitComrade.Core.Controller
                 //Ontvang profile
                 int profileID = (int)session.GetInt32("profileID");
                 string userName = session.GetString("userName");
+                var profile = _context.Customers.FirstOrDefault(item => item.CustomerID.Equals(profileID));
 
-                Blog blog = new Blog();
-                blog.BlogName = userName;
-                blog.CustomerID = profileID;
+                profile.Blog = new Blog
+                {
+                    BlogName = userName,
+                    CustomerID = profileID
+                };
 
                 //Create Blog
-                _context.Blogs.Add(blog);
+                _context.Customers.Attach(profile).State = EntityState.Modified;
                 _context.SaveChanges();
-                return blog;
+                return profile.Blog;
             }
             return null;
         }
@@ -80,5 +83,7 @@ namespace FitComrade.Core.Controller
             }
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }

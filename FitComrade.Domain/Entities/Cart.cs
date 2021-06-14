@@ -7,7 +7,6 @@ namespace FitComrade.Domain.Entities
 {
     public class Cart
     {
-        public string CartID { get; set; }
         public List<Product> Products { get; set; }
 
         public decimal Total()  //Ontvang alle prijzen van de List<Product>
@@ -20,7 +19,6 @@ namespace FitComrade.Domain.Entities
             }
             return Total;
         }
-        
-        
+
     }
 }
