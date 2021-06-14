@@ -19,15 +19,17 @@ namespace FitComrade.Pages.Account.ProductManager
         {
             _context = context;
         }
-        public SessionUser user = new SessionUser();
-        public IList<Product> Products { get;set; }
+
+        private SessionUser sessionUser = new SessionUser();
+
+        public IList<Product> Products { get; private set; }
 
         public List<OrderDetail> OrderDetails { get; private set; }
 
         public async Task OnGetAsync()
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if (user.ProfileID == 1)
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
+            if (sessionUser.ProfileID == 1)
             {
                 Products = await _context.Products.ToListAsync();
 
@@ -37,9 +39,9 @@ namespace FitComrade.Pages.Account.ProductManager
             {
                 Response.Redirect("/");
             }
-            
+
         }
-        
-        
+
+
     }
 }

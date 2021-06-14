@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "Home page";
     string comrade = "Comrade";
-    if (Model.user.UserName != null)
+    if (Model.SessionUser.UserName != null)
     {
-        comrade = Model.user.UserName;
+        comrade = Model.SessionUser.UserName;
     }
 
 }

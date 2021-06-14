@@ -23,24 +23,25 @@ namespace FitComrade.Pages.Account.Credits
         [BindProperty]
         public CreditCode CreditCode { get; set; }
 
-        public SessionUser user = new SessionUser();
+        private SessionUser sessionUser = new SessionUser();
 
         public void OnGet()
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if (user.ProfileID == 0)
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
+            if (sessionUser.ProfileID == 0)
             {
                 Response.Redirect("/");
-            }           
+            }
 
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
-            if(CreditCode.CreditCodeString != null && CreditCode.CreditCodeString.Length <= 10)
+            if (CreditCode.CreditCodeString != null && CreditCode.CreditCodeString.Length <= 10)
             {
                 CreditController creditController = new CreditController(_context);
                 bool succes = creditController.RedeemCode(HttpContext.Session, CreditCode);
-                if(succes == true)
+                if (succes == true)
                 {
                     await _context.SaveChangesAsync();
                     return RedirectToPage("/Account/Index");
@@ -49,7 +50,7 @@ namespace FitComrade.Pages.Account.Credits
                 {
                     return Page();
                 }
-                             
+
             }
             else
             {

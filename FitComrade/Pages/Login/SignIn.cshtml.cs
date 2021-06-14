@@ -20,32 +20,33 @@ namespace FitComrade.Pages.Login
             _context = context;
         }
 
-        public SessionUser user = new SessionUser();
+        private SessionUser sessionUser = new SessionUser();
+
         [BindProperty]
         public Customer Profile { get; set; }
-        
 
         public void OnGet()
         {
         }
+
         public IActionResult OnPost()
-        {            
+        {
             DataController dataController = new DataController(_context);
 
             //Check of inloggegevens kloppen
             bool Succes = dataController.Login(HttpContext.Session, Profile);
 
-            if(Succes == true && user.GetAttemptLogin(HttpContext.Session) < 5) //Login succes en wordt doorgestuurd naar Account
+            if (Succes == true && sessionUser.GetAttemptLogin(HttpContext.Session) < 5) //Login succes en wordt doorgestuurd naar Account
             {
-                user = user.GetSession(HttpContext.Session, user);
+                sessionUser = sessionUser.GetSession(HttpContext.Session);
                 return RedirectToPage("/Account/Index");
             }
             else //Login fout wordt opgeteld in de sessie
-            {                
-                user.AttemptLogin(HttpContext.Session); 
+            {
+                sessionUser.AttemptLogin(HttpContext.Session);
                 return Page();
             }
-            
+
         }
     }
 }

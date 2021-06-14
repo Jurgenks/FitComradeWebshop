@@ -21,29 +21,29 @@ namespace FitComrade.Pages.Account.Orders
             _context = context;
         }
 
-        public List<Order> Order { get;set; }
+        public List<Order> Order { get; set; }
 
-        public SessionUser user = new SessionUser();
+        public SessionUser SessionUser = new SessionUser();
 
         public async Task OnGetAsync() //Bij bezoek van pagina worden de orders van de customer opgehaald
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if(user.ProfileID == 0)
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+            if (SessionUser.ProfileID == 0)
             {
                 Response.Redirect("/");
             }
-            var data = _context.Orders.Where(order=>order.CustomerID.Equals(user.CustomerID));
+            var data = _context.Orders.Where(order => order.CustomerID.Equals(SessionUser.CustomerID));
             if (data.Count() > 0)
             {
                 Order = await data.ToListAsync();
-            }            
-            
+            }
+
         }
         public async Task OnGetConfirmAsync(int id) //Na het bevestigen van de Order is het klaar voor verzameling
         {
-            user = user.GetSession(HttpContext.Session, user);
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
 
-            if(user.ProfileID == 1)
+            if (SessionUser.ProfileID == 1)
             {
                 var order = _context.Orders.Where(s => s.OrderID.Equals(id)).FirstOrDefault();
 
@@ -61,13 +61,13 @@ namespace FitComrade.Pages.Account.Orders
             {
                 await OnGetAsync();
             }
-            
+
         }
         public async Task OnGetDismissed(int id) //Bij het bevestigen van de order naar "Dismissed" wordt de voorraad teruggehaald
         {
-            user = user.GetSession(HttpContext.Session, user);
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
 
-            if (user.ProfileID > 0)
+            if (SessionUser.ProfileID > 0)
             {
                 var order = _context.Orders.Where(s => s.OrderID.Equals(id)).FirstOrDefault();
 
@@ -75,7 +75,7 @@ namespace FitComrade.Pages.Account.Orders
 
                 dataController.RetourOrder(order);
 
-                var data = _context.Orders.Where(order => order.CustomerID.Equals(user.CustomerID));
+                var data = _context.Orders.Where(order => order.CustomerID.Equals(SessionUser.CustomerID));
                 if (data.Count() > 0)
                 {
                     Order = await data.ToListAsync();
@@ -89,11 +89,11 @@ namespace FitComrade.Pages.Account.Orders
         }
         public async Task OnGetAllOrdersAsync() // Haalt alle orders op
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if(user.ProfileID == 1)
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+            if (SessionUser.ProfileID == 1)
             {
                 var data = _context.Orders;
-                if(data.Count()>0)
+                if (data.Count() > 0)
                 {
                     Order = await data.ToListAsync();
                 }

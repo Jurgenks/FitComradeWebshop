@@ -1,6 +1,6 @@
 ﻿@page
 @model FitComrade.Pages.Shop.CheckoutModel
-@{    
+@{
 }
 <head>
     <link rel="stylesheet" href="~/css/CheckoutStyle.css" />
@@ -23,7 +23,7 @@
                             <input asp-for="Customer.CustomerName" class="form-control" />
                             <span asp-validation-for="Customer.CustomerName" class="text-danger"></span>
                         </div>
-                        @if (Model.user.ProfileID == 0)
+                        @if (Model.SessionUser.ProfileID == 0)
                         {
                             <div class="form-group">
                                 <label asp-for="Customer.CustomerEmail" class="control-label">E-Mail</label>
@@ -55,13 +55,22 @@
                         <div class="form-group">
                             <label asp-for="Payment.PaymentMethod" class="control-label">Betaalmethode</label>
                             <select asp-for="Payment.PaymentMethod" class="form-control">
-                                <option id="IDEAL">IDEAL</option>
-                                <option id="CREDITS">Credits</option>
+                                @foreach (var payMethod in Model.Payments)
+                                {
+                                    if (payMethod.PaymentMethod != "Credits")
+                                    {
+                                        <option id="@payMethod.PaymentMethod">@payMethod.PaymentMethod</option>
+                                    }
+                                    else if (Model.SessionUser.ProfileID > 0)
+                                    {
+                                        <option id="@payMethod.PaymentMethod">@payMethod.PaymentMethod</option>
+                                    }
+                                }
                             </select>
                         </div>
 
-                        
-                        
+
+
                     </div>
                 </div>
                 <label>
@@ -72,7 +81,8 @@
         </div>
     </div>
 
-    @if(Model.Cart.Products != null){
+    @if (Model.Cart.Products != null)
+    {
         decimal TotalPrice = 0;
         <div class="col-25">
             <div class="container">

@@ -24,7 +24,7 @@ namespace FitComrade.Pages.Account.ProductManager
         }
 
         [BindProperty]
-        public Product Products { get; set; }
+        public Product Products { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

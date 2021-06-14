@@ -52,7 +52,7 @@ namespace FitComrade.Core.Controller
                 return false;
             }
 
-            if(session.GetInt32("customerID") == 1)
+            if(session.GetInt32("profileID") == 1)
             {
                 var creditCodes = _context.CreditCodes.Where(item=>item.CreditCodeString.Equals(creditCode.CreditCodeString)).ToList();
 
@@ -76,7 +76,7 @@ namespace FitComrade.Core.Controller
 
         public void DeleteCode(ISession session, CreditCode creditCode)
         {
-            if(session.GetInt32("customerID") == 1)
+            if(session.GetInt32("profileID") == 1)
             {
                 _context.CreditCodes.Remove(creditCode);
                 _context.SaveChangesAsync();

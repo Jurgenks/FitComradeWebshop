@@ -14,62 +14,69 @@ namespace FitComrade.Models
         public int CustomerID { get; set; }
         public int AdressID { get; set; }
         public string UserName { get; set; }
-        
-        public SessionUser GetSession(ISession session, SessionUser sessionUser)
+
+        public SessionUser GetSession(ISession session)
         {
-            
-            if(session.Keys.Contains("sessionUserID"))
+
+            if (session.Keys.Contains("sessionUserID"))
             {
-                sessionUser.SessionUserID = session.GetString("sessionUserID");
+                this.SessionUserID = session.GetString("sessionUserID");
             }
             else
             {
                 session.SetString("sessionUserID", session.Id);
-                sessionUser.SessionUserID = session.GetString("sessionUserID");
+                this.SessionUserID = session.GetString("sessionUserID");
             }
 
             if (session.Keys.Contains("profileID"))
             {
-                sessionUser.ProfileID = (int)session.GetInt32("profileID");
-            } 
-            if(session.Keys.Contains("cartID"))
-            {
-                sessionUser.CartID = session.GetString("cartID");
+                this.ProfileID = (int)session.GetInt32("profileID");
             }
-            if(session.Keys.Contains("customerID"))
+
+            if (session.Keys.Contains("cartID"))
             {
-                sessionUser.CustomerID = (int)session.GetInt32("customerID");
+                this.CartID = session.GetString("cartID");
             }
+
+            if (session.Keys.Contains("customerID"))
+            {
+                this.CustomerID = (int)session.GetInt32("customerID");
+            }
+
             if (session.Keys.Contains("adressID"))
             {
-                sessionUser.AdressID = (int)session.GetInt32("adressID");
+                this.AdressID = (int)session.GetInt32("adressID");
             }
+
             if (session.Keys.Contains("userName"))
             {
-                sessionUser.UserName = session.GetString("userName");
+                this.UserName = session.GetString("userName");
             }
-            
-            
-            return sessionUser;
+
+
+            return this;
         }
+
         public void LogOutSession(ISession session)
-        {                
+        {
             session.Clear();
         }
+
         public void AttemptLogin(ISession session)
         {
-            if(session.Keys.Contains("attempts"))
+            if (session.Keys.Contains("attempts"))
             {
-               session.SetInt32("attempts", (int)session.GetInt32("attempts") + 1);               
+                session.SetInt32("attempts", (int)session.GetInt32("attempts") + 1);
             }
             else
             {
-                session.SetInt32("attempts", 1);                
+                session.SetInt32("attempts", 1);
             }
         }
+
         public int GetAttemptLogin(ISession session)
         {
-            if(!session.Keys.Contains("attempts"))
+            if (!session.Keys.Contains("attempts"))
             {
                 session.SetInt32("attempts", 0);
             }

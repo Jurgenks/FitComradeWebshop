@@ -25,11 +25,11 @@ namespace FitComrade.Core.Controller
             _context.SaveChanges();
         }
 
-        public async Task<bool> DeleteProductAsync(int? id)
+        public async Task<bool> DeleteProductAsync(int? id) //Delete Product
         {
             var Products = await _context.Products.FindAsync(id);
 
-            var OrderDetails = _context.OrderDetails.Where(product=>product.ProductID.Equals(id)).ToList();
+            var OrderDetails = _context.OrderDetails.Where(product => product.ProductID.Equals(id)).ToList();
 
             if (Products != null && OrderDetails.Count == 0)
             {
@@ -44,8 +44,8 @@ namespace FitComrade.Core.Controller
             }
         }
 
-        public async Task UpdateProductAsync(Product Products)
-        {           
+        public async Task UpdateProductAsync(Product Products) //Update Product
+        {
 
             _context.Attach(Products).State = EntityState.Modified;
 
@@ -65,7 +65,8 @@ namespace FitComrade.Core.Controller
                 }
             }
         }
-        private bool ProductsExists(int id)
+
+        private bool ProductsExists(int id) //Check if Product Exists
         {
             return _context.Products.Any(e => e.ProductID == id);
         }

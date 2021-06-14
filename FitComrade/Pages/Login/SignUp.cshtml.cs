@@ -23,6 +23,7 @@ namespace FitComrade.Pages.Login
         public void OnGet()
         {
         }
+
         public IActionResult OnPost()
         {            
             if(Profile.Password == Match.Password)  //Check of registratie gegevens kloppen

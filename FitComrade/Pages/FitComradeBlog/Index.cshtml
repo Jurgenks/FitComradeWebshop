@@ -13,13 +13,13 @@
     {
         <a asp-page="Edit" asp-page-handler="CreateBlog">Start een Blog!</a>
     }
-    else if (Model.user.ProfileID > 0)
+    else if (Model.SessionUser.ProfileID > 0)
     {
         <a asp-page="Edit">Wijzig Blog</a>
     }
     <br />
     <br />
-    @if (Model.user.ProfileID == 1)
+    @if (Model.SessionUser.ProfileID == 1)
     {
         <a asp-page-handler="CheckNewPosts">Controlleer Blogs</a>
     }
@@ -61,7 +61,7 @@
                             <hr />
                             <h6>Uitleg:</h6>
                             <p>@workout.Discription</p>
-                            @if(Model.user.ProfileID == item.CustomerID || Model.user.CustomerID == 1)
+                            @if(Model.SessionUser.ProfileID == item.CustomerID || Model.SessionUser.ProfileID == 1)
                             { 
                                 <a asp-page="Edit" asp-page-handler="Edit" asp-route-id="@workout.WorkoutID">Aanpassen</a>
                             }                          

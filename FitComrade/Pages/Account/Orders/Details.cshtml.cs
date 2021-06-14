@@ -25,8 +25,8 @@ namespace FitComrade.Pages.Account.Orders
         public List<Payment> Payments;
         public List<CustomerAdress> CustomerAdress;
         public List<Product> Products;
-        private SessionUser user = new SessionUser();
-        
+        private SessionUser sessionUser = new SessionUser();
+
 
         public async Task<IActionResult> OnGetAsync(int? id) // Haalt OrderDetails op met specifiek id
         {
@@ -35,15 +35,15 @@ namespace FitComrade.Pages.Account.Orders
                 return NotFound();
             }
 
-            user = user.GetSession(HttpContext.Session, user);           
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
 
-            OrderDetail = await _context.OrderDetails.Where(m => m.OrderID.Equals(id)).ToListAsync(); 
-            
-            Products = await _context.Products.ToListAsync(); 
+            OrderDetail = await _context.OrderDetails.Where(m => m.OrderID.Equals(id)).ToListAsync();
+
+            Products = await _context.Products.ToListAsync();
 
             Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
 
-            if (Order == null || user.ProfileID != Order.CustomerID && user.ProfileID != 1) // Er zijn geen orders of gebruiker heeft geen toegang
+            if (Order == null || sessionUser.ProfileID != Order.CustomerID && sessionUser.ProfileID != 1) // Er zijn geen orders of gebruiker heeft geen toegang
             {
                 return NotFound();
             }
@@ -54,7 +54,7 @@ namespace FitComrade.Pages.Account.Orders
 
             CustomerAdress = await _context.CustomerAdresses.ToListAsync();
 
-            
+
             return Page();
         }
     }

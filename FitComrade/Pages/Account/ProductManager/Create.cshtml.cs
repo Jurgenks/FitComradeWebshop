@@ -21,12 +21,13 @@ namespace FitComrade.Pages.Account.ProductManager
             _context = context;
         }
 
+        private SessionUser sessionUser = new SessionUser();
+
         public IActionResult OnGet()
         {
-            SessionUser user = new SessionUser();
-            user = user.GetSession(HttpContext.Session,user);
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
 
-            if(user.ProfileID == 1)
+            if (sessionUser.ProfileID == 1)
             {
                 return Page();
             }
@@ -34,12 +35,12 @@ namespace FitComrade.Pages.Account.ProductManager
             {
                 return NotFound();
             }
-            
+
         }
 
         [BindProperty]
-        public Product Products { get; set; }
-        
+        public Product Products { get; private set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -48,6 +49,7 @@ namespace FitComrade.Pages.Account.ProductManager
             }
 
             ProductController productController = new ProductController(_context);
+
             productController.AddProduct(Products);
             await _context.SaveChangesAsync();
 

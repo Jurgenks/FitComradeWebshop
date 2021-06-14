@@ -21,32 +21,33 @@ namespace FitComrade.Pages.Shop
             _context = context;
         }
 
+        private List<Product> products;
+        private CartController cartController = new CartController();
+
         public Cart Cart = new Cart();
-        private List<Product> Products;
-        
         public decimal Total { get; private set; }  //Totaalprijs van Cart
 
         public void OnGet()
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            if(Cart.Products != null)
+            if (Cart.Products != null)
             {
                 Total = Cart.Total();
             }
-            
+
         }
 
         public IActionResult OnGetBuyNow(int id)
         {
-            Products = _context.Products.ToList();
+            products = _context.Products.ToList();
 
-            var product = Products.Where(item=>item.ProductID.Equals(id)).FirstOrDefault();
-            
+            var product = products.Where(item => item.ProductID.Equals(id)).FirstOrDefault();
+
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            CartController cartController = new CartController();
-            if(product == null || product.ProductQuantity == 0)
+
+            if (product == null || product.ProductQuantity == 0)
             {
                 return NotFound();
             }
@@ -70,8 +71,6 @@ namespace FitComrade.Pages.Shop
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            CartController cartController = new CartController();
-
             Cart.Products = cartController.RemoveFromCart(Cart.Products, id);
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
@@ -83,18 +82,16 @@ namespace FitComrade.Pages.Shop
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            if(Cart.Products != null)
+            if (Cart.Products != null)
             {
-                CartController cartController = new CartController();
-
                 Cart.Products = cartController.UpdateCart(Cart.Products, quantities);
 
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
-            }           
+            }
 
             return RedirectToPage("Cart");
         }
 
-        
+
     }
 }

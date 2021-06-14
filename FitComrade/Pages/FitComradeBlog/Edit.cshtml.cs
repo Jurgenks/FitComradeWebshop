@@ -20,20 +20,20 @@ namespace FitComrade.Pages.FitComradeBlog
             _context = context;
         }
         public Blog Blog { get; private set; }
-        public SessionUser user = new SessionUser();
+        public SessionUser SessionUser = new SessionUser();
 
         [BindProperty]
         public Workout Workout { get; set; }
 
         public void OnGet()
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if(user.ProfileID == 0)
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+            if(SessionUser.ProfileID == 0)
             {
                 Response.Redirect("/");
             }
             //Haalt de blog op van de ingelogde gebruiker
-            Blog = _context.Blogs.Where(item => item.CustomerID.Equals(user.ProfileID)).FirstOrDefault();
+            Blog = _context.Blogs.Where(item => item.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
         }
         public IActionResult OnGetCreateBlog()
         {
@@ -45,7 +45,7 @@ namespace FitComrade.Pages.FitComradeBlog
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            user = user.GetSession(HttpContext.Session, user);
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
 
             var oldWorkout = SessionHelper.GetObjectFromJson<Workout>(HttpContext.Session, "workout");
 
@@ -73,7 +73,7 @@ namespace FitComrade.Pages.FitComradeBlog
             }
             else  //Nieuwe Workout
             {
-                Blog = _context.Blogs.Where(b => b.CustomerID.Equals(user.ProfileID)).FirstOrDefault();
+                Blog = _context.Blogs.Where(b => b.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
 
                 BlogController blogController = new BlogController(_context);
 

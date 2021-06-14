@@ -37,7 +37,7 @@
                         <input asp-for="Workout.WorkoutVideo" class="form-control" />
                         <span asp-validation-for="Workout.WorkoutVideo" class="text-danger"></span>
                     </div>
-                    @if (Model.user.ProfileID == 1)
+                    @if (Model.SessionUser.ProfileID == 1)
                     {
                         <div class="form-group">
                             <label asp-for="Workout.Confirmed" class="control-label"></label>

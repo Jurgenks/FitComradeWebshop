@@ -23,7 +23,7 @@ namespace FitComrade.Core.Controller
         //Account
         public bool Login(ISession session, Customer profile) //Read Account
         {
-            
+
             var login = _context.Customers.FirstOrDefault(s => s.UserName.Equals(profile.UserName) && s.Password.Equals(profile.Password));
 
             if (login != null)
@@ -32,7 +32,7 @@ namespace FitComrade.Core.Controller
                 //Je huidige sessie ontvangen variabelen om toegang te verkrijgen
                 session.SetString("userName", profile.UserName);
                 session.SetInt32("profileID", login.CustomerID);
-                session.SetInt32("customerID", login.CustomerID);                
+                session.SetInt32("customerID", login.CustomerID);
                 //Login succes
                 return true;
             }
@@ -45,13 +45,13 @@ namespace FitComrade.Core.Controller
             var register = _context.Customers.Where(s => s.UserName.Equals(profile.UserName));
             //Check of profile al bestaat
             if (register.Count() == 0)
-            {                
+            {
                 _context.Customers.Add(profile);
                 _context.SaveChanges();
                 return true;
             }
             return false;
-        }        
+        }
 
         //Webshop
         public void RegisterCustomer(ISession session, Customer customer) //Create Customer
@@ -61,8 +61,8 @@ namespace FitComrade.Core.Controller
             if (session.Keys.Contains("customerID"))
             {
                 customerID = (int)session.GetInt32("customerID");
-            }            
-            if(customerID != 0)
+            }
+            if (customerID != 0)
             {
                 var logged = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
                 customer.CustomerEmail = logged.CustomerEmail;
@@ -73,21 +73,21 @@ namespace FitComrade.Core.Controller
             var register = _context.Customers.Where(s => s.CustomerEmail.Equals(customer.CustomerEmail));
 
             //Check of de customer bestaat
-            if(register.Count() == 0) //customer bestaat niet
+            if (register.Count() == 0) //customer bestaat niet
             {
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
 
-                var newCustomer = _context.Customers.FirstOrDefault(s=>s.CustomerEmail.Equals(customer.CustomerEmail));
-                
+                var newCustomer = _context.Customers.FirstOrDefault(s => s.CustomerEmail.Equals(customer.CustomerEmail));
+
                 session.SetInt32("customerID", newCustomer.CustomerID);
             }
-            else if(register.Count() > 0) //customer bestaat wel
+            else if (register.Count() > 0) //customer bestaat wel
             {
                 _context.Customers.Add(customer);
                 _context.SaveChanges();
 
-                var newCustomer = _context.Customers.FirstOrDefault(c => c.Equals(customer));               
+                var newCustomer = _context.Customers.FirstOrDefault(c => c.Equals(customer));
 
                 _context.Customers.Attach(newCustomer);
                 _context.SaveChanges();
@@ -97,7 +97,7 @@ namespace FitComrade.Core.Controller
                 return;
 
             }
-            
+
         }
 
         public void UpdateProfile(ISession session, Customer customer) // Update Profile CustomerID
@@ -111,7 +111,7 @@ namespace FitComrade.Core.Controller
 
             profile.CustomerPhone = customer.CustomerPhone;
 
-            profile.CustomerSurName = customer.CustomerSurName;                       
+            profile.CustomerSurName = customer.CustomerSurName;
 
             //Van het aangemaakte customer wordt het id ingesteld naar het profile en opgeslagen in de database
             //Update Profile
@@ -125,16 +125,16 @@ namespace FitComrade.Core.Controller
             //Haal customer op met customerID
             var customer = _context.Customers.FirstOrDefault(c => c.CustomerID.Equals(customerID));
             var paymentMethods = _context.Payments;
-            
+
             Order order = new Order();
             order.OrderDate = DateTime.Now;
             order.OrderPrice = cart.Total();
             order.CustomerAdress = customerAdress;
 
-            if (payment.PaymentMethod == paymentMethods.FirstOrDefault(item=>item.PaymentMethod.Equals("Credits")).PaymentMethod)
+            if (payment.PaymentMethod == paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("Credits")).PaymentMethod)
             {
-                var credits = _context.Credits.Where(item=>item.CustomerID.Equals(customer.CustomerID)).FirstOrDefault();
-                if(credits.CreditValue < order.OrderPrice)
+                var credits = _context.Credits.Where(item => item.CustomerID.Equals(customer.CustomerID)).FirstOrDefault();
+                if (credits.CreditValue < order.OrderPrice)
                 {
                     return;
                 }
@@ -142,24 +142,24 @@ namespace FitComrade.Core.Controller
                 order.OrderStatus = "Paid";
                 order.PaymentID = paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("Credits")).PaymentID;
             }
-            if(payment.PaymentMethod == paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("IDEAL")).PaymentMethod)
+            if (payment.PaymentMethod == paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("IDEAL")).PaymentMethod)
             {
                 order.OrderStatus = "Paid"; //fake
                 order.PaymentID = paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("IDEAL")).PaymentID;
             }
 
             if (order.OrderStatus == "Paid")
-            {              
+            {
                 List<OrderDetail> orderDetails = new List<OrderDetail>();
                 foreach (var item in cart.Products.Where(item => item != null)) //Create OrderDetail
-                {                    
+                {
                     orderDetails.Add(new OrderDetail
-                    {                        
-                        ProductID = item.ProductID,                        
+                    {
+                        ProductID = item.ProductID,
                         Quantity = item.ProductQuantity,
                         TotalPrice = item.ProductPrice * item.ProductQuantity
                     });
-                    
+
                 }
                 order.OrderDetails = orderDetails;
                 customer.Orders = new List<Order>();    //fixed bug customer.Orders == NULL
@@ -169,8 +169,8 @@ namespace FitComrade.Core.Controller
                 //Update Customers                
                 _context.Customers.Attach(customer).State = EntityState.Modified;
                 _context.SaveChanges();
-            }            
-            
+            }
+
         }
 
         public decimal GetSales(DateTime dateTime, string kind) //Read Sales from OrderDetail
@@ -178,7 +178,7 @@ namespace FitComrade.Core.Controller
             var Orders = _context.Orders.Where(o => o.OrderStatus != "Dismissed").ToList();
             var OrderDetails = _context.OrderDetails.Where(o => o.Order.OrderStatus != "Dismissed").ToList();
             decimal Sale = 0;
-            switch(kind)
+            switch (kind)
             {
                 case "Month":
                     //Haal alle orders op van de Maand
@@ -238,25 +238,25 @@ namespace FitComrade.Core.Controller
         public void UpdateStatus(Order order) //Update Order & Products
         {
             //Orders met de status "Paid" moeten hun producten nog afschrijven van de voorraad
-            if(order.OrderStatus == "Paid")
-            {               
+            if (order.OrderStatus == "Paid")
+            {
                 //Order met de status "Confirmed" zijn omgeboekt
                 order.OrderStatus = "Confirmed";
                 //Update OrderStatus
                 _context.Orders.Attach(order).State = EntityState.Modified;
                 _context.SaveChanges();
             }
-                    
+
         }
-        
+
         public void RetourOrder(Order order)
         {
-            if(order.OrderStatus == "Paid")
+            if (order.OrderStatus == "Paid")
             {
                 //Orders met de status "Dismissed" zijn afgewezen
                 order.OrderStatus = "Dismissed";
-                var credits = _context.Credits.Where(item=>item.CustomerID.Equals(order.CustomerID)).FirstOrDefault();
-                
+                var credits = _context.Credits.Where(item => item.CustomerID.Equals(order.CustomerID)).FirstOrDefault();
+
                 //Update OrderStatus
                 _context.Orders.Attach(order).State = EntityState.Modified;
                 credits.CreditValue += order.OrderPrice;
@@ -264,7 +264,7 @@ namespace FitComrade.Core.Controller
             }
         }
 
-        
-        
+
+
     }
 }

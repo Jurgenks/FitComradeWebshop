@@ -9,7 +9,7 @@
 </head>
 
 <h1>Bestellingen</h1>
-@if (Model.user.ProfileID == 1)
+@if (Model.SessionUser.ProfileID == 1)
 {
     <a asp-page-handler="AllOrders">Alle orders</a>
 }
@@ -55,11 +55,11 @@
                     </td>
                     <td>
                         <a asp-page="./Details" asp-route-id="@item.OrderID">Factuur</a>
-                        @if (Model.user.ProfileID == 1 && item.OrderStatus == "Paid")
+                        @if (Model.SessionUser.ProfileID == 1 && item.OrderStatus == "Paid")
                         {
                             <a asp-page-handler="Confirm" asp-route-id="@item.OrderID">Bevestig</a>
                         }
-                        @if(Model.user.ProfileID == item.CustomerID && item.OrderStatus == "Paid")
+                        @if(Model.SessionUser.ProfileID == item.CustomerID && item.OrderStatus == "Paid")
                         { 
                             <a asp-page-handler="Dismissed" asp-route-id="@item.OrderID">Retourneer</a>
                         }

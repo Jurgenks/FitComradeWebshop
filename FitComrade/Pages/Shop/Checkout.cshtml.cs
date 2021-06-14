@@ -6,66 +6,75 @@ using FitComrade.Models;
 using FitComrade.Helpers;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Controller;
+using FitComrade.Data;
+using System.Linq;
 
 namespace FitComrade.Pages.Shop
 {
     public class CheckoutModel : PageModel
     {
-        private readonly Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public CheckoutModel(Data.FitComradeContext context)
+        public CheckoutModel(FitComradeContext context)
         {
             _context = context;
         }
 
-        public Cart Cart = new Cart();
-        public SessionUser user = new SessionUser();
+        public SessionUser SessionUser = new SessionUser();
 
+        public Cart Cart = new Cart();
         [BindProperty]
         public Customer Customer { get; set; }
         [BindProperty]
-        public CustomerAdress CustomerAdress { get; set; } 
+        public CustomerAdress CustomerAdress { get; set; }
         [BindProperty]
         public Payment Payment { get; set; }
+
+        public List<Payment> Payments { get; private set; }
 
 
         public void OnGet()
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
-            user = user.GetSession(HttpContext.Session, user);
+
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
 
-            if(Cart.Products == null || Cart.Products.Count == 0)
+            Payments = _context.Payments.ToList();
+
+            if (Cart.Products == null || Cart.Products.Count == 0)
             {
                 Response.Redirect("/");
             }
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
             DataController dataController = new DataController(_context);
 
-            Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");          
+            Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
             dataController.RegisterCustomer(HttpContext.Session, Customer);
 
-            user = user.GetSession(HttpContext.Session, user);
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
 
-            if (user.CustomerID != 0)
+            if (SessionUser.CustomerID != 0)
             {
-                if (user.ProfileID != 0)
+                if (SessionUser.ProfileID != 0)
                 {
                     dataController.UpdateProfile(HttpContext.Session, Customer);
                 }
                 dataController.PlaceOrder(HttpContext.Session, Cart, CustomerAdress, Payment);
             }
             await _context.SaveChangesAsync();
+
             return RedirectToPage("/Index");
         }
-        
+
     }
 }

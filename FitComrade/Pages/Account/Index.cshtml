@@ -2,20 +2,20 @@
 @model FitComrade.Pages.Account.IndexModel
 @{
     ViewData["Title"] = "Account";
-    
+
 }
 
-<body>      
+<body>
     <div class="row">
         <div class="col-6">
-            @if (Model.user.ProfileID == 0)
+            @if (Model.SessionUser.ProfileID == 0)
             {
                 <h2><a asp-page="/Login/SignIn">Sign In</a></h2>
                 <p>Heeft u geen account klik dan op <a asp-page="/Login/SignUp">SignUp</a></p>
             }
             else
             {
-                <h5>Profiel: @Model.user.UserName</h5>
+                <h5>Profiel: @Model.SessionUser.UserName</h5>
                 <br />
                 <h3><a asp-page="Orders/Invoice">Bestellingen</a></h3>
                 <br />
@@ -26,9 +26,9 @@
             }
         </div>
         <div class="col-6">
-            @if (Model.user.ProfileID == 1) // Admin
+            @if (Model.SessionUser.ProfileID == 1) // Admin
             {
-                <h5>Admin: @Model.user.ProfileID</h5>
+                <h5>Admin: @Model.SessionUser.ProfileID</h5>
                 <br />
                 <h3><a asp-page="ProductManager/Index">ProductManager</a></h3>
                 <h3><a asp-page="Credits/Index">Credits</a></h3>

@@ -21,18 +21,20 @@ namespace FitComrade.Pages.Account.Profits
         public List<Product> Products;
         public List<OrderDetail> OrderDetails;
         public List<Order> Orders;
-        public SessionUser user = new SessionUser();
+        private SessionUser sessionUser = new SessionUser();
+
         public decimal sale, purchase, profit;
         public decimal DaySale, MonthSale, YearSale;     
         
 
         public void OnGet()
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if(user.ProfileID != 1)
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
+            if(sessionUser.ProfileID != 1)
             {
                 Response.Redirect("/");
             }
+
             Products = _context.Products.ToList();
 
             OrderDetails = _context.OrderDetails.Where(o=>o.Order.OrderStatus != "Dismissed").ToList();

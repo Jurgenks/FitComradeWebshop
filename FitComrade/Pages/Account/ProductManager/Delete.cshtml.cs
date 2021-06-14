@@ -22,7 +22,7 @@ namespace FitComrade.Pages.Account.ProductManager
         }
 
         [BindProperty]
-        public Product Products { get; set; }
+        public Product Products { get; private set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -49,7 +49,7 @@ namespace FitComrade.Pages.Account.ProductManager
 
             ProductController productController = new ProductController(_context);
             bool delete = await productController.DeleteProductAsync(id);
-            if(delete == false)
+            if (delete == false)
             {
                 return NotFound();
             }

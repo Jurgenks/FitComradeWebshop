@@ -7,7 +7,7 @@ using System.Text;
 namespace FitComrade.Core.Controller
 {
     public class CartController
-    {       
+    {
 
         public List<Product> NewCart(Product product)
         {
@@ -23,7 +23,7 @@ namespace FitComrade.Core.Controller
             return Products;
         }
 
-        public List<Product> AddToCart(List<Product> Products,Product product)
+        public List<Product> AddToCart(List<Product> Products, Product product)
         {
             int index = Exists(Products, product.ProductID);
 

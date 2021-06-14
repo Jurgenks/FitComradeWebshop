@@ -12,15 +12,16 @@ namespace FitComrade.Pages
 {
     public class IndexModel : PageModel
     {
-        public SessionUser user = new SessionUser();
-        
+        public SessionUser SessionUser = new SessionUser();
+
         public void OnGet()
         {
-            user = user.GetSession(HttpContext.Session, user);            
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
         }
         public IActionResult OnGetLogOut()
         {
-            user.LogOutSession(HttpContext.Session);
+            SessionUser.LogOutSession(HttpContext.Session);
+
             return Page();
         }
 

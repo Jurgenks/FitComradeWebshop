@@ -22,17 +22,17 @@ namespace FitComrade.Pages.Account.Credits
 
         public List<CreditCode> CreditCodes { get; set; }
 
-        public SessionUser user = new SessionUser();
+        private SessionUser sessionUser = new SessionUser();
 
         public async Task OnGet()
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if (user.ProfileID != 1)
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
+            if (sessionUser.ProfileID != 1)
             {
                 Response.Redirect("/");
             }
 
             CreditCodes = await _context.CreditCodes.ToListAsync();
-        }        
+        }
     }
 }

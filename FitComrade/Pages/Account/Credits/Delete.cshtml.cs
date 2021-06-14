@@ -24,13 +24,13 @@ namespace FitComrade.Pages.Account.Credits
         [BindProperty]
         public CreditCode CreditCode { get; set; }
 
-        public SessionUser user = new SessionUser();
+        private SessionUser sessionUser = new SessionUser();
 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if (user.ProfileID != 1)
+            sessionUser = sessionUser.GetSession(HttpContext.Session);
+            if (sessionUser.ProfileID != 1)
             {
                 Response.Redirect("/");
             }

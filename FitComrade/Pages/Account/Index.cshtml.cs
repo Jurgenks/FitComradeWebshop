@@ -20,7 +20,7 @@ namespace FitComrade.Pages.Account
             _context = context;
         }
 
-        public SessionUser user = new SessionUser();
+        public SessionUser SessionUser = new SessionUser();
 
         public Customer Customer { get; set; }
 
@@ -28,11 +28,11 @@ namespace FitComrade.Pages.Account
 
         public void OnGet()
         {
-            user = user.GetSession(HttpContext.Session, user);
-            if(user.ProfileID != 0)
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+            if(SessionUser.ProfileID != 0)
             {
-                Customer = _context.Customers.FirstOrDefault(item => item.CustomerID.Equals(user.ProfileID));
-                Credits = _context.Credits.FirstOrDefault(item => item.CustomerID.Equals(user.ProfileID));
+                Customer = _context.Customers.FirstOrDefault(item => item.CustomerID.Equals(SessionUser.ProfileID));
+                Credits = _context.Credits.FirstOrDefault(item => item.CustomerID.Equals(SessionUser.ProfileID));
             }
 
         }

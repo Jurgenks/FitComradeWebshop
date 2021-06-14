@@ -3,11 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using FitComrade.Domain.Entities;
 using System.Collections.Generic;
-using FitComrade.Core;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Linq;
-using FitComrade.Pages.Shop;
 using FitComrade.Helpers;
 using FitComrade.Core.Controller;
 
