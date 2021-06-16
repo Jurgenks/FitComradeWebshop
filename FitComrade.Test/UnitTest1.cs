@@ -36,7 +36,7 @@ namespace FitComrade.Test
             //Act
             using (var context = new Data.FitComradeContext(options))
             {
-                ProductController productController = new ProductController(context);
+                ProductService productController = new ProductService(context);
                 productController.ControllerContext.HttpContext = mockHttpContext.Object;
                 productController.AddProduct(product);
 

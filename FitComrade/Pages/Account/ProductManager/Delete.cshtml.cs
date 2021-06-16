@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
-using FitComrade.Models;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Services;
-using FitComrade.Core.Controllers;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
@@ -48,8 +43,8 @@ namespace FitComrade.Pages.Account.ProductManager
                 return NotFound();
             }
 
-            ProductController productController = new ProductController(_context);
-            bool delete = await productController.DeleteProductAsync(id);
+            ProductService productService = new ProductService(_context);
+            bool delete = await productService.DeleteProductAsync(id);
             if (delete == false)
             {
                 return NotFound();

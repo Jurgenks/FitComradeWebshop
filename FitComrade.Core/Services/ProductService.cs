@@ -1,20 +1,16 @@
 ﻿using FitComrade.Data;
 using FitComrade.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FitComrade.Core.Controllers
+namespace FitComrade.Core.Services
 {
-    public class ProductController : ControllerBase
+    public class ProductService
     {
         private readonly FitComradeContext _context;
 
-        public ProductController(FitComradeContext context)
+        public ProductService(FitComradeContext context)
         {
             _context = context;
         }
@@ -57,7 +53,7 @@ namespace FitComrade.Core.Controllers
             {
                 if (!ProductsExists(Products.ProductID))
                 {
-                    NotFound();
+                    return;
                 }
                 else
                 {

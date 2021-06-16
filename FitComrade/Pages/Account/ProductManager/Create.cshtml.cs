@@ -9,7 +9,6 @@ using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Services;
-using FitComrade.Core.Controllers;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
@@ -49,7 +48,7 @@ namespace FitComrade.Pages.Account.ProductManager
                 return Page();
             }
 
-            ProductController productController = new ProductController(_context);
+            ProductService productController = new ProductService(_context);
 
             productController.AddProduct(Products);
             await _context.SaveChangesAsync();
