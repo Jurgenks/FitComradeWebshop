@@ -374,7 +374,6 @@ C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitCom
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
-C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\obj\Debug\netcoreapp3.1\FitComrade.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Domain.dll
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Domain.pdb
 C:\Users\jurge\Documents\MEGAsync\Laptop\Fontys\Semester 2\Project\GitHub\FitComradeWebshop\FitComrade\bin\Debug\netcoreapp3.1\FitComrade.Core.dll

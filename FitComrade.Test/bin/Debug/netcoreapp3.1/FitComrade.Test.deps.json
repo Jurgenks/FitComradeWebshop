@@ -2391,7 +2391,6 @@
       "FitComrade/1.0.0": {
         "dependencies": {
           "FitComrade.Core": "1.0.0",
-          "FitComrade.Data": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.13",
           "Microsoft.EntityFrameworkCore.Sqlite": "3.1.13",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "3.1.5"

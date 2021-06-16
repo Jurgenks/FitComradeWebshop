@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using FitComrade.Helpers;
 using FitComrade.Core.Services;
-using FitComrade.Core.Controllers;
 
 namespace FitComrade.Test
 {
@@ -37,7 +36,6 @@ namespace FitComrade.Test
             using (var context = new Data.FitComradeContext(options))
             {
                 ProductService productController = new ProductService(context);
-                productController.ControllerContext.HttpContext = mockHttpContext.Object;
                 productController.AddProduct(product);
 
                 var Products = context.Products;

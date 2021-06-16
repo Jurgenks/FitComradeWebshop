@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
+using FitComrade.Core.Services;
 
 namespace FitComrade
 {
@@ -31,6 +32,7 @@ namespace FitComrade
             services.AddDbContext<FitComradeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FitComradeContext"), b=>b.MigrationsAssembly("FitComrade.Data")));
             services.AddDistributedMemoryCache();
+            services.AddScoped<IDataService, DataService>();
 
             services.AddSession(options =>
             {
