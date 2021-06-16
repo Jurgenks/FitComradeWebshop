@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitComrade.Core.Controller
+namespace FitComrade.Core.Services
 {
-    public class ProductController : ControllerBase
+    public class ProductService : ControllerBase
     {
         private readonly FitComradeContext _context;
 
-        public ProductController(FitComradeContext context)
+        public ProductService(FitComradeContext context)
         {
             _context = context;
         }

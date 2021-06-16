@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using FitComrade.Models;
@@ -41,7 +41,7 @@ namespace FitComrade.Pages.Account.Credits
                 return Page();
             }
 
-            CreditController creditController = new CreditController(_context);
+            CreditService creditController = new CreditService(_context);
             bool created = creditController.CreateCode(HttpContext.Session, CreditCode);
 
             if (created == true)

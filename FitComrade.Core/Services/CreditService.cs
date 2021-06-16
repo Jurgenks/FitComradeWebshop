@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace FitComrade.Core.Controller
+namespace FitComrade.Core.Services
 {
-    public class CreditController : ControllerBase
+    public class CreditService
     {
         private readonly FitComradeContext _context;
 
-        public CreditController(FitComradeContext context)
+        public CreditService(FitComradeContext context)
         {
             _context = context;
         }

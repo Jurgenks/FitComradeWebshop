@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FitComrade.Core.Controller
+namespace FitComrade.Core.Services
 {
-    public class CartController
+    public class CartService
     {
 
         public List<Product> NewCart(Product product)

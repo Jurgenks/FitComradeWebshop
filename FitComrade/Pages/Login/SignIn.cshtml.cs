@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Login
 {
     public class SignInModel : PageModel
     {
-        private readonly Data.FitComradeContext _context;
+        private readonly FitComradeContext _context;
 
-        public SignInModel(Data.FitComradeContext context)
+        public SignInModel(FitComradeContext context)
         {
             _context = context;
         }
@@ -31,10 +31,10 @@ namespace FitComrade.Pages.Login
 
         public IActionResult OnPost()
         {
-            DataController dataController = new DataController(_context);
+            AccountService accountService = new AccountService(_context);
 
             //Check of inloggegevens kloppen
-            bool Succes = dataController.Login(HttpContext.Session, Profile);
+            bool Succes = accountService.LoginProfile(HttpContext.Session, Profile);
 
             if (Succes == true && sessionUser.GetAttemptLogin(HttpContext.Session) < 5) //Login succes en wordt doorgestuurd naar Account
             {

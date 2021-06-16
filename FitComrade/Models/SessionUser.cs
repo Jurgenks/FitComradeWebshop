@@ -8,12 +8,15 @@ namespace FitComrade.Models
 {
     public class SessionUser
     {
-        public string SessionUserID { get; set; }
-        public int ProfileID { get; set; }
-        public string CartID { get; set; }
-        public int CustomerID { get; set; }
-        public int AdressID { get; set; }
-        public string UserName { get; set; }
+        public string SessionUserID { get; private set; }
+
+        public int ProfileID { get; private set; }
+
+        public int CustomerID { get; private set; }
+
+        public int AdressID { get; private set; }
+
+        public string UserName { get; private set; }
 
         public SessionUser GetSession(ISession session)
         {
@@ -31,11 +34,6 @@ namespace FitComrade.Models
             if (session.Keys.Contains("profileID"))
             {
                 this.ProfileID = (int)session.GetInt32("profileID");
-            }
-
-            if (session.Keys.Contains("cartID"))
-            {
-                this.CartID = session.GetString("cartID");
             }
 
             if (session.Keys.Contains("customerID"))

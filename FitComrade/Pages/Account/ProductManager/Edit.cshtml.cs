@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
-using FitComrade.Models;
 using FitComrade.Domain.Entities;
-using FitComrade.Core;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
@@ -50,7 +44,7 @@ namespace FitComrade.Pages.Account.ProductManager
                 return Page();
             }
 
-            ProductController productController = new ProductController(_context);
+            ProductService productController = new ProductService(_context);
             await productController.UpdateProductAsync(Products);
 
             return RedirectToPage("./Index");

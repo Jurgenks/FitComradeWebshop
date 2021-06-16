@@ -6,8 +6,7 @@ using FitComrade.Models;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
-using FitComrade.Core;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 using FitComrade.Helpers;
 
 namespace FitComrade.Pages.FitComradeBlog
@@ -37,7 +36,7 @@ namespace FitComrade.Pages.FitComradeBlog
         }
         public IActionResult OnGetCreateBlog()
         {
-            BlogController blogController = new BlogController(_context);
+            BlogService blogController = new BlogService(_context);
 
             Blog = blogController.CreateBlog(HttpContext.Session);
 
@@ -61,7 +60,7 @@ namespace FitComrade.Pages.FitComradeBlog
                     oldWorkout.Discription = Workout.Discription;
                     oldWorkout.Confirmed = Workout.Confirmed;
 
-                    BlogController blogController = new BlogController(_context);
+                    BlogService blogController = new BlogService(_context);
 
                     await blogController.AddWorkoutToBlogAsync(Blog.BlogID, oldWorkout);
                 }
@@ -75,7 +74,7 @@ namespace FitComrade.Pages.FitComradeBlog
             {
                 Blog = _context.Blogs.Where(b => b.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
 
-                BlogController blogController = new BlogController(_context);
+                BlogService blogController = new BlogService(_context);
 
                 await blogController.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
             }

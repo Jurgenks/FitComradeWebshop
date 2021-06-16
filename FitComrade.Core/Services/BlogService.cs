@@ -9,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitComrade.Core.Controller
+namespace FitComrade.Core.Services
 {
-    public class BlogController : ControllerBase
+    public class BlogService
     {
         private readonly FitComradeContext _context;
 
-        public BlogController(FitComradeContext context)
+        public BlogService(FitComradeContext context)
         {
             _context = context;
         }

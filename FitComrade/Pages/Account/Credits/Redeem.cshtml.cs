@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using FitComrade.Models;
@@ -39,7 +39,7 @@ namespace FitComrade.Pages.Account.Credits
         {
             if (CreditCode.CreditCodeString != null && CreditCode.CreditCodeString.Length <= 10)
             {
-                CreditController creditController = new CreditController(_context);
+                CreditService creditController = new CreditService(_context);
                 bool succes = creditController.RedeemCode(HttpContext.Session, CreditCode);
                 if (succes == true)
                 {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Account.Profits
 {
@@ -58,7 +58,7 @@ namespace FitComrade.Pages.Account.Profits
                 profit = purchase + sale;
             }
             
-            DataController dataController = new DataController(_context);
+            OrderService dataController = new OrderService(_context);
 
             DaySale = dataController.GetSales(DateTime.Today, "Day");
 

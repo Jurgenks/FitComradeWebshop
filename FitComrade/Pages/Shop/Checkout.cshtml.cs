@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
 using FitComrade.Helpers;
 using FitComrade.Domain.Entities;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 using FitComrade.Data;
 using System.Linq;
 
@@ -55,7 +55,7 @@ namespace FitComrade.Pages.Shop
                 return Page();
             }
 
-            DataController dataController = new DataController(_context);
+            OrderService dataController = new OrderService(_context);
 
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 

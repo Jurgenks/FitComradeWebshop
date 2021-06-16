@@ -8,50 +8,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 
-namespace FitComrade.Core.Controller
+namespace FitComrade.Core.Services
 {
-    public class DataController : ControllerBase
+    public class OrderService
     {
         private readonly FitComradeContext _context;
 
-        public DataController(FitComradeContext context)
+        public OrderService(FitComradeContext context)
         {
             _context = context;
         }
 
-
-        //Account
-        public bool Login(ISession session, Customer profile) //Read Account
-        {
-
-            var login = _context.Customers.FirstOrDefault(s => s.UserName.Equals(profile.UserName) && s.Password.Equals(profile.Password));
-
-            if (login != null)
-            {
-
-                //Je huidige sessie ontvangen variabelen om toegang te verkrijgen
-                session.SetString("userName", profile.UserName);
-                session.SetInt32("profileID", login.CustomerID);
-                session.SetInt32("customerID", login.CustomerID);
-                //Login succes
-                return true;
-            }
-            //Login failed
-            return false;
-        }
-
-        public bool Create(Customer profile) // Create Account
-        {
-            var register = _context.Customers.Where(s => s.UserName.Equals(profile.UserName));
-            //Check of profile al bestaat
-            if (register.Count() == 0)
-            {
-                _context.Customers.Add(profile);
-                _context.SaveChanges();
-                return true;
-            }
-            return false;
-        }
 
         //Webshop
         public void RegisterCustomer(ISession session, Customer customer) //Create Customer
@@ -142,6 +109,7 @@ namespace FitComrade.Core.Controller
                 order.OrderStatus = "Paid";
                 order.PaymentID = paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("Credits")).PaymentID;
             }
+
             if (payment.PaymentMethod == paymentMethods.FirstOrDefault(item => item.PaymentMethod.Equals("IDEAL")).PaymentMethod)
             {
                 order.OrderStatus = "Paid"; //fake

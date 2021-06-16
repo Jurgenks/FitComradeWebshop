@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Account.Orders
 {
@@ -47,7 +47,7 @@ namespace FitComrade.Pages.Account.Orders
             {
                 var order = _context.Orders.Where(s => s.OrderID.Equals(id)).FirstOrDefault();
 
-                DataController dataController = new DataController(_context);
+                OrderService dataController = new OrderService(_context);
 
                 dataController.UpdateStatus(order);
 
@@ -71,7 +71,7 @@ namespace FitComrade.Pages.Account.Orders
             {
                 var order = _context.Orders.Where(s => s.OrderID.Equals(id)).FirstOrDefault();
 
-                DataController dataController = new DataController(_context);
+                OrderService dataController = new OrderService(_context);
 
                 dataController.RetourOrder(order);
 

@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Linq;
 using FitComrade.Helpers;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Test
 {
     [TestClass]
     public class UnitTest1
-    {            
+    {
         [TestMethod]
         public void TC01_Can_Add_Product()
         {
@@ -26,21 +26,21 @@ namespace FitComrade.Test
                 .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
                 .Options;
 
-            Product product = new Product 
-            { 
-                ProductName = "Tren", 
-                ProductPrice = 100, 
-                ProductQuantity = 100 
+            Product product = new Product
+            {
+                ProductName = "Tren",
+                ProductPrice = 100,
+                ProductQuantity = 100
             };
             //Act
             using (var context = new Data.FitComradeContext(options))
             {
-                ProductController productController = new ProductController(context);
-                productController.ControllerContext.HttpContext = mockHttpContext.Object;
-                productController.AddProduct(product);
+                ProductService productService = new ProductService(context);
+                productService.ControllerContext.HttpContext = mockHttpContext.Object;
+                productService.AddProduct(product);
 
                 var Products = context.Products;
-                
+
                 //Assert
                 Assert.IsTrue(Products != null);
             }
@@ -67,7 +67,7 @@ namespace FitComrade.Test
             Workout workout = new Workout
             {
                 WorkoutName = "Fietsen",
-                Discription = "Om vooruit te gaan op de fiets moet je op de trappers duwen moet je voeten."                
+                Discription = "Om vooruit te gaan op de fiets moet je op de trappers duwen moet je voeten."
             };
             //Act
             session.SetInt32("profileID", 2);
@@ -75,14 +75,13 @@ namespace FitComrade.Test
 
             using (var context = new Data.FitComradeContext(options))
             {
-                DataController dataController = new DataController(context);
-                dataController.Create(customer);
-                dataController.Login(session, customer);
+                AccountService accountService = new AccountService(context);
+                accountService.CreateProfile(customer);
+                accountService.LoginProfile(session, customer);
 
-                BlogController blogController = new BlogController(context);
-                blogController.ControllerContext.HttpContext = mockHttpContext.Object;
-                blogController.CreateBlog(session);
-                await blogController.AddWorkoutToBlogAsync(1, workout);
+                BlogService blogService = new BlogService(context);
+                blogService.CreateBlog(session);
+                await blogService.AddWorkoutToBlogAsync(1, workout);
 
                 var Workout = context.Workouts.First();
                 var Blog = context.Blogs.Where(w => w.Workouts.Contains(Workout));
@@ -121,21 +120,20 @@ namespace FitComrade.Test
 
             using (var context = new Data.FitComradeContext(options))
             {
-                DataController dataController = new DataController(context);
-                dataController.Create(customer);
-                dataController.Login(session, customer);
+                AccountService accountService = new AccountService(context);
+                accountService.CreateProfile(customer);
+                accountService.LoginProfile(session, customer);
 
-                BlogController blogController = new BlogController(context);
-                blogController.ControllerContext.HttpContext = mockHttpContext.Object;
-                blogController.CreateBlog(session);
-                await blogController.AddWorkoutToBlogAsync(1, workout);
+                BlogService blogService = new BlogService(context);
+                blogService.CreateBlog(session);
+                await blogService.AddWorkoutToBlogAsync(1, workout);
 
                 var Workout = context.Workouts.First();
                 var Blog = context.Blogs.Where(w => w.Workouts.Contains(Workout));
 
                 session.SetInt32("profileID", 1);
                 Workout.Confirmed = true;
-                await blogController.AddWorkoutToBlogAsync(1, Workout);
+                await blogService.AddWorkoutToBlogAsync(1, Workout);
 
                 Workout = context.Workouts.First();
                 Assert.IsTrue(Workout.Confirmed);
@@ -149,10 +147,10 @@ namespace FitComrade.Test
             Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
             MockHttpSession session = new MockHttpSession();
             mockHttpContext.Setup(s => s.Session).Returns(session);
-             
+
             var options = new DbContextOptionsBuilder<Data.FitComradeContext>()
                 .UseInMemoryDatabase(databaseName: "FitComradeContextDB")
-                .Options;            
+                .Options;
 
             Product product = new Product
             {
@@ -168,10 +166,10 @@ namespace FitComrade.Test
                 context.Products.Add(product);
                 context.SaveChanges();
 
-                CartController cartController = new CartController(); 
-                
+                CartService cartService = new CartService();
+
                 var dbProduct = context.Products.FirstOrDefault(item => item.ProductID.Equals(1));
-                cart = cartController.NewCart(dbProduct);
+                cart = cartService.NewCart(dbProduct);
 
                 SessionHelper.SetObjectAsJson(session, "cart", cart);
                 cart = SessionHelper.GetObjectFromJson<List<Product>>(session, "cart");
@@ -188,9 +186,9 @@ namespace FitComrade.Test
             Mock<HttpContext> mockHttpContext = new Mock<HttpContext>();
             MockHttpSession session = new MockHttpSession();
             mockHttpContext.Setup(s => s.Session).Returns(session);
-            
 
-            Customer customer = new Customer 
+
+            Customer customer = new Customer
             {
                 CustomerName = "Van Boven",
                 CustomerEmail = "Gerrie.Boven@hotmail.com",
@@ -205,17 +203,17 @@ namespace FitComrade.Test
             {
                 PaymentMethod = "Credits"
             };
-            CustomerAdress customerAdress = new CustomerAdress 
+            CustomerAdress customerAdress = new CustomerAdress
             {
                 PostalCode = "5023CE"
             };
 
-            Product product = new Product 
-            { 
-                ProductID = 1, 
-                ProductName = "Tren", 
-                ProductPrice = 100, 
-                ProductQuantity = 1 
+            Product product = new Product
+            {
+                ProductID = 1,
+                ProductName = "Tren",
+                ProductPrice = 100,
+                ProductQuantity = 1
             };
 
             Cart cart = new Cart();
@@ -232,22 +230,21 @@ namespace FitComrade.Test
                 context.Payments.Add(payment1); //Vaste betalingsopties
                 context.Payments.Add(payment2);
 
-                DataController dataController = new DataController(context);
-                dataController.ControllerContext.HttpContext = mockHttpContext.Object;                
-                dataController.RegisterCustomer(session, customer);
-                
-                if((int)session.GetInt32("customerID") != 0)
+                OrderService orderService = new OrderService(context);
+                orderService.RegisterCustomer(session, customer);
+
+                if ((int)session.GetInt32("customerID") != 0)
                 {
-                    dataController.PlaceOrder(session, cart, customerAdress, payment1);
+                    orderService.PlaceOrder(session, cart, customerAdress, payment1);
                 }
 
                 var orders = context.Orders;
-                
+
                 //Assert
 
                 Assert.IsTrue(orders != null);
             }
-            
+
         }
     }
 }

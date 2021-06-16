@@ -8,7 +8,7 @@ using FitComrade.Models;
 using FitComrade.Helpers;
 using FitComrade.Domain.Entities;
 using FitComrade.Data;
-using FitComrade.Core.Controller;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Shop
 {
@@ -22,7 +22,7 @@ namespace FitComrade.Pages.Shop
         }
 
         private List<Product> products;
-        private CartController cartController = new CartController();
+        private CartService cartController = new CartService();
 
         public Cart Cart = new Cart();
         public decimal Total { get; private set; }  //Totaalprijs van Cart
