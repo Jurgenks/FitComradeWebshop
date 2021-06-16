@@ -20,7 +20,7 @@ namespace FitComrade.Pages.Account.ProductManager
             _context = context;
         }
 
-        public Product Products { get; private set; }
+        public Product Products { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
