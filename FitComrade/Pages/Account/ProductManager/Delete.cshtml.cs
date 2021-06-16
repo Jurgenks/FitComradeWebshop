@@ -9,6 +9,7 @@ using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Services;
+using FitComrade.Core.Controllers;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
@@ -47,7 +48,7 @@ namespace FitComrade.Pages.Account.ProductManager
                 return NotFound();
             }
 
-            ProductService productController = new ProductService(_context);
+            ProductController productController = new ProductController(_context);
             bool delete = await productController.DeleteProductAsync(id);
             if (delete == false)
             {

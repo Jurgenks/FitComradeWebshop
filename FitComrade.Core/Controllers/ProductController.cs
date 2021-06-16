@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FitComrade.Core.Services
+namespace FitComrade.Core.Controllers
 {
-    public class ProductService : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly FitComradeContext _context;
 
-        public ProductService(FitComradeContext context)
+        public ProductController(FitComradeContext context)
         {
             _context = context;
         }
@@ -47,10 +47,10 @@ namespace FitComrade.Core.Services
         public async Task UpdateProductAsync(Product Products) //Update Product
         {
 
-            _context.Attach(Products).State = EntityState.Modified;
-
             try
             {
+                _context.Attach(Products).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

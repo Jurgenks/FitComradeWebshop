@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Services;
+using FitComrade.Core.Controllers;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
@@ -18,7 +19,7 @@ namespace FitComrade.Pages.Account.ProductManager
         }
 
         [BindProperty]
-        public Product Products { get; private set; }
+        public Product Products { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -44,7 +45,7 @@ namespace FitComrade.Pages.Account.ProductManager
                 return Page();
             }
 
-            ProductService productController = new ProductService(_context);
+            ProductController productController = new ProductController(_context);
             await productController.UpdateProductAsync(Products);
 
             return RedirectToPage("./Index");
