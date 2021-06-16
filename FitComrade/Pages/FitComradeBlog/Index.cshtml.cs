@@ -6,16 +6,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Domain.Entities;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.FitComradeBlog
 {
     public class IndexModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public IndexModel(FitComradeContext context)
+        public IndexModel(IDataService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public SessionUser SessionUser = new SessionUser();
@@ -23,28 +24,31 @@ namespace FitComrade.Pages.FitComradeBlog
         public List<Workout> Workouts { get; private set; }
         public bool HasNoBlog { get; private set; }
 
-        public async Task OnGetAsync()  //Haalt alle blogs en bijbehordende workouts op
+        public void OnGet()  //Haalt alle blogs en bijbehordende workouts op
         {
             SessionUser = SessionUser.GetSession(HttpContext.Session);
 
             HasNoBlog = CanCreateBlog();
 
-            var blogs = _context.Blogs.Where(blog => blog.Workouts.Count > 0);
+            Workouts = _service.GetWorkouts().Where(workout => workout.Confirmed == true).ToList();
 
-            var workouts = _context.Workouts.Where(workout => workout.Confirmed == true);
+            Blogs = _service.GetBlogs().Where(blog => blog.Workouts.Count > 0).ToList();
 
-            if (blogs.Count() > 0 && workouts.Count() > 0)
-            {
-                Workouts = await workouts.ToListAsync();
-                Blogs = await blogs.ToListAsync();
-            }
+        }
 
+        public void OnGetCheckNewPosts()
+        {
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+
+            var workouts = _service.GetWorkouts().Where(workout => workout.Confirmed == false);
+
+            var blogs = _service.GetBlogs().Where(blog => blog.Workouts.Count > 0);
 
         }
 
         private bool CanCreateBlog()    //Check of de gebruiker al een blog heeft
         {
-            var ProfileBlogs = _context.Blogs.Where(item => item.CustomerID.Equals(SessionUser.ProfileID));
+            var ProfileBlogs = _service.GetBlogs().Where(item => item.CustomerID.Equals(SessionUser.ProfileID));
             if (SessionUser.ProfileID != 0)
             {
                 if (ProfileBlogs.Count() > 0)
@@ -57,21 +61,6 @@ namespace FitComrade.Pages.FitComradeBlog
                 }
             }
             return false;
-        }
-
-        public async Task OnGetCheckNewPostsAsync()
-        {
-            SessionUser = SessionUser.GetSession(HttpContext.Session);
-
-            var blogs = _context.Blogs.Where(blog => blog.Workouts.Count > 0);
-
-            var workouts = _context.Workouts.Where(workout => workout.Confirmed == false);
-
-            if (blogs.Count() > 0 && workouts.Count() > 0)
-            {
-                Workouts = await workouts.ToListAsync();
-                Blogs = await blogs.ToListAsync();
-            }
         }
     }
 }

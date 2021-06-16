@@ -1,24 +1,21 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using FitComrade.Core.Services;
-using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using FitComrade.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace FitComrade.Pages.Account.Credits
 {
     public class DeleteModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
+        private readonly ICreditService _creditService;
 
-        public DeleteModel(FitComradeContext context)
+        public DeleteModel(IDataService service, ICreditService creditService)
         {
-            _context = context;
+            _service = service;
+            _creditService = creditService;
         }
 
         [BindProperty]
@@ -27,7 +24,7 @@ namespace FitComrade.Pages.Account.Credits
         private SessionUser sessionUser = new SessionUser();
 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             sessionUser = sessionUser.GetSession(HttpContext.Session);
             if (sessionUser.ProfileID != 1)
@@ -40,7 +37,7 @@ namespace FitComrade.Pages.Account.Credits
                 return NotFound();
             }
 
-            CreditCode = await _context.CreditCodes.FirstOrDefaultAsync(m => m.CreditCodeID == id);
+            CreditCode = _service.GetCreditCodes().FirstOrDefault(m => m.CreditCodeID == id);
 
             if (CreditCode == null)
             {
@@ -49,19 +46,18 @@ namespace FitComrade.Pages.Account.Credits
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            CreditCode = await _context.CreditCodes.FindAsync(id);
+            CreditCode = _service.GetCreditCodes().FirstOrDefault(c => c.CreditCodeID.Equals(id));
 
             if (CreditCode != null && CreditCode.CreditIsValid == true)
             {
-                CreditService creditController = new CreditService(_context);
-                creditController.DeleteCode(HttpContext.Session, CreditCode);
+                _creditService.DeleteCode(HttpContext.Session, CreditCode);
             }
 
             return RedirectToPage("./Index");

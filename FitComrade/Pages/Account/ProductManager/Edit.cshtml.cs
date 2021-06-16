@@ -1,33 +1,35 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Services;
+using System.Linq;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
     public class EditModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public EditModel(FitComradeContext context)
+        private readonly IProductService _productService;
+
+        public EditModel(IDataService service, IProductService productService)
         {
-            _context = context;
+            _service = service;
+            _productService = productService;
         }
 
         [BindProperty]
         public Product Products { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Products = await _context.Products.FirstOrDefaultAsync(m => m.ProductID == id);
+            Products = _service.GetProducts().FirstOrDefault(m => m.ProductID == id);
 
             if (Products == null)
             {
@@ -36,7 +38,7 @@ namespace FitComrade.Pages.Account.ProductManager
             return Page();
         }
 
-        
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -49,8 +51,7 @@ namespace FitComrade.Pages.Account.ProductManager
                 return NotFound();
             }
 
-            ProductService productService = new ProductService(_context);
-            await productService.UpdateProductAsync(Products);
+            await _productService.UpdateProductAsync(Products);
 
             return RedirectToPage("./Index");
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FitComrade.Core.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly FitComradeContext _context;
 

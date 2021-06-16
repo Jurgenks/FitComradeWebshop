@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
     public class IndexModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public IndexModel(FitComradeContext context)
+        public IndexModel(IDataService service)
         {
-            _context = context;
+            _service = service;
         }
 
         private SessionUser sessionUser = new SessionUser();
@@ -26,14 +27,15 @@ namespace FitComrade.Pages.Account.ProductManager
 
         public List<OrderDetail> OrderDetails { get; private set; }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
             sessionUser = sessionUser.GetSession(HttpContext.Session);
+
             if (sessionUser.ProfileID == 1)
             {
-                Products = await _context.Products.ToListAsync();
+                Products = _service.GetProducts();
 
-                OrderDetails = _context.OrderDetails.ToList();
+                OrderDetails = _service.GetOrderDetails();
             }
             else
             {

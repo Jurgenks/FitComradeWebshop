@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using FitComrade.Data;
 using FitComrade.Models;
 using FitComrade.Domain.Entities;
 using FitComrade.Core.Services;
@@ -14,11 +8,11 @@ namespace FitComrade.Pages.Account.ProductManager
 {
     public class CreateModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IProductService _service;
 
-        public CreateModel(FitComradeContext context)
+        public CreateModel(IProductService service)
         {
-            _context = context;
+            _service = service;
         }
 
         private SessionUser sessionUser = new SessionUser();
@@ -41,17 +35,14 @@ namespace FitComrade.Pages.Account.ProductManager
         [BindProperty]
         public Product Products { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            ProductService productController = new ProductService(_context);
-
-            productController.AddProduct(Products);
-            await _context.SaveChangesAsync();
+            _service.AddProduct(Products);
 
             return RedirectToPage("./Index");
         }

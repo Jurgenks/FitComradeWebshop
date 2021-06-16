@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace FitComrade.Core.Services
 {
-    public class CreditService
+    public class CreditService : ICreditService
     {
         private readonly FitComradeContext _context;
 
@@ -18,6 +18,7 @@ namespace FitComrade.Core.Services
         {
             _context = context;
         }
+
         //Credit
         public bool RedeemCode(ISession session,CreditCode creditCode)
         {            

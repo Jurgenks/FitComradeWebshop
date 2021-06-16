@@ -1,22 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using FitComrade.Data;
 using FitComrade.Domain.Entities;
 using FitComrade.Models;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Account.Orders
 {
     public class DetailsModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public DetailsModel(FitComradeContext context)
+        public DetailsModel(IDataService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public Order Order;
@@ -28,7 +26,7 @@ namespace FitComrade.Pages.Account.Orders
         private SessionUser sessionUser = new SessionUser();
 
 
-        public async Task<IActionResult> OnGetAsync(int? id) // Haalt OrderDetails op met specifiek id
+        public IActionResult OnGet(int? id) // Haalt OrderDetails op met specifiek id
         {
             if (id == null) // Er is geen order met het specifieke id
             {
@@ -37,22 +35,22 @@ namespace FitComrade.Pages.Account.Orders
 
             sessionUser = sessionUser.GetSession(HttpContext.Session);
 
-            OrderDetail = await _context.OrderDetails.Where(m => m.OrderID.Equals(id)).ToListAsync();
+            OrderDetail = _service.GetOrderDetails().Where(m => m.OrderID.Equals(id)).ToList();
 
-            Products = await _context.Products.ToListAsync();
+            Products = _service.GetProducts();
 
-            Order = await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
+            Order = _service.GetOrders().FirstOrDefault(m => m.OrderID == id);
 
             if (Order == null || sessionUser.ProfileID != Order.CustomerID && sessionUser.ProfileID != 1) // Er zijn geen orders of gebruiker heeft geen toegang
             {
                 return NotFound();
             }
 
-            Customer = await _context.Customers.FirstOrDefaultAsync(m => m.CustomerID == Order.CustomerID);
+            Customer = _service.GetCustomers().FirstOrDefault(m => m.CustomerID == Order.CustomerID);
 
-            Payments = await _context.Payments.ToListAsync();
+            Payments = _service.GetPayments().ToList();
 
-            CustomerAdress = await _context.CustomerAdresses.ToListAsync();
+            CustomerAdress = _service.GetCustomerAdresses().ToList();
 
 
             return Page();

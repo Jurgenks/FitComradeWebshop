@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FitComrade.Core.Services
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly FitComradeContext _context;
 

@@ -8,11 +8,11 @@ namespace FitComrade.Pages.Login
 {
     public class SignUpModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IAccountService _accountService;
 
-        public SignUpModel(FitComradeContext context)
+        public SignUpModel(IAccountService accountService)
         {
-            _context = context;
+            _accountService = accountService;
         }
 
         [BindProperty]
@@ -27,9 +27,8 @@ namespace FitComrade.Pages.Login
         public IActionResult OnPost()
         {
             if (Profile.Password == Match.Password)  //Check of registratie gegevens kloppen
-            {
-                AccountService accountService = new AccountService(_context);
-                bool succes = accountService.CreateProfile(Profile);
+            {                
+                bool succes = _accountService.CreateProfile(Profile);
 
                 if (succes == true)  //Account aangemaakt
                 {

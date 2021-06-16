@@ -13,11 +13,11 @@ namespace FitComrade.Pages.Account.Credits
 {
     public class RedeemModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly ICreditService _service;
 
-        public RedeemModel(FitComradeContext context)
+        public RedeemModel(ICreditService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [BindProperty]
@@ -35,15 +35,14 @@ namespace FitComrade.Pages.Account.Credits
 
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (CreditCode.CreditCodeString != null && CreditCode.CreditCodeString.Length <= 10)
             {
-                CreditService creditController = new CreditService(_context);
-                bool succes = creditController.RedeemCode(HttpContext.Session, CreditCode);
+                bool succes = _service.RedeemCode(HttpContext.Session, CreditCode);
+
                 if (succes == true)
                 {
-                    await _context.SaveChangesAsync();
                     return RedirectToPage("/Account/Index");
                 }
                 else

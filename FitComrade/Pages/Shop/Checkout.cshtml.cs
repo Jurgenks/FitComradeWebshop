@@ -13,11 +13,13 @@ namespace FitComrade.Pages.Shop
 {
     public class CheckoutModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
+        private readonly IOrderService orderService;
 
-        public CheckoutModel(FitComradeContext context)
+        public CheckoutModel(IDataService service, IOrderService order)
         {
-            _context = context;
+            _service = service;
+            orderService = order;
         }
 
         public SessionUser SessionUser = new SessionUser();
@@ -41,25 +43,23 @@ namespace FitComrade.Pages.Shop
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
 
-            Payments = _context.Payments.ToList();
+            Payments = _service.GetPayments();
 
             if (Cart.Products == null || Cart.Products.Count == 0)
             {
                 Response.Redirect("/");
             }
         }
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            OrderService dataController = new OrderService(_context);
-
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            dataController.RegisterCustomer(HttpContext.Session, Customer);
+            orderService.RegisterCustomer(HttpContext.Session, Customer);
 
             SessionUser = SessionUser.GetSession(HttpContext.Session);
 
@@ -67,11 +67,10 @@ namespace FitComrade.Pages.Shop
             {
                 if (SessionUser.ProfileID != 0)
                 {
-                    dataController.UpdateProfile(HttpContext.Session, Customer);
+                    orderService.UpdateProfile(HttpContext.Session, Customer);
                 }
-                dataController.PlaceOrder(HttpContext.Session, Cart, CustomerAdress, Payment);
+                orderService.PlaceOrder(HttpContext.Session, Cart, CustomerAdress, Payment);
             }
-            await _context.SaveChangesAsync();
 
             return RedirectToPage("/Index");
         }

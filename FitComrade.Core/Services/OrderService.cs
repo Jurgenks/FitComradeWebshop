@@ -10,7 +10,7 @@ using FitComrade.Data;
 
 namespace FitComrade.Core.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly FitComradeContext _context;
 

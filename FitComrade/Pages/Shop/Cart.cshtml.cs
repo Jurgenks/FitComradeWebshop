@@ -14,15 +14,15 @@ namespace FitComrade.Pages.Shop
 {
     public class CartModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public CartModel(FitComradeContext context)
+        public CartModel(IDataService service)
         {
-            _context = context;
+            _service = service;
         }
 
         private List<Product> products;
-        private CartService cartController = new CartService();
+        private CartService cartService = new CartService();
 
         public Cart Cart = new Cart();
         public decimal Total { get; private set; }  //Totaalprijs van Cart
@@ -40,7 +40,7 @@ namespace FitComrade.Pages.Shop
 
         public IActionResult OnGetBuyNow(int id)
         {
-            products = _context.Products.ToList();
+            products = _service.GetProducts();
 
             var product = products.Where(item => item.ProductID.Equals(id)).FirstOrDefault();
 
@@ -54,13 +54,13 @@ namespace FitComrade.Pages.Shop
 
             if (Cart.Products == null)
             {
-                Cart.Products = cartController.NewCart(product);
+                Cart.Products = cartService.NewCart(product);
 
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
             }
             else
             {
-                Cart.Products = cartController.AddToCart(Cart.Products, product);
+                Cart.Products = cartService.AddToCart(Cart.Products, product);
 
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
             }
@@ -71,7 +71,7 @@ namespace FitComrade.Pages.Shop
         {
             Cart.Products = SessionHelper.GetObjectFromJson<List<Product>>(HttpContext.Session, "cart");
 
-            Cart.Products = cartController.RemoveFromCart(Cart.Products, id);
+            Cart.Products = cartService.RemoveFromCart(Cart.Products, id);
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
 
@@ -84,7 +84,7 @@ namespace FitComrade.Pages.Shop
 
             if (Cart.Products != null)
             {
-                Cart.Products = cartController.UpdateCart(Cart.Products, quantities);
+                Cart.Products = cartService.UpdateCart(Cart.Products, quantities);
 
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", Cart.Products);
             }

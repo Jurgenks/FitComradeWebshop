@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FitComrade.Models;
-using Microsoft.EntityFrameworkCore;
 using FitComrade.Domain.Entities;
-using FitComrade.Data;
 using FitComrade.Core.Services;
 using FitComrade.Helpers;
 
@@ -13,11 +11,15 @@ namespace FitComrade.Pages.FitComradeBlog
 {
     public class EditModel : PageModel
     {
-        private readonly FitComradeContext _context;
-        public EditModel(FitComradeContext context)
+        private readonly IDataService _service;
+        private readonly IBlogService _blogService;
+
+        public EditModel(IDataService service, IBlogService blogService)
         {
-            _context = context;
+            _service = service;
+            _blogService = blogService;
         }
+
         public Blog Blog { get; private set; }
         public SessionUser SessionUser = new SessionUser();
 
@@ -32,13 +34,11 @@ namespace FitComrade.Pages.FitComradeBlog
                 Response.Redirect("/");
             }
             //Haalt de blog op van de ingelogde gebruiker
-            Blog = _context.Blogs.Where(item => item.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
+            Blog = _service.GetBlogs().Where(item => item.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
         }
         public IActionResult OnGetCreateBlog()
         {
-            BlogService blogController = new BlogService(_context);
-
-            Blog = blogController.CreateBlog(HttpContext.Session);
+            Blog = _blogService.CreateBlog(HttpContext.Session);
 
             return RedirectToPage("Edit");
         }
@@ -52,7 +52,7 @@ namespace FitComrade.Pages.FitComradeBlog
             {
                 try
                 {                    
-                    Blog = _context.Blogs.Where(b => b.Workouts.Contains(oldWorkout)).FirstOrDefault();
+                    Blog = _service.GetBlogs().Where(b => b.Workouts.Contains(oldWorkout)).FirstOrDefault();
                     //Update Workout changes
                     oldWorkout.WorkoutImage = Workout.WorkoutImage;
                     oldWorkout.WorkoutName = Workout.WorkoutName;
@@ -60,9 +60,7 @@ namespace FitComrade.Pages.FitComradeBlog
                     oldWorkout.Discription = Workout.Discription;
                     oldWorkout.Confirmed = Workout.Confirmed;
 
-                    BlogService blogController = new BlogService(_context);
-
-                    await blogController.AddWorkoutToBlogAsync(Blog.BlogID, oldWorkout);
+                    await _blogService.AddWorkoutToBlogAsync(Blog.BlogID, oldWorkout);
                 }
                 catch
                 {
@@ -72,19 +70,15 @@ namespace FitComrade.Pages.FitComradeBlog
             }
             else  //Nieuwe Workout
             {
-                Blog = _context.Blogs.Where(b => b.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
+                Blog = _service.GetBlogs().Where(b => b.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
 
-                BlogService blogController = new BlogService(_context);
-
-                await blogController.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
-            }
-
-            
+                await _blogService.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
+            }            
             
             return RedirectToPage("Index");
         }
-        
-        public async Task<IActionResult> OnGetEditAsync(int? id)
+
+        public IActionResult OnGetEdit(int? id)
         {
             OnGet();
 
@@ -93,7 +87,7 @@ namespace FitComrade.Pages.FitComradeBlog
                 return NotFound();
             }
 
-            Workout = await _context.Workouts.FirstOrDefaultAsync(w => w.WorkoutID == id);
+            Workout = _service.GetWorkouts().FirstOrDefault(w => w.WorkoutID == id);
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "workout", Workout);
 

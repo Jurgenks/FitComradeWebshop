@@ -8,31 +8,33 @@ using FitComrade.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using FitComrade.Core.Services;
 
 namespace FitComrade.Pages.Account.Credits
 {
     public class IndexModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public IndexModel(FitComradeContext context)
+        public IndexModel(IDataService service)
         {
-            _context = context;
+            _service = service;
         }
 
-        public List<CreditCode> CreditCodes { get; set; }
+        public List<CreditCode> CreditCodes { get; private set; }
 
         private SessionUser sessionUser = new SessionUser();
 
-        public async Task OnGet()
+        public void OnGet()
         {
             sessionUser = sessionUser.GetSession(HttpContext.Session);
+
             if (sessionUser.ProfileID != 1)
             {
                 Response.Redirect("/");
             }
 
-            CreditCodes = await _context.CreditCodes.ToListAsync();
+            CreditCodes = _service.GetCreditCodes();
         }
     }
 }

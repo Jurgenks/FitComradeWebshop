@@ -13,11 +13,11 @@ namespace FitComrade.Pages.Account.Credits
 {
     public class CreateModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly ICreditService _service;
 
-        public CreateModel(FitComradeContext context)
+        public CreateModel(ICreditService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [BindProperty]
@@ -34,19 +34,17 @@ namespace FitComrade.Pages.Account.Credits
             }
 
         }
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            CreditService creditController = new CreditService(_context);
-            bool created = creditController.CreateCode(HttpContext.Session, CreditCode);
+            bool created = _service.CreateCode(HttpContext.Session, CreditCode);
 
             if (created == true)
             {
-                await _context.SaveChangesAsync();
                 return RedirectToPage("Index");
             }
             else

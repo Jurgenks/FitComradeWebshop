@@ -10,11 +10,11 @@ namespace FitComrade.Pages.Shop
 {
     public class IndexModel : PageModel
     {
-        private readonly IDataService _IDataService;
+        private readonly IDataService _service;
         
-        public IndexModel(IDataService dataService)
+        public IndexModel(IDataService service)
         {
-            _IDataService = dataService;
+            _service = service;
         }
 
         public List<Product> Products { get; private set; }        
@@ -24,11 +24,11 @@ namespace FitComrade.Pages.Shop
 
         public void OnGet()
         {
-            Products = _IDataService.GetProducts().OrderByDescending(item => item.ProductQuantity).ToList();
+            Products = _service.GetProducts().OrderByDescending(item => item.ProductQuantity).ToList();
 
             if (!string.IsNullOrEmpty(SearchString))
             {
-                Products = _IDataService.GetProducts().Where(item => item.ProductName.Contains(SearchString)).ToList();
+                Products = _service.GetProducts().Where(item => item.ProductName.Contains(SearchString)).ToList();
             }
         }
 
@@ -36,19 +36,19 @@ namespace FitComrade.Pages.Shop
         {
             if (id == 1)
             {
-                Products = _IDataService.GetProducts().OrderBy(item => item.ProductID).ToList();
+                Products = _service.GetProducts().OrderBy(item => item.ProductID).ToList();
             }
             if (id == 2)
             {
-                Products = _IDataService.GetProducts().OrderBy(item => item.ProductName).ToList();
+                Products = _service.GetProducts().OrderBy(item => item.ProductName).ToList();
             }
             if (id == 3)
             {
-                Products = _IDataService.GetProducts().OrderBy(item => item.ProductPrice).ToList();
+                Products = _service.GetProducts().OrderBy(item => item.ProductPrice).ToList();
             }
             if (id == 4)
             {
-                Products = _IDataService.GetProducts().OrderByDescending(item => item.ProductQuantity).ToList();
+                Products = _service.GetProducts().OrderByDescending(item => item.ProductQuantity).ToList();
             }
 
             return Page();

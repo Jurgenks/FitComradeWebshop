@@ -11,11 +11,14 @@ namespace FitComrade.Pages.Account.Profits
 {
     public class IndexModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public IndexModel(FitComradeContext context)
+        private readonly IOrderService _orderService;
+
+        public IndexModel(IDataService service, IOrderService orderService)
         {
-            _context = context;
+            _service = service;
+            _orderService = orderService;
         }
 
         public List<Product> Products;
@@ -35,11 +38,11 @@ namespace FitComrade.Pages.Account.Profits
                 Response.Redirect("/");
             }
 
-            Products = _context.Products.ToList();
+            Products = _service.GetProducts();
 
-            OrderDetails = _context.OrderDetails.Where(o=>o.Order.OrderStatus != "Dismissed").ToList();
+            Orders = _service.GetOrders().Where(o => o.OrderStatus != "Dismissed").ToList();
 
-            Orders = _context.Orders.Where(o=>o.OrderStatus != "Dismissed").ToList();
+            OrderDetails = _service.GetOrderDetails().Where(o=>o.Order.OrderStatus != "Dismissed").ToList();
 
             if(OrderDetails != null && Products != null)
             {
@@ -56,15 +59,13 @@ namespace FitComrade.Pages.Account.Profits
                     purchase -= ((decimal)0.60 * item.TotalPrice);
                 }
                 profit = purchase + sale;
-            }
-            
-            OrderService dataController = new OrderService(_context);
+            }            
 
-            DaySale = dataController.GetSales(DateTime.Today, "Day");
+            DaySale = _orderService.GetSales(DateTime.Today, "Day");
 
-            MonthSale = dataController.GetSales(DateTime.Today, "Month");
+            MonthSale = _orderService.GetSales(DateTime.Today, "Month");
 
-            YearSale = dataController.GetSales(DateTime.Today, "Year");
+            YearSale = _orderService.GetSales(DateTime.Today, "Year");
 
         }
         

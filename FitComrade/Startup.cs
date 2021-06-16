@@ -32,7 +32,13 @@ namespace FitComrade
             services.AddDbContext<FitComradeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("FitComradeContext"), b=>b.MigrationsAssembly("FitComrade.Data")));
             services.AddDistributedMemoryCache();
+
             services.AddScoped<IDataService, DataService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICreditService, CreditService>();
+            services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddSession(options =>
             {

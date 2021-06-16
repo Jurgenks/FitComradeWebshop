@@ -1,31 +1,30 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using FitComrade.Data;
 using FitComrade.Domain.Entities;
+using FitComrade.Core.Services;
+using System.Linq;
 
 namespace FitComrade.Pages.Account.ProductManager
 {
     public class DetailsModel : PageModel
     {
-        private readonly FitComradeContext _context;
+        private readonly IDataService _service;
 
-        public DetailsModel(FitComradeContext context)
+        public DetailsModel(IDataService service)
         {
-            _context = context;
+            _service = service;
         }
 
         public Product Products { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            Products = await _context.Products.FirstOrDefaultAsync(m => m.ProductID == id);
+            Products = _service.GetProducts().FirstOrDefault(m => m.ProductID == id);
 
             if (Products == null)
             {

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FitComrade.Core.Services
 {
-    public class BlogService
+    public class BlogService : IBlogService
     {
         private readonly FitComradeContext _context;
 
