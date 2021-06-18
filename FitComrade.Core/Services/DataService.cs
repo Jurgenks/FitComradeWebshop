@@ -118,9 +118,15 @@ namespace FitComrade.Core.Services
             return customerAdresses;
         }
 
-        public async Task<List<Blog>> GetBlogsAsync()
+        public async Task<List<Blog>> GetBlogsAsync(int id)
         {
             var blogs = await _context.Blogs.ToListAsync();
+
+            if(id > 0)
+            {
+                blogs = await _context.Blogs.Where(b => b.CustomerID.Equals(id)).ToListAsync();
+            }
+
             return blogs;
         }
 

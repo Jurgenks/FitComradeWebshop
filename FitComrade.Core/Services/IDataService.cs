@@ -22,7 +22,7 @@ namespace FitComrade.Core.Services
         Task<List<Payment>> GetPaymentsAsync();
         Task<List<Customer>> GetCustomersAsync();
         Task<List<CustomerAdress>> GetCustomerAdressesAsync();
-        Task<List<Blog>> GetBlogsAsync();
+        Task<List<Blog>> GetBlogsAsync(int id);
         Task<List<Workout>> GetWorkoutsAsync(bool b);
         Task<List<Credit>> GetCreditsAsync();
         Task<List<CreditCode>> GetCreditCodesAsync();

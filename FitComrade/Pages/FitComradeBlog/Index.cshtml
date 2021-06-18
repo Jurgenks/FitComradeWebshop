@@ -18,11 +18,18 @@
         <a asp-page="Edit">Voeg Workout toe</a>
     }
     <br />
-    <br />
     @if (Model.SessionUser.ProfileID == 1)
     {
+        <br />
         <a asp-page-handler="CheckNewPosts">Controlleer Blogs</a>
     }
+
+    @if (Model.SessionUser.ProfileID > 0)
+    {
+        <br />
+        <a asp-page-handler="ProfileBlog">-> wachtrij</a>
+    }
+
     @if (Model.Blogs != null)
     {
         <hr />
@@ -61,10 +68,10 @@
                             <hr />
                             <h6>Uitleg:</h6>
                             <p>@workout.Discription</p>
-                            @if(Model.SessionUser.ProfileID == item.CustomerID || Model.SessionUser.ProfileID == 1)
-                            { 
+                            @if (Model.SessionUser.ProfileID == item.CustomerID || Model.SessionUser.ProfileID == 1)
+                            {
                                 <a asp-page="Edit" asp-page-handler="Edit" asp-route-id="@workout.WorkoutID">Aanpassen</a>
-                            }                          
+                            }
 
                             <hr />
                             <br />

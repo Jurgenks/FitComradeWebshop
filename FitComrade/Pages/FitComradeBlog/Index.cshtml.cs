@@ -32,7 +32,7 @@ namespace FitComrade.Pages.FitComradeBlog
 
             HasNoBlog = CanCreateBlog();
 
-            Blogs = await _service.GetBlogsAsync();
+            Blogs = await _service.GetBlogsAsync(0);
 
             Workouts = await _service.GetWorkoutsAsync(true);
         }
@@ -41,7 +41,17 @@ namespace FitComrade.Pages.FitComradeBlog
         {
             SessionUser = SessionUser.GetSession(HttpContext.Session);
 
-            Blogs = await _service.GetBlogsAsync();
+            Blogs = await _service.GetBlogsAsync(0);
+
+            Workouts = await _service.GetWorkoutsAsync(false);
+
+        }
+
+        public async Task OnGetProfileBlog()
+        {
+            SessionUser = SessionUser.GetSession(HttpContext.Session);
+
+            Blogs = await _service.GetBlogsAsync(SessionUser.CustomerID);
 
             Workouts = await _service.GetWorkoutsAsync(false);
 

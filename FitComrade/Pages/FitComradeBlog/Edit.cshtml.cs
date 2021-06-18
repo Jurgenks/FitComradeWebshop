@@ -52,7 +52,7 @@ namespace FitComrade.Pages.FitComradeBlog
             if (oldWorkout != null)  //Bestaande Workout
             {
                 var workouts =  _service.GetWorkouts();
-                var blogs = await _service.GetBlogsAsync();
+                var blogs = await _service.GetBlogsAsync(0);
 
                 Blog = blogs.FirstOrDefault(b => b.BlogID.Equals(oldWorkout.BlogID));
 
