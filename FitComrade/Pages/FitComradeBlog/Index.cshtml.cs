@@ -20,29 +20,30 @@ namespace FitComrade.Pages.FitComradeBlog
         }
 
         public SessionUser SessionUser = new SessionUser();
+
         public List<Blog> Blogs { get; private set; }
         public List<Workout> Workouts { get; private set; }
+
         public bool HasNoBlog { get; private set; }
 
-        public void OnGet()  //Haalt alle blogs en bijbehordende workouts op
+        public async Task OnGetAsync()  //Haalt alle blogs en bijbehordende workouts op
         {
             SessionUser = SessionUser.GetSession(HttpContext.Session);
 
             HasNoBlog = CanCreateBlog();
 
-            Workouts = _service.GetWorkouts().Where(workout => workout.Confirmed == true).ToList();
+            Blogs = await _service.GetBlogsAsync();
 
-            Blogs = _service.GetBlogs().Where(blog => blog.Workouts.Count > 0).ToList();
-
+            Workouts = await _service.GetWorkoutsAsync(true);
         }
 
-        public void OnGetCheckNewPosts()
+        public async Task OnGetCheckNewPostsAsync()
         {
             SessionUser = SessionUser.GetSession(HttpContext.Session);
 
-            var workouts = _service.GetWorkouts().Where(workout => workout.Confirmed == false);
+            Blogs = await _service.GetBlogsAsync();
 
-            var blogs = _service.GetBlogs().Where(blog => blog.Workouts.Count > 0);
+            Workouts = await _service.GetWorkoutsAsync(false);
 
         }
 

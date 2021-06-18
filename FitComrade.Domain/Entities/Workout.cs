@@ -22,6 +22,8 @@ namespace FitComrade.Domain.Entities
         public string WorkoutImage { get; set; }
 
         [DataType(DataType.ImageUrl)]
-        public string WorkoutVideo { get; set; }        
+        public string WorkoutVideo { get; set; }   
+        
+        public int BlogID { get; set; }
     }
 }

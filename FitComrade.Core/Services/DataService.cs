@@ -1,9 +1,11 @@
 ﻿using FitComrade.Data;
 using FitComrade.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FitComrade.Core.Services
 {
@@ -20,140 +22,137 @@ namespace FitComrade.Core.Services
         {
             var products = _context.Products.ToList();
 
-            if (products != null)
-            {
-                return products;
-            }
-            else
-            {
-                return null;
-            }
+            return products;
+
         }
 
         public List<Payment> GetPayments()
         {
             var payments = _context.Payments.ToList();
 
-            if (payments != null)
-            {
-                return payments;
-            }
-            else
-            {
-                return null;
-            }
+            return payments;
         }
 
         public List<Customer> GetCustomers()
         {
             var customers = _context.Customers.ToList();
 
-            if (customers != null)
-            {
-                return customers;
-            }
-            else
-            {
-                return null;
-            }
+            return customers;
         }
 
         public List<CustomerAdress> GetCustomerAdresses()
         {
             var customerAdresses = _context.CustomerAdresses.ToList();
 
-            if (customerAdresses != null)
-            {
-                return customerAdresses;
-            }
-            else
-            {
-                return null;
-            }
+            return customerAdresses;
         }
 
         public List<Blog> GetBlogs()
         {
             var blogs = _context.Blogs.ToList();
 
-            if(blogs != null)
-            {
-                return blogs;
-            }
-            else
-            {
-                return null;
-            }
+            return blogs;
         }
 
         public List<Workout> GetWorkouts()
         {
             var workouts = _context.Workouts.ToList();
 
-            if (workouts != null)
-            {
-                return workouts;
-            }
-            else
-            {
-                return null;
-            }
+            return workouts;
         }
 
         public List<Credit> GetCredits()
         {
             var credits = _context.Credits.ToList();
 
-            if (credits != null)
-            {
-                return credits;
-            }
-            else
-            {
-                return null;
-            }
+            return credits;
         }
 
         public List<CreditCode> GetCreditCodes()
         {
             var creditCodes = _context.CreditCodes.ToList();
 
-            if (creditCodes != null)
-            {
-                return creditCodes;
-            }
-            else
-            {
-                return null;
-            }
+            return creditCodes;
         }
 
         public List<Order> GetOrders()
         {
             var orders = _context.Orders.ToList();
 
-            if(orders != null)
-            {
-                return orders;
-            }
-            else
-            {
-                return null;
-            }
+            return orders;
+
         }
 
         public List<OrderDetail> GetOrderDetails()
         {
             var orderDetails = _context.OrderDetails.ToList();
 
-            if (orderDetails != null)
-            {
-                return orderDetails;
-            }
-            else
-            {
-                return null;
-            }
+            return orderDetails;
+
+        }
+
+        public async Task<List<Product>> GetProductsAsync()
+        {
+            var products = await _context.Products.ToListAsync();
+
+            return products;
+
+        }
+
+        public async Task<List<Payment>> GetPaymentsAsync()
+        {
+            var payments = await _context.Payments.ToListAsync();
+
+            return payments;
+        }
+
+        public async Task<List<Customer>> GetCustomersAsync()
+        {
+            var customers = await _context.Customers.ToListAsync();
+            return customers;
+        }
+
+        public async Task<List<CustomerAdress>> GetCustomerAdressesAsync()
+        {
+            var customerAdresses = await _context.CustomerAdresses.ToListAsync();
+            return customerAdresses;
+        }
+
+        public async Task<List<Blog>> GetBlogsAsync()
+        {
+            var blogs = await _context.Blogs.ToListAsync();
+            return blogs;
+        }
+
+        public async Task<List<Workout>> GetWorkoutsAsync(bool b)
+        {
+            var workouts = await _context.Workouts.Where(w=>w.Confirmed.Equals(b)).ToListAsync();
+
+            return workouts;
+        }
+
+        public async Task<List<Credit>> GetCreditsAsync()
+        {
+            var credits = await _context.Credits.ToListAsync();
+            return credits;
+        }
+
+        public async Task<List<CreditCode>> GetCreditCodesAsync()
+        {
+            var creditCodes = await _context.CreditCodes.ToListAsync();
+            return creditCodes;
+        }
+
+        public async Task<List<Order>> GetOrdersAsync()
+        {
+            var orders = await _context.Orders.ToListAsync();
+            return orders;
+        }
+
+        public async Task<List<OrderDetail>> GetOrderDetailsAsync()
+        {
+            var orderDetails = await _context.OrderDetails.ToListAsync();
+            return orderDetails;
         }
 
     }

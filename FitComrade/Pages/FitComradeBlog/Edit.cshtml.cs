@@ -33,8 +33,9 @@ namespace FitComrade.Pages.FitComradeBlog
             {
                 Response.Redirect("/");
             }
+
             //Haalt de blog op van de ingelogde gebruiker
-            Blog = _service.GetBlogs().Where(item => item.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
+            Blog = _service.GetBlogs().FirstOrDefault(item => item.CustomerID.Equals(SessionUser.ProfileID));
         }
         public IActionResult OnGetCreateBlog()
         {
@@ -50,27 +51,23 @@ namespace FitComrade.Pages.FitComradeBlog
 
             if (oldWorkout != null)  //Bestaande Workout
             {
-                try
-                {                    
-                    Blog = _service.GetBlogs().Where(b => b.Workouts.Contains(oldWorkout)).FirstOrDefault();
-                    //Update Workout changes
-                    oldWorkout.WorkoutImage = Workout.WorkoutImage;
-                    oldWorkout.WorkoutName = Workout.WorkoutName;
-                    oldWorkout.WorkoutVideo = Workout.WorkoutVideo;
-                    oldWorkout.Discription = Workout.Discription;
-                    oldWorkout.Confirmed = Workout.Confirmed;
+                var workouts =  _service.GetWorkouts();
+                var blogs = await _service.GetBlogsAsync();
 
-                    await _blogService.AddWorkoutToBlogAsync(Blog.BlogID, oldWorkout);
-                }
-                catch
-                {
-                    Response.Redirect("/");
-                }
+                Blog = blogs.FirstOrDefault(b => b.BlogID.Equals(oldWorkout.BlogID));
 
+                //Update Workout changes
+                oldWorkout.WorkoutImage = Workout.WorkoutImage;
+                oldWorkout.WorkoutName = Workout.WorkoutName;
+                oldWorkout.WorkoutVideo = Workout.WorkoutVideo;
+                oldWorkout.Discription = Workout.Discription;
+                oldWorkout.Confirmed = Workout.Confirmed;
+
+                await _blogService.AddWorkoutToBlogAsync(Blog.BlogID, oldWorkout);
             }
             else  //Nieuwe Workout
             {
-                Blog = _service.GetBlogs().Where(b => b.CustomerID.Equals(SessionUser.ProfileID)).FirstOrDefault();
+                Blog = _service.GetBlogs().FirstOrDefault(b => b.CustomerID.Equals(SessionUser.ProfileID));
 
                 await _blogService.AddWorkoutToBlogAsync(Blog.BlogID, Workout);
             }            
