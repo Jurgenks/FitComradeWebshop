@@ -167,7 +167,7 @@ namespace FitComrade.Core.Services
                     return Sale;
                 case "Day":
                     //Haal alle orders op van vandaag
-                    var OrderDay = Orders.Where(m => m.OrderDate.Day.Equals(dateTime.Day)).ToList();
+                    var OrderDay = Orders.Where(m => m.OrderDate.Date.Equals(dateTime.Date)).ToList();
                     if (OrderDay != null)
                     {
                         foreach (var item in OrderDetails)

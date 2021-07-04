@@ -32,7 +32,7 @@ namespace FitComrade.Pages.Account.Orders
                 Response.Redirect("/");
             }
 
-            var data = _service.GetOrders().Where(order => order.CustomerID.Equals(SessionUser.CustomerID));
+            var data = _service.GetOrders().Where(order => order.CustomerID.Equals(SessionUser.CustomerID)).OrderByDescending(order => order.OrderDate);
 
             if (data.Count() > 0)
             {
@@ -50,7 +50,7 @@ namespace FitComrade.Pages.Account.Orders
 
                 _orderService.UpdateStatus(order);
 
-                var data = _service.GetOrders();
+                var data = _service.GetOrders().OrderByDescending(order => order.OrderDate);
 
                 if (data.Count() > 0)
                 {
@@ -73,7 +73,7 @@ namespace FitComrade.Pages.Account.Orders
 
                 _orderService.RetourOrder(order);
 
-                var data = _service.GetOrders().Where(order => order.CustomerID.Equals(SessionUser.CustomerID));
+                var data = _service.GetOrders().Where(order => order.CustomerID.Equals(SessionUser.CustomerID)).OrderByDescending(order => order.OrderDate);
 
                 if (data.Count() > 0)
                 {
@@ -92,7 +92,7 @@ namespace FitComrade.Pages.Account.Orders
 
             if (SessionUser.ProfileID == 1)
             {
-                var data = _service.GetOrders();
+                var data = _service.GetOrders().OrderByDescending(order => order.OrderDate);
 
                 if (data.Count() > 0)
                 {

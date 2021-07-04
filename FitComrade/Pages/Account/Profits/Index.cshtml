@@ -20,7 +20,7 @@
     <hr />
     <button class="accordion">Dag: @DateTime.Today.DayOfYear</button>
     <div class="panel">
-        <h5>Vandaag: @Model.Orders.Where(s => s.OrderDate.Day.Equals(DateTime.Today.Day)).Count()</h5>
+        <h5>Vandaag: @Model.Orders.Where(s => s.OrderDate.Date.Equals(DateTime.Today)).Count()</h5>
         <p>Inkomst verkoop: € @Model.DaySale</p>        
     </div>
 
